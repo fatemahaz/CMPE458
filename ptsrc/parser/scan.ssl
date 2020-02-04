@@ -114,18 +114,17 @@ Output :
         pSlash
         pPercent
         pAmpersand
-        pBar
+        pOrBar
         pExclamation
         pUnderscore
         pDotDot
-        pAmpersandAmpersand
-        pBarBar
-        pExclamationExclamation
-        pEqualsEquals
+        pDoubleAmpersand
+        pDoubleOrBar
+        pDoubleEquals
         pEqualsGreater
         pPlusEquals
         pMinusEquals
-        lastSyntaxToken = pDotDot;
+        lastSyntaxToken = pMinusEquals;
 
 Error :
         eIllegalChar = 5
@@ -192,7 +191,7 @@ Scan :
             | '&':
                 [
                     | '&':
-                        .pAmpersandAmpersand
+                        .pDoubleAmpersand
                     | *:
                         .pAmpersand
                 ]
@@ -227,7 +226,7 @@ Scan :
             | '=':
                 [
                     | '=':
-                        .pEqualsEquals
+                        .pDoubleEquals
                     | '>':
                         .pEqualsGreater
                     | *:
