@@ -33,8 +33,6 @@ while
 int
 str
 bool
-print
-println
 
 % Predeclared constants
 true
