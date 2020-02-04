@@ -16,25 +16,36 @@
 Input : 
         lLetter 
         firstCharClass = lLetter 
-        lDigit
-        lPlus           '+'
-        lMinus          '-'
-        lStar           '*'
-        lColon          ':'
-        lEquals         '='
-        lDot            '.'
-        lComma          ','
-        lSemicolon      ';'
-        lQuote
+        lQuestionMark	"?"
+	lSlash		"/"
+	lPercent	"%"
+
+	lDigit
+        lPlus           "+"
+	lPlusEquals	"+"
+        lMinus          "-"
+	lMinusEquals	"-="
+        lStar           "*"
+        lColon          ":"
+        lEquals         "="
+        lDoubleEquals	"=="
+	lDot            "."
+        lComma          ","
+        lSemicolon      ";"
+        
+	lBar		"|"
+	lExclamation	"!"
+	lUnderscore	"_"
+	lQuote
         lBackslash
-        lLeftAngle      '<'
-        lRightAngle     '>'
-        lLeftParen      '('
-        lRightParen     ')'
-        lLeftBracket    '['
-        lRightBracket   ']'
-        lLeftBrace      '{'
-        lRightBrace     '}'
+        lLeftAngle      "<"
+        lRightAngle     ">"
+        lLeftParen      "("
+        lRightParen     ")"
+        lLeftBracket    "["
+        lRightBracket   "]"
+        lLeftBrace      "{"
+        lRightBrace     "}"
         lBlank
         lIllegal
         lNewLine
@@ -49,31 +60,22 @@ Output :
         %   Tokens pDiv through pRepeat are keywords which will be separated
         %   from user defined identifiers by the Screener.  This Scanner
         %   treats them all as identifiers.
-        pDiv 
-        firstKeywordToken = pDiv
-        pMod
-        pOr
-        pAnd
-        pNot
-        pThen
-        pElse
-        pOf
-        pEnd
-        pUntil
-        pDo
-        pArray
+	pElse
+        firstKeywordToken = pElse
+	pPub
+	pMod
+	pMain
+	pLet
+	pMut
+	pFn
+	pLoop
+	pBreak
+	pMatch
         pFile
-        pProgram
         pConst
-        pVar
         pType
-        pProcedure
-        pBegin
-        pIf
-        pCase
         pWhile
-        pRepeat
-        lastKeywordToken = pRepeat
+        lastKeywordToken = pWhile
 
         % Scanner tokens -
         %   These are the tokens actually recognized by the Scanner itself.
@@ -82,7 +84,7 @@ Output :
         %   These will be sent to the parser with a value or index.
         pIdentifier 
         firstCompoundInputToken = pIdentifier
-        pInteger
+        pInt
         pStringLiteral
         lastCompoundInputToken = pStringLiteral
 
