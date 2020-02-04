@@ -43,8 +43,8 @@ false
 % Predeclared procedures and functions
 reset
 rewrite
-write
-writeln
+print
+println
 read
 readln
 chr
