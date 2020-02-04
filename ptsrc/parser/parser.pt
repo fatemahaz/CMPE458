@@ -389,7 +389,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
 
         { The following value MUST match the total number of
           keywords and idents entered in the stdIdentifiers file. }
-        numberStdIdentifiers = 42;
+        numberStdIdentifiers = 35; {was 42 in original}
 
         textBufferSize = 200;
         identTableSize = 1601;       { must be prime }
