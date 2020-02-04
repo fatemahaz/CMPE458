@@ -16,36 +16,32 @@
 Input : 
         lLetter 
         firstCharClass = lLetter 
-        lQuestionMark	"?"
-	lSlash		"/"
-	lPercent	"%"
-
-	lDigit
-        lPlus           "+"
-	lPlusEquals	"+"
-        lMinus          "-"
-	lMinusEquals	"-="
-        lStar           "*"
-        lColon          ":"
-        lEquals         "="
-        lDoubleEquals	"=="
-	lDot            "."
-        lComma          ","
-        lSemicolon      ";"
-        
-	lBar		"|"
-	lExclamation	"!"
-	lUnderscore	"_"
-	lQuote
+        lDigit
+        lPlus           '+'
+        lMinus          '-'
+        lStar           '*'
+        lColon          ':'
+        lEquals         '='
+        lDot            '.'
+        lComma          ','
+        lSemicolon      ';'
+        lQuote          '"'
         lBackslash
-        lLeftAngle      "<"
-        lRightAngle     ">"
-        lLeftParen      "("
-        lRightParen     ")"
-        lLeftBracket    "["
-        lRightBracket   "]"
-        lLeftBrace      "{"
-        lRightBrace     "}"
+        lLeftAngle      '<'
+        lRightAngle     '>'
+        lLeftParen      '('
+        lRightParen     ')'
+        lLeftBracket    '['
+        lRightBracket   ']'
+        lLeftBrace      '{'
+        lRightBrace     '}'
+        lQuestionMark   '?'
+        lSlash          '/'
+        lPercent        '%'
+        lAmpersand      '&'
+        lBar            '|'
+        lExclamation    '!'
+        lUnderscore     '_'
         lBlank
         lIllegal
         lNewLine
@@ -60,20 +56,23 @@ Output :
         %   Tokens pDiv through pRepeat are keywords which will be separated
         %   from user defined identifiers by the Screener.  This Scanner
         %   treats them all as identifiers.
-	pElse
-        firstKeywordToken = pElse
-	pPub
-	pMod
-	pMain
-	pLet
-	pMut
-	pFn
-	pLoop
-	pBreak
-	pMatch
+
+        firstKeywordToken = pPub
+        pPub
+        pMod
+        pMain
+        pLet
+        pMut
+        pFn
+        pLoop
+        pBreak
+        pMatch
+        pElse
+        pOf
         pFile
         pConst
         pType
+        pIf
         pWhile
         lastKeywordToken = pWhile
 
@@ -110,8 +109,23 @@ Output :
         pRightParen
         pLeftBracket
         pRightBracket
+        pLeftBrace
+        pRightBrace
+        pQuestionMark
+        pSlash
+        pPercent
+        pAmpersand
+        pOrBar
+        pExclamation
+        pUnderscore
         pDotDot
-        lastSyntaxToken = pDotDot;
+        pDoubleAmpersand
+        pDoubleOrBar
+        pDoubleEquals
+        pEqualsGreater
+        pPlusEquals
+        pMinusEquals
+        lastSyntaxToken = pMinusEquals;
 
 Error :
         eIllegalChar = 5
@@ -158,8 +172,36 @@ Scan :
                 .pLeftBracket
             | ']':
                 .pRightBracket
+            | '{':
+                .pLeftBrace
+            | '}':
+                .pRightBrace
             | ',':
                 .pComma
+            | '?':
+                .pQuestionMark
+            | '/':
+                .pSlash
+            | '%':
+                .pPercent
+            | '&':
+                [
+                    | '&':
+                        .pDoubleAmpersand
+                    | *:
+                        .pAmpersand
+                ]
+            | '|':
+                [
+                    | '|':
+                        .pDoubleOrBar
+                    | *:
+                        .pOrBar
+                ]
+            | '!':
+                .pExclamation
+            | '_':
+                .pUnderscore
             | ':':
                 [
                     | '=':
@@ -178,13 +220,30 @@ Scan :
                     | *:
                 ]
             | '=':
-                .pEquals
+                [
+                    | '=':
+                        .pDoubleEquals
+                    | '>':
+                        .pEqualsGreater
+                    | *:
+                        .pEquals
+                ]
             | '+':
-                .pPlus
+                [
+                    | '=':
+                        .pPlusEquals
+                    | *:
+                        .pPlus
+                ]
             | lQuote:
                 @StringLiteral
             | '-':
-                .pMinus
+                [
+                    | '=':
+                        .pMinusEquals
+                    | *:
+                        .pMinus
+                ]
             | '.':
                 [
                     | '.':
@@ -305,7 +364,7 @@ AlternateComment :
                         >
                     | *:
                 ]
-            | lNewLine:
+            | lNewLine:s
                 .pNewLine
             | lEndFile:
                 #eCommentEOF
