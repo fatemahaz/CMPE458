@@ -198,9 +198,9 @@ Scan :
             | '|':
                 [
                     | '|':
-                        .pOrBar
+                        .pDoubleOrBar
                     | *:
-                        .pBar
+                        .pOrBar
                 ]
             | '!':
                 .pExclamation
