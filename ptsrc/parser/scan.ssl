@@ -25,7 +25,7 @@ Input :
         lDot            '.'
         lComma          ','
         lSemicolon      ';'
-        lQuote
+        lQuote          '"'
         lBackslash
         lLeftAngle      '<'
         lRightAngle     '>'
@@ -35,6 +35,13 @@ Input :
         lRightBracket   ']'
         lLeftBrace      '{'
         lRightBrace     '}'
+        lQuestionMark   '?'
+        lSlash          '/'
+        lPercent        '%'
+        lAmpersand      '&'
+        lBar            '|'
+        lExclamation    '!'
+        lUnderscore     '_'
         lBlank
         lIllegal
         lNewLine
@@ -49,31 +56,24 @@ Output :
         %   Tokens pDiv through pRepeat are keywords which will be separated
         %   from user defined identifiers by the Screener.  This Scanner
         %   treats them all as identifiers.
-        pDiv 
-        firstKeywordToken = pDiv
+        firstKeywordToken = pPub
+        pPub
         pMod
-        pOr
-        pAnd
-        pNot
-        pThen
+        pMain
+        pLet
+        pMut
+        pFn
+        pLoop
+        pBreak
+        pMatch
         pElse
         pOf
-        pEnd
-        pUntil
-        pDo
-        pArray
         pFile
-        pProgram
         pConst
-        pVar
         pType
-        pProcedure
-        pBegin
         pIf
-        pCase
         pWhile
-        pRepeat
-        lastKeywordToken = pRepeat
+        lastKeywordToken = pWhile
 
         % Scanner tokens -
         %   These are the tokens actually recognized by the Scanner itself.
@@ -108,7 +108,23 @@ Output :
         pRightParen
         pLeftBracket
         pRightBracket
+        pLeftBrace
+        pRightBrace
+        pQuestionMark
+        pSlash
+        pPercent
+        pAmpersand
+        pBar
+        pExclamation
+        pUnderscore
         pDotDot
+        pAmpersandAmpersand
+        pBarBar
+        pExclamationExclamation
+        pEqualsEquals
+        pEqualsGreater
+        pPlusEquals
+        pMinusEquals
         lastSyntaxToken = pDotDot;
 
 Error :
@@ -161,8 +177,36 @@ Scan :
                 .pLeftBracket
             | ']':
                 .pRightBracket
+            | '{':
+                .pLeftBrace
+            | '}':
+                .pRightBrace
             | ',':
                 .pComma
+            | '?':
+                .pQuestionMark
+            | '/':
+                .pSlash
+            | '%':
+                .pPercent
+            | '&':
+                [
+                    | '&':
+                        .pAmpersandAmpersand
+                    | *:
+                        .pAmpersand
+                ]
+            | '|':
+                [
+                    | '|':
+                        .pBarBar
+                    | *:
+                        .pBar
+                ]
+            | '!':
+                .pExclamation
+            | '_':
+                .pUnderscore
             | ':':
                 [
                     | '=':
@@ -181,13 +225,30 @@ Scan :
                     | *:
                 ]
             | '=':
-                .pEquals
+                [
+                    | '=':
+                        .pEqualsEquals
+                    | '>':
+                        .pEqualsGreater
+                    | *:
+                        .pEquals
+                ]
             | '+':
-                .pPlus
+                [
+                    | '=':
+                        .pPlusEquals
+                    | *:
+                        .pPlus
+                ]
             | lQuote:
                 @StringLiteral
             | '-':
-                .pMinus
+                [
+                    | '=':
+                        .pMinusEquals
+                    | *:
+                        .pMinus
+                ]
             | '.':
                 [
                     | '.':
