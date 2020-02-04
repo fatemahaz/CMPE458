@@ -57,8 +57,8 @@ Output :
         %   from user defined identifiers by the Screener.  This Scanner
         %   treats them all as identifiers.
 
-        firstKeywordToken = pPub
         pPub
+        firstKeywordToken = pPub
         pMod
         pMain
         pLet
