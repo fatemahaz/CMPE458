@@ -39,7 +39,7 @@ Input :
         lSlash          '/'
         lPercent        '%'
         lAmpersand      '&'
-        lBar            '|'
+        lOrBar          '|'
         lExclamation    '!'
         lUnderscore     '_'
         lBlank
