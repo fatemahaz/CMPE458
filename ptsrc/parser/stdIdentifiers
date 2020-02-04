@@ -33,6 +33,7 @@ while
 int
 str
 bool
+text
 
 % Predeclared constants
 true
