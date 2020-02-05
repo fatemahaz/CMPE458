@@ -83,7 +83,7 @@ Output :
         %   These will be sent to the parser with a value or index.
         pIdentifier 
         firstCompoundInputToken = pIdentifier
-        pInt
+        pInteger
         pStringLiteral
         lastCompoundInputToken = pStringLiteral
 
