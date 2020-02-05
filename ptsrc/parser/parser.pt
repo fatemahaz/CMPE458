@@ -924,7 +924,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
             charClassMap[ord('+')] := lPlus;
             charClassMap[ord(',')] := lComma;
             charClassMap[ord('-')] := lMinus;
-            charClassMap[ord('.')] := lDot;
+            % change: remove lDot 
             charClassMap[ord(':')] := lColon;
             charClassMap[ord(';')] := lSemicolon;
             charClassMap[ord('<')] := lLeftAngle;

@@ -22,7 +22,7 @@ Input :
         lStar           '*'
         lColon          ':'
         lEquals         '='
-        lDot            '.'
+        % change : remove lDot
         lComma          ','
         lSemicolon      ';'
         lQuote          '"'
@@ -102,7 +102,7 @@ Output :
         pMinus
         pStar
         pColonEquals
-        pDot
+        % change: remove pDot
         pComma
         pSemicolon
         pColon
@@ -116,7 +116,7 @@ Output :
         pRightParen
         pLeftBracket
         pRightBracket
-        pDotDot
+        % change: remove pDotDot
 
         % changes start
         pLeftBrace
@@ -266,13 +266,7 @@ Scan :
                     | *:
                         .pMinus
                 ]
-            | '.':
-                [
-                    | '.':
-                        .pDotDot
-                    | *:
-                        .pDot
-                ]
+            % change: remove rule for pDot and pDotDot
             | '<':
                 [
                     | '>':
