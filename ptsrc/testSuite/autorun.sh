@@ -298,9 +298,9 @@ echo "================================"
 echo ""
 
 echo "Test file: doublequote_new_char.pt"
-echo "this test will not recognize '"' as an #eIllegalChar and will map it to token lQuote"
+echo "this test will not recognize a double quote as an #eIllegalChar and will map it to token lQuote"
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt double_new_char.pt" ./../lib/pt/scan.def -i
+ssltrace "ptc -o1 -t1 -L ./../lib/pt doublequote_new_char.pt" ./../lib/pt/scan.def -i
 echo "================================"
 echo ""
 
