@@ -314,14 +314,14 @@ echo ""
 echo "Test file: dot_new_char.pt"
 echo "this test will recognize the '.' character as an #eIllegalChar since this character no longer exists in Qust"
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt dot_new_char.pt" ./../lib/pt/scan.def -i
+ssltrace "ptc -o1 -t1 -L ./../lib/pt dot_new_char.pt" ./../lib/pt/scan.def -e
 echo "================================"
 echo ""
 
 echo "Test file: dotdot_new_char.pt"
 echo "this test will recognize '..' as an #eIllegalChar since this character no longer exists in Qust"
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt dotdot_new_char.pt" ./../lib/pt/scan.def -i
+ssltrace "ptc -o1 -t1 -L ./../lib/pt dotdot_new_char.pt" ./../lib/pt/scan.def -e
 echo "================================"
 echo ""
 
