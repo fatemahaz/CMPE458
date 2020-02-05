@@ -6,6 +6,7 @@
 %   These must be in the exact same order as the keyword token definitions 
 %   in the Output section of scan.ssl and the Input section of parser.ssl
 
+% change start
 pub
 mod
 main
@@ -15,6 +16,7 @@ fn
 loop
 break
 match
+% change end
 else
 of
 file
@@ -30,9 +32,11 @@ while
 %   in semantic.ssl.  
 
 % Predeclared type names
+% change start
 int
 str
 bool
+% change end
 text
 
 % Predeclared constants
@@ -42,8 +46,12 @@ false
 % Predeclared procedures and functions
 reset
 rewrite
+
+% change start
 print
 println
+% change end
+
 read
 readln
 chr

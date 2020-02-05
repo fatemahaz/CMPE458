@@ -402,7 +402,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
 
         { The following value MUST match the total number of
           keywords and idents entered in the stdIdentifiers file. }
-        numberStdIdentifiers = 35; {was 42 in original}
+        numberStdIdentifiers = 35; {changed: was 42 in original}
 
         textBufferSize = 200;
         identTableSize = 1601;       { must be prime }
@@ -426,7 +426,7 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         { misc. }
         tab = '	';
         blank = ' ';
-        quote = '"';
+        quote = '"';    % change for double quote support
         null = 0;
 
         { Phase identification values - for use by common routines }
