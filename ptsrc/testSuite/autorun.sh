@@ -212,41 +212,41 @@ echo "================================"
 echo ""
 
 echo "Test file: int_new_keyword.pt"
-echo "this test will screen .pIdentifier 'int' to token pInt"
+echo "this test will screen .pIdentifier 'int' to anything since it is a predefined identifier and wil not be recognized as a keyword"
 echo "Output of test case:"
 ssltrace "ptc -o1 -t1 -L ./../lib/pt int_new_keyword.pt" ./../lib/pt/scan.def -e
 echo "================================"
 echo ""
 
 echo "Test file: str_new_keyword.pt"
-echo "this test will screen .pIdentifier 'str' to token pStr"
+echo "this test will screen .pIdentifier 'str' to anything since it is a predefined identifier and wil not be recognized as a keyword"
 echo "Output of test case:"
 ssltrace "ptc -o1 -t1 -L ./../lib/pt str_new_keyword.pt" ./../lib/pt/scan.def -e
 echo "================================"
 echo ""
 
 echo "Test file: bool_new_keyword.pt"
-echo "this test will screen .pIdentifier 'bool' to token pBool"
+echo "this test will screen .pIdentifier 'bool' to anything since it is a predefined identifier and wil not be recognized as a keyword"
 echo "Output of test case:"
 ssltrace "ptc -o1 -t1 -L ./../lib/pt bool_new_keyword.pt" ./../lib/pt/scan.def -e
 echo "================================"
 echo ""
 
 echo "Test file: print_new_keyword.pt"
-echo "this test will screen .pIdentifier 'print' to token pPrint"
+echo "this test will screen .pIdentifier 'print' to anything since it is a predefined identifier and wil not be recognized as a keyword"
 echo "Output of test case:"
 ssltrace "ptc -o1 -t1 -L ./../lib/pt print_new_keyword.pt" ./../lib/pt/scan.def -e
 echo "================================"
 echo ""
 
 echo "Test file: println_new_keyword.pt"
-echo "this test will screen .pIdentifier 'println' to token pPrintln"
+echo "this test will screen .pIdentifier 'println' to anything since it is a predefined identifier and wil not be recognized as a keyword"
 echo "Output of test case:"
 ssltrace "ptc -o1 -t1 -L ./../lib/pt println_new_keyword.pt" ./../lib/pt/scan.def -e
 echo "================================"
 echo ""
 
-echo "Series 3: Test cases for new characters in Qust"
+echo "Series 3: Test cases for characters in Qust"
 echo "-----------------"
 echo "Test file: qmark_new_char.pt"
 echo "this test will not recognize '?' as an #eIllegalChar and will map it to token pQuestionMark"
@@ -298,16 +298,30 @@ echo "================================"
 echo ""
 
 echo "Test file: doublequote_new_char.pt"
-echo "this test will not recognize a double quote as an #eIllegalChar and will map it to token lQuote"
+echo "this test will not recognize double quote as an #eIllegalChar and will map it to token lQuote"
 echo "Output of test case:"
 ssltrace "ptc -o1 -t1 -L ./../lib/pt doublequote_new_char.pt" ./../lib/pt/scan.def -i
 echo "================================"
 echo ""
 
 echo "Test file: singlequote_new_char.pt"
-echo "this test will not recognize the single quotation mark ' as an #eIllegalChar since this character no longer exists in Qust"
+echo "this test will recognize the single quotation mark ' as an #eIllegalChar since this character no longer exists in Qust"
 echo "Output of test case:"
 ssltrace "ptc -o1 -t1 -L ./../lib/pt singlequote_new_char.pt" ./../lib/pt/scan.def -i
+echo "================================"
+echo ""
+
+echo "Test file: dot_new_char.pt"
+echo "this test will recognize the '.' character as an #eIllegalChar since this character no longer exists in Qust"
+echo "Output of test case:"
+ssltrace "ptc -o1 -t1 -L ./../lib/pt dot_new_char.pt" ./../lib/pt/scan.def -i
+echo "================================"
+echo ""
+
+echo "Test file: dotdot_new_char.pt"
+echo "this test will recognize '..' as an #eIllegalChar since this character no longer exists in Qust"
+echo "Output of test case:"
+ssltrace "ptc -o1 -t1 -L ./../lib/pt dotdot_new_char.pt" ./../lib/pt/scan.def -i
 echo "================================"
 echo ""
 
