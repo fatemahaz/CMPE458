@@ -180,8 +180,6 @@ Scan :
                 .pComma
             | '?':
                 .pQuestionMark
-            | '/':
-                .pSlash
             | '%':
                 .pPercent
             | '&':
@@ -267,8 +265,6 @@ Scan :
                     | *:
                         .pGreater
                 ]
-            | '{':
-                .pRightBrace
             | '/':
                 [
                     | '/':
@@ -364,7 +360,7 @@ AlternateComment :
                         >
                     | *:
                 ]
-            | lNewLine:s
+            | lNewLine:
                 .pNewLine
             | lEndFile:
                 #eCommentEOF
