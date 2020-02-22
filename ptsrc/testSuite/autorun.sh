@@ -1,432 +1,357 @@
 #!/bin/bash
-echo "Automatically running test suite for Phase 1..."
+echo "Automatically running test suite for Phase 2..."
+echo "****************** PLEASE NOTE ******************"
+echo "The irrelevant parts of the output for each test case, such as parser output tokens '.sProgram', '.sIdentifier', '.sParmEnd' etc have been STRIPPED from the output to avoid unnecessary clutter"
 echo ""
 
-echo "Series 1: Test cases for keywords no longer existing in Qust"
-echo "-----------------"
-echo "Test file: div_keyword_fail.pt"
-echo "this test will fail because the .pIdentifier token will not be screened to pDiv since 'div' is no longer a keyword in Qust"
+echo "Test file: mod_main.pt"
+echo "this test will emit the same program declaration output tokens as PT Pascal for the new Qust way of declaring main programs"
+echo "Contents of test file:"
+cat mod_main.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt div_keyword_fail.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt mod_main.pt" ./../lib/pt/parser.def -e
 echo "================================"
 echo ""
 
-echo "Test file: mod_keyword_fail.pt"
-echo "this test will recognize 'mod' as a keyword. It is important to note that although the previous mod and the
-new Qust mod have very different meanings, they are parsed as tokens the same in the first phase"
+echo "Test file: mod.pt"
+echo "this test will emit the new Qust parser output token sModule and sBegin and sEnd for the brackets around the module declaration"
+echo "Contents of test file:"
+cat mod.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt mod_keyword_fail.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt mod.pt" ./../lib/pt/parser.def -e
 echo "================================"
 echo ""
 
-echo "Test file: or_keyword_fail.pt"
-echo "this test will fail because the .pIdentifier token will not be screened to pOr since 'or' is no longer a keyword in Qust"
+echo "Test file: fn.pt"
+echo "this program will output sProcedure token for the 'fn' keyword"
+echo "Contents of test file:"
+cat fn.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt or_keyword_fail.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt fn.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: and_keyword_fail.pt"
-echo "this test will fail because the .pIdentifier token will not be screened to pAnd since 'and' is no longer a keyword in Qust"
+echo "Test file: pub.pt"
+echo "this program will output sPublic after sProcedure and sIdentifier"
+echo "Contents of test file:"
+cat pub.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt and_keyword_fail.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt pub.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: not_keyword_fail.pt"
-echo "this test will fail because the .pIdentifier token will not be screened to pNot since 'not' is no longer a keyword in Qust"
+echo "Test file: mut_integer_explicit.pt"
+echo "this test will emit the parser output tokens sVar and sInteger for mutable integer decleration"
+echo "Contents of test file:"
+cat mut_integer_explicit.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt not_keyword_fail.pt" ./../lib/pt/scan.def -e
-echo "================================"
-echo ""
-
-echo "Test file: then_keyword_fail.pt"
-echo "this test will fail because the .pIdentifier token will not be screened to pThen since 'then' is no longer a keyword in Qust"
-echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt then_keyword_fail.pt" ./../lib/pt/scan.def -e
-echo "================================"
-echo ""
-
-echo "Test file: end_keyword_fail.pt"
-echo "this test will fail because the .pIdentifier token will not be screened to pEnd since 'end' is no longer a keyword in Qust"
-echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt then_keyword_fail.pt" ./../lib/pt/scan.def -e
-echo "================================"
-echo ""
-
-echo "Test file: until_keyword_fail.pt"
-echo "this test will fail because the .pIdentifier token will not be screened to pUntil since 'until' is no longer a keyword in Qust"
-echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt until_keyword_fail.pt" ./../lib/pt/scan.def -e
-echo "================================"
-echo ""
-
-echo "Test file: do_keyword_fail.pt"
-echo "this test will fail because the .pIdentifier token will not be screened to pDo since 'do' is no longer a keyword in Qust"
-echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt do_keyword_fail.pt" ./../lib/pt/scan.def -e
-echo "================================"
-echo ""
-
-echo "Test file: array_keyword_fail.pt"
-echo "this test will fail because the .pIdentifier token will not be screened to pArray since 'array' is no longer a keyword in Qust"
-echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt array_keyword_fail.pt" ./../lib/pt/scan.def -e
-echo "================================"
-echo ""
-
-echo "Test file: program_keyword_fail.pt"
-echo "this test will fail because the .pIdentifier token will not be screened to pProgram since 'program' is no longer a keyword in Qust"
-echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt program_keyword_fail.pt" ./../lib/pt/scan.def -e
-echo "================================"
-echo ""
-
-echo "Test file: var_keyword_fail.pt"
-echo "this test will fail because the .pIdentifier token will not be screened to pVar since 'var' is no longer a keyword in Qust"
-echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt var_keyword_fail.pt" ./../lib/pt/scan.def -e
-echo "================================"
-echo ""
-
-echo "Test file: procedure_keyword_fail.pt"
-echo "this test will fail because the .pIdentifier token will not be screened to pProcedure since 'procedure' is no longer a keyword in Qust"
-echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt procedure_keyword_fail.pt" ./../lib/pt/scan.def -e
-echo "================================"
-echo ""
-
-echo "Test file: begin_keyword_fail.pt"
-echo "this test will fail because the .pIdentifier token will not be screened to pBegin since 'begin' is no longer a keyword in Qust"
-echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt begin_keyword_fail.pt" ./../lib/pt/scan.def -e
-echo "================================"
-echo ""
-
-echo "Test file: case_keyword_fail.pt"
-echo "this test will fail because the .pIdentifier token will not be screened to pCase since 'case' is no longer a keyword in Qust"
-echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt case_keyword_fail.pt" ./../lib/pt/scan.def -e
-echo "================================"
-echo ""
-
-echo "Test file: repeat_keyword_fail.pt"
-echo "this test will fail because the .pIdentifier token will not be screened to pRepeat since 'repeat' is no longer a keyword in Qust"
-echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt repeat_keyword_fail.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt mut_integer_explicit.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
 
-echo "Test file: integer_keyword_fail.pt"
-echo "this test will fail because the .pIdentifier token will not be screened to pInteger since 'integer' is no longer a keyword in Qust"
+echo "Test file: var_fail.pt"
+echo "this test fails for previous way of declaring variables by not emitting sVar token"
+echo "Contents of test file:"
+cat var_fail.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt repeat_keyword_fail.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt var_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: char_keyword_fail.pt"
-echo "this test will fail because the .pIdentifier token will not be screened to pChar since 'char' is no longer a keyword in Qust"
+echo "Test file: array.pt"
+echo "this test will pass for declaring a Qust array with a only an upper bound by emitting an sArray token"
+echo "Contents of test file:"
+cat array.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt char_keyword_fail.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt array.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: boolean_keyword_fail.pt"
-echo "this test will fail because the .pIdentifier token will not be screened to pBoolean since 'boolean' is no longer a keyword in Qust"
+echo "Test file: array_fail.pt"
+echo "this program will faild for declaring an array the PT Pascal way with a lower bound by emitting a sNullStmt token"
+echo "Contents of test file:"
+cat array_fail.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt boolean_keyword_fail.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt array_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: write_keyword_fail.pt"
-echo "this test will fail because the .pIdentifier token will not be screened to pWrite since 'write' is no longer a keyword in Qust"
+echo "Test file: const.pt"
+echo "this program emits parser output token sConst for const declaration"
+echo "Contents of test file:"
+cat const.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt write_keyword_fail.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt const.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: writeln_keyword_fail.pt"
-echo "this test will fail because the .pIdentifier token will not be screened to pWriteln since 'writeln' is no longer a keyword in Qust"
+echo "Test file: const_multiple_semicolon_fail.pt"
+echo "this test fails for multiple declarations of const when separate by semi colons by emitting sNullStmt tokens"
+echo "Contents of test file:"
+cat const_multiple_semicolon_fail.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt writeln_keyword_fail.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt const_multiple_semicolon_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Series 2: Test cases for new keywords in Qust"
-echo "-----------------"
-echo "Test file: pub_new_keyword.pt"
-echo "this test will screen .pIdentifier 'pub' to token pPub"
+echo "Test file: const_multiple_comma.pt"
+echo "this program will pass for multiple declarations const when separate by commas by NOT emitting sNullStmt tokens"
+echo "Contents of test file:"
+cat const_multiple_comma.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt pub_new_keyword.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt const_multiple_comma.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: main_new_keyword.pt"
-echo "this test will screen .pIdentifier 'main' to token pMain"
+echo "Test file: let_multiple_semicolon_fail.pt"
+echo "this test fails for multiple declarations of a mutable integer variable when separate by semi colons by emitting sNullStmt tokens"
+echo "Contents of test file:"
+cat let_multiple_semicolon_fail.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt main_new_keyword.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt let_multiple_semicolon_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: let_new_keyword.pt"
-echo "this test will screen .pIdentifier 'let' to token pLet"
+echo "Test file: let_multiple_comma.pt"
+echo "this program will pass for multiple declarations of a mutable integer variable when separate by commas by NOT emitting sNullStmt tokens"
+echo "Contents of test file:"
+cat let_multiple_comma.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt let_new_keyword.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt let_multiple_comma.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: mut_new_keyword.pt"
-echo "this test will screen .pIdentifier 'mut' to token pMut"
+echo "Test file: type.pt"
+echo "this test emits parser output token sType for type decleration"
+echo "Contents of test file:"
+cat type.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt mut_new_keyword.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt type.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: fn_new_keyword.pt"
-echo "this test will screen .pIdentifier 'fn' to token pFn"
+echo "Test file: type_multiple_fail.pt"
+echo "this test fails for multiple declarations in each type by emitting sNullStmt tokens separated by semi colons"
+echo "Contents of test file:"
+cat type_multiple_fail.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt fn_new_keyword.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt type_multiple_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: loop_new_keyword.pt"
-echo "this test will screen .pIdentifier 'loop' to token pLoop"
+echo "Test file: type_multiple_comma_fail.pt"
+echo "this test fails for multiple declarations in each type by emitting sNullStmt tokens separated by commas"
+echo "Contents of test file:"
+cat type_multiple_comma_fail.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt loop_new_keyword.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt type_multiple_comma_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: break_new_keyword.pt"
-echo "this test will screen .pIdentifier 'break' to token pBreak"
+echo "Test file: initialvalue.pt"
+echo "this test will output sInitialValue and sExpnEnd at the end"
+echo "Contents of test file:"
+cat initialvalue.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt break_new_keyword.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt initialvalue.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: match_new_keyword.pt"
-echo "this test will screen .pIdentifier 'match' to token pMatch"
+echo "Test file: println.pt"
+echo "this test maps the predefined identifier 'println' with the previous parser output token .sCallStmt"
+echo "Contents of test file:"
+cat print.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt match_new_keyword.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt println.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: int_new_keyword.pt"
-echo "this test will screen .pIdentifier 'int' to anything since it is a predefined identifier and wil not be recognized as a keyword"
+echo "Test file: print.pt"
+echo "this test maps the predefined identifier 'print' with the previous parser output token .sCallStmt"
+echo "Contents of test file:"
+cat print.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt int_new_keyword.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt print.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: str_new_keyword.pt"
-echo "this test will screen .pIdentifier 'str' to anything since it is a predefined identifier and wil not be recognized as a keyword"
+echo "Test file: bool.pt"
+echo "this test maps the predefined identifier bool with the previous parser output token sBoolean"
+echo "Contents of test file:"
+cat bool.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt str_new_keyword.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt bool.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: bool_new_keyword.pt"
-echo "this test will screen .pIdentifier 'bool' to anything since it is a predefined identifier and wil not be recognized as a keyword"
+echo "Test file: str.pt"
+echo "this test maps the predefined identifier str with the new Qust parser output token sString"
+echo "Contents of test file:"
+cat str.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt bool_new_keyword.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt str.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: print_new_keyword.pt"
-echo "this test will screen .pIdentifier 'print' to anything since it is a predefined identifier and wil not be recognized as a keyword"
+echo "Test file: substring.pt"
+echo "this test will emit sSubstring token"
+echo "Contents of test file:"
+cat substring.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt print_new_keyword.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt substring.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: println_new_keyword.pt"
-echo "this test will screen .pIdentifier 'println' to anything since it is a predefined identifier and wil not be recognized as a keyword"
+echo "Test file: string_length.pt"
+echo "this test will emit sLength token"
+echo "Contents of test file:"
+cat string_length.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt println_new_keyword.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt string_length.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Series 3: Test cases for characters in Qust"
-echo "-----------------"
-echo "Test file: qmark_new_char.pt"
-echo "this test will not recognize '?' as an #eIllegalChar and will map it to token pQuestionMark"
+echo "Test file: match.pt"
+echo "this test will map 'match' to sCase token and will also emit sCaseOtherwise token one of the cases will be surrounded by sBegin and sEnd tokens for statement sequencing. This will be demonstrated by including 2 statements in one of that case and observing that no sNullStmt token is emitted"
+echo "Contents of test file:"
+cat match.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt qmark_new_char.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt match.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: slash_new_char.pt"
-echo "this test will not recognize '/' as an #eIllegalChar and will map it to token pSlash"
+echo "Test file: loop.pt"
+echo "this test will emit parser output tokens sLoopStmt, sLoopBreakIf and sLoopEnd. It will also show that the loop statement is surrounded by sBegin and sEnd for sequencing statements there will be a sExpnEnd token emitted after the statement tokens after sLoopBreakIf"
+echo "Contents of test file:"
+cat loop.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt slash_new_char.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt loop.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: percent_new_char.pt"
-echo "this test will not recognize '%' as an #eIllegalChar and will map it to token pPercent"
+echo "Test file: if_elseif_else.pt"
+echo "this program will output sIf, sElseIf, and sElse tokens for Qust style if statements"
+echo "Contents of test file:"
+cat if_elseif_else.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt percent_new_char.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt if_elseif_else.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: ampersand_new_char.pt"
-echo "this test will not recognize '&' as an #eIllegalChar and will map it to token pAmpersand"
+echo "Test file: declaration_stmt.pt"
+echo "this test will show that declarations and and statements go in any order by incluing 2 declarations first and then 2 statementa by not emitting any sNullStmt tokens and emitting all appropriate parser output tokens"
+echo "Contents of test file:"
+cat declaration_stmt.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt ampersand_new_char.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt declaration_stmt.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: bar_new_char.pt"
-echo "this test will not recognize '|' as an #eIllegalChar and will map it to token pBar"
+echo "Test file: stmt_declaration.pt"
+echo "this program will show that declarations and and statements go in any order by incluing 2 statements first and then 2 declarations by not emitting any sNullStmt tokens and emitting all appropriate parser output tokens"
+echo "Contents of test file:"
+cat stmt_declaration.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt bar_new_char.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt stmt_declaration.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: exclamation_new_char.pt"
-echo "this test will not recognize '!' as an #eIllegalChar and will map it to token pExclamation"
+echo "Test file: and.pt"
+echo "we do not need to test for the previous PT Pascal keyword 'and' since it will never get screened to a keyword in Qust, as proved by out tests in phase 1. Instead, we will test the replacement in Qust '&&' and make sure it is mapped to the parser output token sAnd"
+echo "Contents of test file:"
+cat and.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt exclamation_new_char.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt and.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: underscore_new_char.pt"
-echo "this test will not recognize '_' as an #eIllegalChar and will map it to token pUnderscore"
+echo "Test file: or.pt"
+echo "we do not need to test for the previous PT Pascal keyword 'or' since it will never get screened to a keyword in Qust, as proved by out tests in phase 1. Instead, we will test the replacement in Qust '||' and make sure it is mapped to the parser output token sOr"
+echo "Contents of test file:"
+cat or.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt underscore_new_char.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt and.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: doublequote_new_char.pt"
-echo "this test will not recognize double quote as an #eIllegalChar and will map it to token lQuote"
+echo "Test file: div.pt"
+echo "we do not need to test for the previous PT Pascal keyword 'div' since it will never get screened to a keyword in Qust, as proved by out tests in phase 1 Instead, we will test the replacement in Qust '/' and make sure it is mapped to the parser output token sDiv"
+echo "Contents of test file:"
+cat div.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt doublequote_new_char.pt" ./../lib/pt/scan.def -i
+ssltrace "ptc -o2 -t2 -L ./../lib/pt div.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: singlequote_new_char.pt"
-echo "this test will recognize the single quotation mark ' as an #eIllegalChar since this character no longer exists in Qust"
+echo "Test file: mod.pt"
+echo "we do not need to test for the previous PT Pascal keyword 'mod' since it will never get screened to a keyword in Qust, as proved by out tests in phase 1 Instead, we will test the replacement in Qust '%' and make sure it is mapped to the parser output token sMod"
+echo "Contents of test file:"
+cat mod.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt singlequote_new_char.pt" ./../lib/pt/scan.def -i
+ssltrace "ptc -o2 -t2 -L ./../lib/pt mod.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: dot_new_char.pt"
-echo "this test will recognize the '.' character as an #eIllegalChar since this character no longer exists in Qust"
+echo "Test file: not.pt"
+echo "we do not need to test for the previous PT Pascal keyword 'not' since it will never get screened to a keyword in Qust, as proved by out tests in phase 1. Instead, we will test the replacement in Qust '!' and make sure it is mapped to the parser output token sNot"
+echo "Contents of test file:"
+cat not.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt dot_new_char.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt not.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: dotdot_new_char.pt"
-echo "this test will recognize '..' as an #eIllegalChar since this character no longer exists in Qust"
+echo "Test file: double_equals.pt"
+echo "this test maps the new Qust operator '==' by emitting a sDoubleEquals token"
+echo "Contents of test file:"
+cat double_equals.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt dotdot_new_char.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt double_equals.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Series 4: Test cases for new syntax tokens in Qust"
-echo "-----------------"
-echo "Test file: leftbrace_new_syn.pt"
-echo "this test will recognize '{' as a syntax token pLeftBrace"
+echo "Test file: pt_double_equals_fail.pt"
+echo "this test fails for previous PT Pascal operator '=' by not emitting a sDoubleEquals token and instead emitting a sNullStmt token"
+echo "Contents of test file:"
+cat pt_double_equals_fail.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt leftbrace_new_syn.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt pt_double_equals_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: rightbrace_new_syn.pt"
-echo "this test will recognize '}' as a syntax token pRightBrace"
+echo "Test file: not_equals.pt"
+echo "this test maps the new Qust operator '!=' by emitting a sNotEqual parser output token"
+echo "Contents of test file:"
+cat not_equals.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt rightbrace_new_syn.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt not_equals.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: plusequals_new_syn.pt"
-echo "this test will recognize '+=' as a syntax token pPlushEquals"
+echo "Test file: pt_not_equals_fail.pt"
+echo "this test fails for the old PT Pascal operator '<>' by NOT emitting a sNotEqual parser output token"
+echo "Contents of test file:"
+cat pt_not_equals_fail.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt plusequals_new_syn.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt pt_not_equals_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-echo "Test file: minusequals_new_syn.pt"
-echo "this test will recognize '-=' as a syntax token pMinusEquals"
+echo "Test file: plus_equals.pt"
+echo "the += operator will be tested by observing that the tokens emitted indicate the equivalence to the statement that the variable is being added with an integer and assigned to the same variable"
+echo "Contents of test file:"
+cat plus_equals.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt minusequals_new_syn.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt plus_equals.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
 
-
-echo "Test file: doubleequals_new_syn.pt"
-echo "this test will recognize '==' as a syntax token pDoubleEquals"
+echo "Test file: minus_equals.pt"
+echo "the -= operator will be tested by observing that the tokens emitted indicate the equivalence to the statement that an integer is being subtracted from the variable and assigned to the same variable"
+echo "Contents of test file:"
+cat minus_equals.pt
 echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt doubleequals_new_syn.pt" ./../lib/pt/scan.def -e
-echo "================================"
-echo ""
-
-echo "Test file: doubleampersand_new_syn.pt"
-echo "this test will recognize '&&' as a syntax token pDoubleAmpersand"
-echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt doubleampersand_new_syn.pt" ./../lib/pt/scan.def -e
-echo "================================"
-echo ""
-
-echo "Test file: doublebar_new_syn.pt"
-echo "this test will recognize '||' as a syntax token pDoubleBar"
-echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt doublebar_new_syn.pt" ./../lib/pt/scan.def -e
-echo "================================"
-echo ""
-
-echo "Test file: equalgreater_new_syn.pt"
-echo "this test will recognize '=>' as a syntax token pEqualGreater"
-echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt equalgreater_new_syn.pt" ./../lib/pt/scan.def -e
-echo "================================"
-echo ""
-
-echo "Series 5: Test case for new string literals in Qust using double quotes"
-echo "-----------------"
-echo "Test file: stringlit_new_syn.pt"
-echo "this test will recognize a line of text in between two double quotation marks as a #eStringLiteralLine"
-echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt stringlit_new_syn.pt" ./../lib/pt/scan.def -e
-echo "================================"
-echo ""
-
-echo "Test file: stringlit_fail.pt"
-echo "this test will not recognize a line of text in between two single quotation marks"
-echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt stringlit_fail.pt" ./../lib/pt/scan.def -e
-echo "================================"
-echo ""
-
-
-echo "Series 6: Test cases for new commenting syntax in Qust"
-echo "-----------------"
-echo "Test file: linecomment_new_comm.pt"
-echo "this test will completely ignore the line of text which starts with '//' and will only emmit .pNewLine"
-echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt linecomment_new_comm.pt" ./../lib/pt/scan.def -e
-echo "================================"
-echo ""
-
-echo "Test file: blockcomment_new_comm.pt"
-echo "this test will completely ignore the block of text between '/**/' and will only emmit .pNewLine for every new line in the block"
-echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt blockcomment_new_comm.pt" ./../lib/pt/scan.def -e
-echo "================================"
-echo ""
-
-echo "Test file: linecomment_old_comm.pt"
-echo "this test will fail because it will emmit every work in the old syntax of line commenting by emitting .pIdentifier for every word along with % Output token text '<word>'"
-echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt linecomment_old_comm.pt" ./../lib/pt/scan.def -e
-echo "================================"
-echo ""
-
-echo "Test file: blockcomment_old_comm.pt"
-echo "this test will fail because it will emmit every work in the old syntax of block commenting by emitting .pIdentifier for every word along with % Output token text '<word>'"
-echo "Output of test case:"
-ssltrace "ptc -o1 -t1 -L ./../lib/pt blockcomment_old_comm.pt" ./../lib/pt/scan.def -e
+ssltrace "ptc -o2 -t2 -L ./../lib/pt minus_equals.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
 echo "================================"
 echo ""
