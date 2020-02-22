@@ -246,8 +246,6 @@ Block :
                 >
 
         ]}
-        '{'
-        @BeginStmt;
 
 FnHeading :
         % Accept zero or more procedure formal parameter declarations.
