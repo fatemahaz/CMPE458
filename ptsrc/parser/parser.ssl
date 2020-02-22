@@ -203,35 +203,12 @@ Block :
         % We allow arbitrary intermixing of these instead to preserve
         % programmer sanity.
         {[
-            % comment out const definitions
-            | 'const':
-                .sConst
-                %@ConstantDefinitions
-
-            % comment out type definitions
-            | 'type':
-                .sType
-                %@TypeDefinitions
-
-            % change var to let and comment out variable declaration
-            | 'let':
-                .sVar
-                %@VariableDeclarations
-
-            %change procdure to fn and FnHeading
-            | 'fn':
-                .sProcedure
-                % procedure name
-                pIdentifier  .sIdentifier
-                @FnHeading
-                @Block  ';'
-
             | '{':
-                .sBegin
+                %.sBegin
                 @BeginStmt
 
-            %| *:
-             %   >
+            | *:
+                >
 
         ]};
 
