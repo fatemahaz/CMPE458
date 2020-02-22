@@ -204,8 +204,12 @@ Block :
         % We allow arbitrary intermixing of these instead to preserve
         % programmer sanity.
         {[
-                | '{' :
+            | '{' :
                     @BeginStmt
+            
+            | 'const':
+                .sConst
+                @ConstantDefinitions
 
             | *:
                 >
@@ -253,6 +257,40 @@ BeginStmt :
                     >
             ]
         };
+
+ConstantDefinitions :
+        % Accept one or more named constant definitions
+        pIdentifier  .sIdentifier
+        '=' @ConstantValue 
+        {[
+            | ';' :
+                >
+            | ',' :
+                @ConstantDefinitions  
+        ]};
+
+ConstantValue :
+        [
+            | pInteger:
+                .sInteger
+            | pIdentifier:
+                .sIdentifier
+            | '-':
+                @UnsignedIntegerConstant
+                .sNegate
+            | '+':
+                @UnsignedIntegerConstant
+            | pStringLiteral:
+                .sStringLiteral
+        ];
+
+UnsignedIntegerConstant :
+[
+        | pIdentifier:
+        .sIdentifier
+        | pInteger:
+        .sInteger
+];
 
 end
 
