@@ -210,6 +210,10 @@ Block :
             | 'const':
                 .sConst
                 @ConstantDefinitions
+            
+            | 'type':
+                .sType
+                @TypeDefinitions 
 
             | *:
                 >
@@ -293,6 +297,54 @@ UnsignedIntegerConstant :
         | pInteger:
         .sInteger
 ];
+
+TypeDefinitions :
+        % Accept one or more named type definitions.
+        pIdentifier  .sIdentifier
+        '='  @TypeBody  ';'
+;
+
+TypeBody :
+        [
+            | '[':
+                .sArray
+                @SimpleType  ']'
+            | 'file':
+                .sFile
+                'of'  @SimpleType
+            | *:
+                @SimpleType
+        ];
+
+SimpleType :
+        % A simple type is a named type (possibly predefined)
+        % or a subrange type specification
+        [
+            | pIdentifier:
+                .sIdentifier
+                ':':
+                .sRange         %% this may be unnecessary
+                [
+                    | pInteger :
+                        @OptionallySignedIntegerConstant
+                    | pIdentifier :
+                        .sIdentifier
+                ]
+            | pIdentifier :
+                .sIdentifier
+        ];
+
+OptionallySignedIntegerConstant :
+        [
+            | '-':
+                @UnsignedIntegerConstant
+                .sNegate
+            | '+':
+                @UnsignedIntegerConstant
+            | *:
+                @UnsignedIntegerConstant
+        ];
+
 
 end
 
