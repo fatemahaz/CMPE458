@@ -194,11 +194,7 @@ Program :
         }
         ')'
         .sParmEnd
-        '{'
-        .sBegin 
         @Block  
-        '}'
-        .sEnd
         ; 
         % remove ; and . from end of program
 
@@ -209,7 +205,6 @@ Block :
         % programmer sanity.
         {[
                 | '{' :
-                    .sBegin
                     @BeginStmt
 
             | *:
