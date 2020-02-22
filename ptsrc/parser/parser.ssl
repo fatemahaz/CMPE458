@@ -351,13 +351,13 @@ OptionallySignedIntegerConstant :
 
 VariableDeclarations :
         % Accept one or more variable declarations.
-        {[
+        [
             | 'mut' :
                 @Mutable
                 >
             | pIdentifier :
                 .sIdentifier
-                [
+                {[
                     | ':' : 
                         @TypeBody
                         [
@@ -376,10 +376,10 @@ VariableDeclarations :
                         @VariableDeclarations 
                     | ';':
                         >
-                ]
-            | * :
-                >
-        ]};
+                    | * :
+                        >
+                ]}
+        ];
 
 Mutable:
         pIdentifier
