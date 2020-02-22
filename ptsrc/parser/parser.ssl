@@ -350,26 +350,31 @@ OptionallySignedIntegerConstant :
 
 VariableDeclarations :
         % Accept one or more variable declarations.
-        [
+        {[
             | 'mut' :
                 @Mutable
+                >
             | pIdentifier :
                 .sIdentifier
-                ':'  @TypeBody  ';'
                 [
-                | ':' : 
+                    | ':' : 
                         @TypeBody
-                | '=' :
-                ]
-                {[
-                | pIdentifier:
-                        .sIdentifier
-                        ':'  @TypeBody  ';'
-                | *:
+                        '='
+                        .sInitialValue
+                        @Factor
+                        @Expression
+                        .sExpnEnd
+                    | '=' :
+                        .sInitialValue
+                        @Factor
+                        @Expression
+                        .sExpnEnd
+                    | ',' :
+                        @VariableDeclarations 
+                    | *:
                         >
-                ]}
-        ]
-        ;
+                ]
+        ]};
 
 Mutable:
         pIdentifier
@@ -390,5 +395,93 @@ Mutable:
 .sMutable
 ;
 
+Expression :
+        @SimpleExpression
+        [
+            | '=':
+                @SimpleExpression  .sEq
+            | '<>':
+                @SimpleExpression  .sNE
+            | '<':
+                @SimpleExpression  .sLT
+            | '<=':
+                @SimpleExpression  .sLE
+            | '>':
+                @SimpleExpression  .sGT
+            | '>=':
+                @SimpleExpression  .sGE
+            | *:
+        ];
+
+SimpleExpression :
+        [
+            | '+':
+                @Term
+            | '-':
+                @Term  .sNegate
+            | *:
+                @Term
+        ]
+        {[
+            | '+':
+                @Term  .sAdd
+            | '-':
+                @Term  .sSubtract
+            | 'or':
+                .sInfixOr  @Term  .sOr
+            | *:
+                >
+        ]};
+
+Term :
+        @Factor
+        {[
+            | '*':
+                @Factor  .sMultiply
+            | 'div':
+                @Factor  .sDivide
+            | 'mod':
+                @Factor  .sModulus
+            | 'and':
+                .sInfixAnd  @Factor  .sAnd
+            | *:
+                >
+        ]};
+
+Factor :
+        [
+            | pIdentifier:
+                .sIdentifier
+                @IdentifierExtension
+            | pInteger:
+                .sInteger
+            | '(':
+                @Expression  ')'
+            | 'not':
+                @Factor
+                .sNot
+            | pStringLiteral:
+                .sStringLiteral
+            | 'file':
+                .sFile '(' @Expression ')'
+                .sExpnEnd
+        ];
+
+IdentifierExtension :
+        % Handle subscripts and function actual parameter lists
+        [
+            | '[':
+                .sSubscript
+                @Expression  ']'
+                .sExpnEnd
+            | '(':
+                .sParmBegin
+                @Expression  ')'
+                .sExpnEnd
+                .sParmEnd
+            | *:
+        ];
+
+end
 end
 
