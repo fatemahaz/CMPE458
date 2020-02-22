@@ -1,0 +1,6 @@
+mod main(output) {
+	// tests for let by emitting sVar and sMutable  and sInteger when explicitely
+	//declared
+	//when implicitely declared
+	let mut v;
+}

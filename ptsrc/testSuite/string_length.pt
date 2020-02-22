@@ -1,0 +1,5 @@
+mod main(output) {
+	let mut x: str;
+	x = "foo";
+	let n = ?x;
+}

@@ -1,0 +1,3 @@
+mod main(output) {
+	let n : int = 0;
+}

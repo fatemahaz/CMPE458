@@ -1,0 +1,10 @@
+mod main(output) {
+	let mut x = 0;
+	match x {
+		| 0 => { 
+			x = 1;
+			print(x);
+			}
+		| _ => x = 0;
+	}
+}

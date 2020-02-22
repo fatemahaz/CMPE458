@@ -1,0 +1,6 @@
+mod main(output) {
+	const c = 1;
+	if c == 1 {
+		print(c);
+	}
+}
