@@ -208,7 +208,6 @@ Block :
                     @BeginStmt
 
             | *:
-                .sCallStmt
                 >
 
         ]};
