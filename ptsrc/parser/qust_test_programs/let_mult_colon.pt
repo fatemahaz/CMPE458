@@ -1,0 +1,5 @@
+mod main(output) {
+    let d : int,
+        f = 7,
+        k : int = 6;
+}

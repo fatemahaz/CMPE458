@@ -322,6 +322,7 @@ SimpleType :
         % or a subrange type specification
         [
             | '[':
+                .sArray
                 pIdentifier
                 .sIdentifier
                 ':'
@@ -359,11 +360,13 @@ VariableDeclarations :
                 [
                     | ':' : 
                         @TypeBody
-                        '='
-                        .sInitialValue
-                        @Factor
-                        @Expression
-                        .sExpnEnd
+                        [
+                            | '='
+                              .sInitialValue
+                              @Factor
+                              @Expression
+                             .sExpnEnd
+                        ]
                     | '=' :
                         .sInitialValue
                         @Factor
