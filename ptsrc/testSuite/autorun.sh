@@ -27,7 +27,7 @@ echo "this program will output sProcedure token for the 'fn' keyword"
 echo "Contents of test file:"
 cat fn.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt fn.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt fn.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -36,7 +36,7 @@ echo "this program will output sPublic after sProcedure and sIdentifier"
 echo "Contents of test file:"
 cat pub.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt pub.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt pub.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -45,7 +45,7 @@ echo "this test will emit the parser output tokens sVar and sInteger for mutable
 echo "Contents of test file:"
 cat mut_integer_explicit.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt mut_integer_explicit.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt mut_integer_explicit.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -55,7 +55,7 @@ echo "this test fails for previous way of declaring variables by not emitting sV
 echo "Contents of test file:"
 cat var_fail.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt var_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt var_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -64,7 +64,7 @@ echo "this test will pass for declaring a Qust array with a only an upper bound 
 echo "Contents of test file:"
 cat array.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt array.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt array.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -73,7 +73,7 @@ echo "this program will faild for declaring an array the PT Pascal way with a lo
 echo "Contents of test file:"
 cat array_fail.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt array_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt array_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -82,7 +82,7 @@ echo "this program emits parser output token sConst for const declaration"
 echo "Contents of test file:"
 cat const.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt const.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt const.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -91,7 +91,7 @@ echo "this test fails for multiple declarations of const when separate by semi c
 echo "Contents of test file:"
 cat const_multiple_semicolon_fail.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt const_multiple_semicolon_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt const_multiple_semicolon_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -100,7 +100,7 @@ echo "this program will pass for multiple declarations const when separate by co
 echo "Contents of test file:"
 cat const_multiple_comma.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt const_multiple_comma.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt const_multiple_comma.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -109,7 +109,7 @@ echo "this test fails for multiple declarations of a mutable integer variable wh
 echo "Contents of test file:"
 cat let_multiple_semicolon_fail.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt let_multiple_semicolon_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt let_multiple_semicolon_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -118,7 +118,7 @@ echo "this program will pass for multiple declarations of a mutable integer vari
 echo "Contents of test file:"
 cat let_multiple_comma.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt let_multiple_comma.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt let_multiple_comma.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -127,7 +127,7 @@ echo "this test emits parser output token sType for type decleration"
 echo "Contents of test file:"
 cat type.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt type.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt type.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -136,7 +136,7 @@ echo "this test fails for multiple declarations in each type by emitting sNullSt
 echo "Contents of test file:"
 cat type_multiple_fail.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt type_multiple_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt type_multiple_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -145,7 +145,7 @@ echo "this test fails for multiple declarations in each type by emitting sNullSt
 echo "Contents of test file:"
 cat type_multiple_comma_fail.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt type_multiple_comma_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt type_multiple_comma_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -154,7 +154,7 @@ echo "this test will output sInitialValue and sExpnEnd at the end"
 echo "Contents of test file:"
 cat initialvalue.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt initialvalue.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt initialvalue.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -163,7 +163,7 @@ echo "this test maps the predefined identifier 'println' with the previous parse
 echo "Contents of test file:"
 cat print.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt println.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt println.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -172,7 +172,7 @@ echo "this test maps the predefined identifier 'print' with the previous parser 
 echo "Contents of test file:"
 cat print.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt print.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt print.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -181,7 +181,7 @@ echo "this test maps the predefined identifier bool with the previous parser out
 echo "Contents of test file:"
 cat bool.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt bool.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt bool.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -190,7 +190,7 @@ echo "this test maps the predefined identifier str with the new Qust parser outp
 echo "Contents of test file:"
 cat str.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt str.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt str.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -199,7 +199,7 @@ echo "this test will emit sSubstring token"
 echo "Contents of test file:"
 cat substring.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt substring.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt substring.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -208,7 +208,7 @@ echo "this test will emit sLength token"
 echo "Contents of test file:"
 cat string_length.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt string_length.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt string_length.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -217,7 +217,7 @@ echo "this test will map 'match' to sCase token and will also emit sCaseOtherwis
 echo "Contents of test file:"
 cat match.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt match.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt match.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -226,7 +226,7 @@ echo "this test will emit parser output tokens sLoopStmt, sLoopBreakIf and sLoop
 echo "Contents of test file:"
 cat loop.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt loop.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt loop.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -235,7 +235,7 @@ echo "this program will output sIf, sElseIf, and sElse tokens for Qust style if 
 echo "Contents of test file:"
 cat if_elseif_else.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt if_elseif_else.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt if_elseif_else.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -244,7 +244,7 @@ echo "this test will show that declarations and and statements go in any order b
 echo "Contents of test file:"
 cat declaration_stmt.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt declaration_stmt.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt declaration_stmt.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -253,7 +253,7 @@ echo "this program will show that declarations and and statements go in any orde
 echo "Contents of test file:"
 cat stmt_declaration.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt stmt_declaration.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt stmt_declaration.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -262,7 +262,7 @@ echo "we do not need to test for the previous PT Pascal keyword 'and' since it w
 echo "Contents of test file:"
 cat and.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt and.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt and.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -271,7 +271,7 @@ echo "we do not need to test for the previous PT Pascal keyword 'or' since it wi
 echo "Contents of test file:"
 cat or.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt and.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt and.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -280,7 +280,7 @@ echo "we do not need to test for the previous PT Pascal keyword 'div' since it w
 echo "Contents of test file:"
 cat div.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt div.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt div.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -289,7 +289,7 @@ echo "we do not need to test for the previous PT Pascal keyword 'mod' since it w
 echo "Contents of test file:"
 cat mod.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt mod.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt mod.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -298,7 +298,7 @@ echo "we do not need to test for the previous PT Pascal keyword 'not' since it w
 echo "Contents of test file:"
 cat not.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt not.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt not.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -307,7 +307,7 @@ echo "this test maps the new Qust operator '==' by emitting a sDoubleEquals toke
 echo "Contents of test file:"
 cat double_equals.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt double_equals.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt double_equals.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -316,7 +316,7 @@ echo "this test fails for previous PT Pascal operator '=' by not emitting a sDou
 echo "Contents of test file:"
 cat pt_double_equals_fail.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt pt_double_equals_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt pt_double_equals_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -325,7 +325,7 @@ echo "this test maps the new Qust operator '!=' by emitting a sNotEqual parser o
 echo "Contents of test file:"
 cat not_equals.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt not_equals.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt not_equals.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -334,7 +334,7 @@ echo "this test fails for the old PT Pascal operator '<>' by NOT emitting a sNot
 echo "Contents of test file:"
 cat pt_not_equals_fail.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt pt_not_equals_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt pt_not_equals_fail.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -343,7 +343,7 @@ echo "the += operator will be tested by observing that the tokens emitted indica
 echo "Contents of test file:"
 cat plus_equals.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt plus_equals.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt plus_equals.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
 
@@ -352,6 +352,6 @@ echo "the -= operator will be tested by observing that the tokens emitted indica
 echo "Contents of test file:"
 cat minus_equals.pt
 echo "Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt minus_equals.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine|sBegin|sEnd' 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt minus_equals.pt" ./../lib/pt/parser.def -e|grep -i -v -E 'sProgram|sIdentifier|sParmEnd|sNewLine' 
 echo "================================"
 echo ""
