@@ -204,7 +204,7 @@ Block :
         % programmer sanity.
         {[
             | '{':
-                %.sBegin
+                .sBegin
                 @BeginStmt
 
             | *:
