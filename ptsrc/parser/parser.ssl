@@ -181,7 +181,7 @@ Program :
 % change: removed check for 'main'
         .sProgram
         % program name
-        pIdentifier
+        % pIdentifier
         % program parameters
         '('
         {
