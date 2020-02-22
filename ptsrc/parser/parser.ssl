@@ -194,7 +194,7 @@ Program :
         }
         ')'
         .sParmEnd
-        %@Block  
+        @Block  
         ; % remove ; and . from end of program
 
 Block :
@@ -246,7 +246,7 @@ Block :
                 >
 
         ]}
-        'begin'
+        '{'
         @BeginStmt;
 
 FnHeading :
@@ -285,7 +285,7 @@ BeginStmt :
             @Block
             [
                 | ';':
-                | 'end':
+                | '}':
                     .sEnd
                     >
             ]
