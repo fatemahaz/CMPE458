@@ -354,7 +354,6 @@ VariableDeclarations :
         [
             | 'mut' :
                 @Mutable
-                >
             | pIdentifier :
                 .sIdentifier
                 {[
