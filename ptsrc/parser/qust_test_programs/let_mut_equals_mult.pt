@@ -1,5 +1,5 @@
 mod main(output) {
-    let mut d : int,
-            e : bool,
-            g : str;
+    let mut d = 5,
+            e = 6,
+            h = 8;
 }
