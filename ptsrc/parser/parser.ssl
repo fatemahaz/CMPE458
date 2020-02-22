@@ -353,36 +353,24 @@ VariableDeclarations :
         [
             | 'mut' :
             @Mutable
-            >
-        ]
-        pIdentifier  .sIdentifier
-        ':'  @TypeBody  ';'
-        [
-            | ':' : 
-                @TypeBody
-            | '=' :
-        ]
-        {[
-            | pIdentifier:
-                .sIdentifier
-                ':'  @TypeBody  ';'
-            | *:
-                >
-        ]};
 
-
-Mutable:
-        pIdentifier
+        |    pIdentifier  
         .sIdentifier
-        [
-            | ':'
-                 @TypeBody
-            | '='
-                pInteger
-                .sInteger
+        ':'  @TypeBody  ';'
+                [
+                | ':' : 
+                        @TypeBody
+                | '=' :
+                ]
+                {[
+                | pIdentifier:
+                        .sIdentifier
+                        ':'  @TypeBody  ';'
+                | *:
+                        >
+                ]}
         ]
-.sMutable
-;
+        ;
 
 Mutable:
         pIdentifier
