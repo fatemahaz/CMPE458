@@ -361,7 +361,7 @@ VariableDeclarations :
                     | ':' : 
                         @TypeBody
                         [
-                            | '='
+                            | '=' :
                               .sInitialValue
                               @Factor
                               @Expression
