@@ -231,6 +231,7 @@ Block :
  %               @AssignmentOrCallStmt
 %
              | '{':
+                .sBegin
                 @BeginStmt
 %            | 'if':
 %                @IfStmt
