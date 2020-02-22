@@ -194,7 +194,11 @@ Program :
         }
         ')'
         .sParmEnd
+        '{'
+        .sBegin 
         @Block  
+        '}'
+        .sEnd
         ; 
         % remove ; and . from end of program
 
@@ -204,7 +208,7 @@ Block :
         % We allow arbitrary intermixing of these instead to preserve
         % programmer sanity.
         {[
-                | '<=' :
+                | '{' :
                     .sBegin
                     @BeginStmt
 
