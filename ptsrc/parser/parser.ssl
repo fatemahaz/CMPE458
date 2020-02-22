@@ -266,7 +266,9 @@ ConstantDefinitions :
             | ';' :
                 >
             | ',' :
-                @ConstantDefinitions  
+                @ConstantDefinitions 
+            | *:
+                >
         ]};
 
 ConstantValue :
