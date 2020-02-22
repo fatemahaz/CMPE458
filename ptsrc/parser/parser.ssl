@@ -196,4 +196,100 @@ Program :
         .sParmEnd
         %@Block  
         ; % remove ; and . from end of program
+
+Block :
+        % Strictly speaking, standard Pascal requires that declarations
+        % appear only in the order consts, types, vars, procedures.
+        % We allow arbitrary intermixing of these instead to preserve
+        % programmer sanity.
+        {[
+                % comment out const definitions
+            | 'const':
+                .sConst
+                %@ConstantDefinitions
+                % comment out type definitions
+
+            | 'type':
+                .sType
+                %@TypeDefinitions
+
+          % change var to let and comment out variable declaration
+            | 'let':
+                .sVar
+                %@VariableDeclarations
+
+         %change procdure to fn and FnHeading
+            | 'fn':
+                .sProcedure
+                % procedure name
+                pIdentifier  .sIdentifier
+                @FnHeading
+                @Block  ';'
+
+        %change: comment out 
+  %          | pIdentifier:
+ %               @AssignmentOrCallStmt
+%
+             | '{':
+                @BeginStmt
+%            | 'if':
+%                @IfStmt
+ %           | 'while':
+ %               @WhileStmt
+%            | 'case':
+ %               @CaseStmt
+ %           | 'repeat':
+ %               @RepeatStmt
+%
+        % end comment
+            | *:
+                >
+
+        ]}
+        'begin'
+        @BeginStmt;
+
+FnHeading :
+        % Accept zero or more procedure formal parameter declarations.
+        [
+            | '(':
+                {
+                    % formal parameter identifier
+                    [
+                            % change var to let
+                        | 'let':
+                            pIdentifier  .sIdentifier
+                            .sVar
+                        | *:
+                            pIdentifier  .sIdentifier
+                    ]
+                    ':'
+                    % type identifier
+                    pIdentifier  .sIdentifier
+                    [
+                        | ';':
+                        | *:
+                            >
+                    ]
+                }
+                ')'
+            | *:
+        ]
+        ';'
+        .sParmEnd;
+
+
+BeginStmt :
+        .sBegin
+        {
+            @Block
+            [
+                | ';':
+                | 'end':
+                    .sEnd
+                    >
+            ]
+        };
+
 end
+
