@@ -195,7 +195,8 @@ Program :
         ')'
         .sParmEnd
         @Block  
-        ; % remove ; and . from end of program
+        ; 
+        % remove ; and . from end of program
 
 Block :
         % Strictly speaking, standard Pascal requires that declarations
@@ -203,6 +204,7 @@ Block :
         % We allow arbitrary intermixing of these instead to preserve
         % programmer sanity.
         {[
+            .sBegin
             | '{':
                 .sBegin
                 @BeginStmt
