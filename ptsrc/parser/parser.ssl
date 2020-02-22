@@ -424,6 +424,8 @@ SimpleExpression :
                 @Term
             | '-':
                 @Term  .sNegate
+            % change - remove comma
+            | ',' :
             | *:
                 @Term
         ]
