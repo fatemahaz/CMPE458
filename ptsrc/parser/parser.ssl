@@ -230,8 +230,8 @@ Block :
                 .sBegin
                 @BeginStmt
 
-            | *:
-                >
+            %| *:
+             %   >
 
         ]};
 
