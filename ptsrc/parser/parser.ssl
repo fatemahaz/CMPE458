@@ -230,8 +230,6 @@ Block :
   %          | pIdentifier:
  %               @AssignmentOrCallStmt
 %
-             | '{':
-                @BeginStmt
 %            | 'if':
 %                @IfStmt
  %           | 'while':
@@ -245,7 +243,10 @@ Block :
             | *:
                 >
 
-        ]};
+        ]}
+        '{'
+        @BeginStmt;
+        
 
 FnHeading :
         % Accept zero or more procedure formal parameter declarations.
