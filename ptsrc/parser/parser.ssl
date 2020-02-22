@@ -169,8 +169,17 @@ Output :
 
 rules
 
+Mod:
+        'mod' 
+        [
+                | 'main'
+                @Program
+        ]
+        ;
+
 Program :
-        'main'  .sProgram
+% change: removed check for 'main'
+        .sProgram
         % program name
         pIdentifier
         % program parameters
