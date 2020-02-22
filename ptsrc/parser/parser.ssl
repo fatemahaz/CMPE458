@@ -365,6 +365,7 @@ VariableDeclarations :
                               @Factor
                               @Expression
                              .sExpnEnd
+                             | * :
                         ]
                     | '=' :
                         .sInitialValue
