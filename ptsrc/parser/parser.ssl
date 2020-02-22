@@ -371,9 +371,11 @@ VariableDeclarations :
                         .sExpnEnd
                     | ',' :
                         @VariableDeclarations 
-                    | *:
+                    | ';':
                         >
                 ]
+            | * :
+                >
         ]};
 
 Mutable:
