@@ -352,11 +352,10 @@ VariableDeclarations :
         % Accept one or more variable declarations.
         [
             | 'mut' :
-            @Mutable
-
-        |    pIdentifier  
-        .sIdentifier
-        ':'  @TypeBody  ';'
+                @Mutable
+            | pIdentifier :
+                .sIdentifier
+                ':'  @TypeBody  ';'
                 [
                 | ':' : 
                         @TypeBody
@@ -375,10 +374,10 @@ VariableDeclarations :
 Mutable:
         pIdentifier
         .sIdentifier
-        [
-            | ':'
+        {[
+            | ':' :
                  @TypeBody
-            | '='
+            | '=' :
                 pInteger
                 .sInteger
             | ';' :
@@ -387,20 +386,9 @@ Mutable:
                 @ConstantDefinitions 
             | *:
                 >
-        ]
+        ]}
 .sMutable
 ;
 
-        % Accept one or more named constant definitions
-        pIdentifier  .sIdentifier
-        '=' @ConstantValue 
-        {[
-            | ';' :
-                >
-            | ',' :
-                @ConstantDefinitions 
-            | *:
-                >
-        ]};
 end
 
