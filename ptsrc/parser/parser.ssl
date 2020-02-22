@@ -203,8 +203,8 @@ Block :
         % appear only in the order consts, types, vars, procedures.
         % We allow arbitrary intermixing of these instead to preserve
         % programmer sanity.
+        .sBegin
         {[
-            .sBegin
             | '{':
                 .sBegin
                 @BeginStmt
