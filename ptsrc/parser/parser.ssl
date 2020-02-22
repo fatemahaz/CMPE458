@@ -204,7 +204,7 @@ Block :
         % We allow arbitrary intermixing of these instead to preserve
         % programmer sanity.
         {[
-                | '{' :
+                | pLeftBrace :
                     .sBegin
                     @BeginStmt
 
