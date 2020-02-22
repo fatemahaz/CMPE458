@@ -215,6 +215,10 @@ Block :
                 .sType
                 @TypeDefinitions 
 
+            | 'let':
+                .sVar
+                @VariableDeclarations
+
             | *:
                 >
 
@@ -344,6 +348,71 @@ OptionallySignedIntegerConstant :
                 @UnsignedIntegerConstant
         ];
 
+VariableDeclarations :
+        % Accept one or more variable declarations.
+        [
+            | 'mut' :
+            @Mutable
+            >
+        ]
+        pIdentifier  .sIdentifier
+        ':'  @TypeBody  ';'
+        [
+            | ':' : 
+                @TypeBody
+            | '=' :
+        ]
+        {[
+            | pIdentifier:
+                .sIdentifier
+                ':'  @TypeBody  ';'
+            | *:
+                >
+        ]};
 
+
+Mutable:
+        pIdentifier
+        .sIdentifier
+        [
+            | ':'
+                 @TypeBody
+            | '='
+                pInteger
+                .sInteger
+        ]
+.sMutable
+;
+
+Mutable:
+        pIdentifier
+        .sIdentifier
+        [
+            | ':'
+                 @TypeBody
+            | '='
+                pInteger
+                .sInteger
+            | ';' :
+                >
+            | ',' :
+                @ConstantDefinitions 
+            | *:
+                >
+        ]
+.sMutable
+;
+
+        % Accept one or more named constant definitions
+        pIdentifier  .sIdentifier
+        '=' @ConstantValue 
+        {[
+            | ';' :
+                >
+            | ',' :
+                @ConstantDefinitions 
+            | *:
+                >
+        ]};
 end
 
