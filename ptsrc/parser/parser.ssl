@@ -306,9 +306,6 @@ TypeDefinitions :
 
 TypeBody :
         [
-            | '[':
-                .sArray
-                @SimpleType  ']'
             | 'file':
                 .sFile
                 'of'  @SimpleType
@@ -320,9 +317,10 @@ SimpleType :
         % A simple type is a named type (possibly predefined)
         % or a subrange type specification
         [
-            | pIdentifier:
+            | '[':
+                pIdentifier
                 .sIdentifier
-                ':':
+                ':'
                 .sRange         %% this may be unnecessary
                 [
                     | pInteger :
@@ -330,6 +328,7 @@ SimpleType :
                     | pIdentifier :
                         .sIdentifier
                 ]
+                ']'
             | pIdentifier :
                 .sIdentifier
         ];
