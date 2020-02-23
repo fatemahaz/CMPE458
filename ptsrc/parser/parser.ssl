@@ -219,6 +219,15 @@ Block :
                 .sVar
                 @VariableDeclarations
 
+            % change: added for public function - is there a better way?   
+            | 'pub' :
+                .sProcedure
+                % procedure name
+                pIdentifier .sIdentifier
+                .sPublic
+                @FnHeading
+                @Block
+
             | 'fn' :
                 .sProcedure
                 % procedure name
@@ -226,6 +235,12 @@ Block :
                 @FnHeading
                 @Block
 
+            % change: added mod to emit mod and then go into Block
+            % does anything else need to be done???     
+            | 'mod' :
+                .sModule
+                pIdentifier .sIdentifier
+                @Block
             | *:
                 >
 
@@ -491,6 +506,7 @@ IdentifierExtension :
                 .sParmEnd
             | *:
         ];
+
 
 end
 
