@@ -219,6 +219,13 @@ Block :
                 .sVar
                 @VariableDeclarations
 
+            | 'fn' :
+                .sProcedure
+                % procedure name
+                pIdentifier .sIdentifier
+                @FnHeading
+                @Block
+
             | *:
                 >
 
@@ -226,31 +233,27 @@ Block :
 
 FnHeading :
         % Accept zero or more procedure formal parameter declarations.
-        [
-            | '(':
-                {
-                    % formal parameter identifier
-                    [
-                            % change var to let
-                        | 'let':
-                            pIdentifier  .sIdentifier
-                            .sVar
-                        | *:
-                            pIdentifier  .sIdentifier
-                    ]
-                    ':'
-                    % type identifier
-                    pIdentifier  .sIdentifier
-                    [
-                        | ';':
-                        | *:
-                            >
-                    ]
-                }
-                ')'
-            | *:
-        ]
-        ';'
+        '('
+        {   [
+                | 'mut' :
+                    .sVar
+                    pIdentifier
+                    .sIdentifier
+                | pIdentifier :
+                    .sIdentifier
+                | *:
+                >
+            ]
+        ':'
+            % type identifier
+            pIdentifier  .sIdentifier
+            [
+                | ',':
+                | *:
+                    >
+            ] 
+        }
+        ')'
         .sParmEnd;
 
 
