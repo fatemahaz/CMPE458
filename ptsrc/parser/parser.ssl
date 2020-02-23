@@ -8,7 +8,7 @@
 % Abstract
 %
 %     This module parses the syntax token stream emitted by the scanner
-%   and emits a postfix stream of tokens to the semantic analyzer
+%   and emits hello a postfix stream of tokens to the semantic analyzer
 %   module.  The parser detects and repairs syntax errors so that the
 %   token stream emitted to the semantic analyzer is syntactically
 %   legal (except for the special case of declaration phase errors - see

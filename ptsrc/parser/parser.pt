@@ -7,7 +7,7 @@
 
    Abstract:
      The scanner parser pass of the PT compiler consists of two modules, 
-   a scanner-screener and a parser, which interact as coroutines.
+   a scanner-screener and a parser, which interact as coroutines. 
 
      Both modules are table driven by separately specified S/SL programs.  
    The routines of this program implement the primitive operations and 
