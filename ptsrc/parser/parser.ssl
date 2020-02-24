@@ -130,6 +130,7 @@ Output :
         sFieldWidth
         sIfStmt
         sThen
+        sElseIf
         sElse
         sWhileStmt
          
@@ -241,10 +242,69 @@ Block :
                 .sModule
                 pIdentifier .sIdentifier
                 @Block
+
+            % change : alternatives from the statement rule
+            | pIdentifier:
+                @AssignmentOrCallStmt
+            | 'if':
+                @IfStmt
+            | 'while':
+                @WhileStmt
+            | 'loop':
+            | 'match':
             | *:
                 >
 
         ]};
+
+AssignmentOrCallStmt :
+        [
+            | ':=':
+                .sAssignmentStmt
+                .sIdentifier    % identifier accepted in the Statement rule
+                @Expression
+                .sExpnEnd
+            | '[':
+                .sAssignmentStmt
+                .sIdentifier
+                .sSubscript
+                @Expression
+                .sExpnEnd
+                ']'  ':='
+                @Expression
+                .sExpnEnd
+            | *:
+                @CallStmt
+        ];
+
+% change: call block rule, and add support for sElseIf token
+IfStmt :
+        .sIfStmt
+        @Expression
+        .sExpnEnd
+        .sThen
+        @Block 
+        [
+            | 'else':
+                [
+                    | 'if':
+                        .sElseIf
+                        @Expression
+                        .sExpnEnd
+                        .sThen
+                        @Block
+                    | *:
+                        .sElse
+                        @Block
+                ]
+            | *:
+        ];
+
+WhileStmt :
+        .sWhileStmt
+        @Expression
+        .sExpnEnd
+        @Block;
 
 FnHeading :
         % Accept zero or more procedure formal parameter declarations.
@@ -283,6 +343,35 @@ BeginStmt :
                     >
             ]
         };
+
+CallStmt :
+        .sCallStmt
+        .sIdentifier    % procedure identifier accepted in the Statement rule
+        % accept zero or more actual parameters
+        [
+            | '(':
+                {
+                    @Expression
+                    .sExpnEnd
+                    % allow a field width specification to occur in calls
+                    % to the standard procedures write and writeln
+                    [
+                        | ':':
+                            .sFieldWidth
+                            @Expression
+                            .sExpnEnd
+                        | *:
+                    ]
+                    [
+                        | ',':
+                        | *:
+                            >
+                    ]
+                }
+                ')'
+            | *:        % no actual parameters
+        ]
+        .sParmEnd;
 
 ConstantDefinitions :
         % Accept one or more named constant definitions
@@ -418,6 +507,7 @@ Mutable:
 .sMutable
 ;
 
+% change TODO: add ==, and others??
 Expression :
         @SimpleExpression
         [
