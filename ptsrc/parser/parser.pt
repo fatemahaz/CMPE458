@@ -281,37 +281,38 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         sFieldWidth = 24;
         sIfStmt = 25;
         sThen = 26;
-        sElse = 27;
-        sWhileStmt = 28;
-        sLoopStmt = 29;
-        sLoopBreakIf = 30;
-        sLoopEnd = 31;
-        sModule = 32;
-        sPublic = 33;
-        sCaseOtherwise = 34;
-        sSubstring = 35;
-        sLength = 36;
-        sMutable = 37;
-        sInitialValue = 38;
-        sEq = 39;
-        sNE = 40;
-        sLT = 41;
-        sLE = 42;
-        sGT = 43;
-        sGE = 44;
-        sAdd = 45;
-        sSubtract = 46;
-        sMultiply = 47;
-        sDivide = 48;
-        sModulus = 49;
-        sInfixOr = 50;
-        sOr = 51;
-        sInfixAnd = 52;
-        sAnd = 53;
-        sNot = 54;
-        sNewLine = 55;
-        sEndOfFile = 56;
-        lastSemanticToken = 56;
+        sElseIf = 27;
+        sElse = 28;
+        sWhileStmt = 29;
+        sLoopStmt = 30;
+        sLoopBreakIf = 31;
+        sLoopEnd = 32;
+        sModule = 33;
+        sPublic = 34;
+        sCaseOtherwise = 35;
+        sSubstring = 36;
+        sLength = 37;
+        sMutable = 38;
+        sInitialValue = 39;
+        sEq = 40;
+        sNE = 41;
+        sLT = 42;
+        sLE = 43;
+        sGT = 44;
+        sGE = 45;
+        sAdd = 46;
+        sSubtract = 47;
+        sMultiply = 48;
+        sDivide = 49;
+        sModulus = 50;
+        sInfixOr = 51;
+        sOr = 52;
+        sInfixAnd = 53;
+        sAnd = 54;
+        sNot = 55;
+        sNewLine = 56;
+        sEndOfFile = 57;
+        lastSemanticToken = 57;
 
         { Input/Output Tokens }
 
@@ -320,11 +321,33 @@ program ScannerParser(output, stdIdentifiers, scanSsl, parseSsl, source, parseSt
         { Type Values }
 
         { S/SL Rule Table Addresses } {
-        Program = 0;
+        Mod = 0;
+        Program = 16;
+        Block = 42;
+        BeginStmt = 281;
+        ConstantDefinitions = 351;
+        TypeDefinitions = 439;
+        VariableDeclarations = 535;
+        FnHeading = 236;
+        AssignmentOrCallStmt = 148;
+        IfStmt = 188;
+        WhileStmt = 227;
+        Expression = 647;
+        CallStmt = 307;
+        ConstantValue = 379;
+        UnsignedIntegerConstant = 419;
+        TypeBody = 450;
+        SimpleType = 466;
+        OptionallySignedIntegerConstant = 515;
+        Mutable = 607;
+        Factor = 798;
+        SimpleExpression = 701;
+        Term = 754;
+        IdentifierExtension = 852;
         }
 
         { S/SL Table Parameters } {
-        sslTblSize = 28;
+        sslTblSize = 882;
         minSslTableValue = -32767;
         maxSslTableValue = 32767;
 	}
