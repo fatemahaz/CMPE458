@@ -613,7 +613,6 @@ MatchStmt :
             | *:
                 >
         ]}
-        '|'
         '_'
         '=>'
         .sCaseOtherwise
