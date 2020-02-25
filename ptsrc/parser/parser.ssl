@@ -610,14 +610,13 @@ MatchStmt :
         {[
             | '|':
                 @MatchAlternative
-                [
-                    | '_' :
-                    >
-                ]
             | *:
                 >
         ]}
-
+        '|'
+        '_'
+        .sCaseOtherwise
+        @MatchAlternative
         .sCaseEnd;
 
 %more than one label?
@@ -628,7 +627,7 @@ MatchAlternative :
         {
             @OptionallySignedIntegerConstant
             [
-                | ',':
+                | '|':
                 | *:
                     >
             ]
