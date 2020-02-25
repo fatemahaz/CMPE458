@@ -616,7 +616,8 @@ MatchStmt :
         '|'
         .sCaseOtherwise
         @MatchAlternative
-        .sCaseEnd;
+        .sCaseEnd
+        '}';
 
 %more than one label?
 MatchAlternative :
@@ -624,7 +625,7 @@ MatchAlternative :
         % one or more optionally signed integer constants
         [
             | '_':
-            
+
             | *:
                  {
                 @OptionallySignedIntegerConstant
@@ -635,8 +636,6 @@ MatchAlternative :
                 ]
         }
         ]
-
-   
         .sLabelEnd
         '=>'  @Block;
 
