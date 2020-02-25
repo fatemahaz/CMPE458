@@ -8,7 +8,7 @@
 % Abstract
 %
 %     This module parses the syntax token stream emitted by the scanner
-%   and emits a postfix stream of tokens to the semantic analyzer
+%   and emits hello a postfix stream of tokens to the semantic analyzer
 %   module.  The parser detects and repairs syntax errors so that the
 %   token stream emitted to the semantic analyzer is syntactically
 %   legal (except for the special case of declaration phase errors - see
@@ -130,6 +130,7 @@ Output :
         sFieldWidth
         sIfStmt
         sThen
+        sElseIf
         sElse
         sWhileStmt
          
@@ -219,38 +220,116 @@ Block :
                 .sVar
                 @VariableDeclarations
 
+            % change: added for public function - is there a better way?   
+            | 'pub' :
+                .sProcedure
+                % procedure name
+                pIdentifier .sIdentifier
+                .sPublic
+                @FnHeading
+                @Block
+
+            | 'fn' :
+                .sProcedure
+                % procedure name
+                pIdentifier .sIdentifier
+                @FnHeading
+                @Block
+
+            % change: added mod to emit mod and then go into Block
+            % does anything else need to be done???     
+            | 'mod' :
+                .sModule
+                pIdentifier .sIdentifier
+                @Block
+
+            % change : alternatives from the statement rule
+            | pIdentifier:
+                @AssignmentOrCallStmt
+            | 'if':
+                @IfStmt
+            | 'while':
+                @WhileStmt
+            | 'loop':
+            | 'match':
             | *:
                 >
 
         ]};
 
+AssignmentOrCallStmt :
+        [
+            | ':=':
+                .sAssignmentStmt
+                .sIdentifier    % identifier accepted in the Statement rule
+                @Expression
+                .sExpnEnd
+            | '[':
+                .sAssignmentStmt
+                .sIdentifier
+                .sSubscript
+                @Expression
+                .sExpnEnd
+                ']'  ':='
+                @Expression
+                .sExpnEnd
+            | *:
+                @CallStmt
+        ];
+
+% change: call block rule, and add support for sElseIf token
+IfStmt :
+        .sIfStmt
+        @Expression
+        .sExpnEnd
+        .sThen
+        @Block 
+        {[
+            | 'else':
+                [
+                    | 'if':
+                        .sElseIf
+                        @Expression
+                        .sExpnEnd
+                        .sThen
+                        @Block
+                    | *:
+                        .sElse
+                        @Block
+                ]
+            | *:
+            >
+        ]};
+
+WhileStmt :
+        .sWhileStmt
+        @Expression
+        .sExpnEnd
+        @Block;
+
 FnHeading :
         % Accept zero or more procedure formal parameter declarations.
-        [
-            | '(':
-                {
-                    % formal parameter identifier
-                    [
-                            % change var to let
-                        | 'let':
-                            pIdentifier  .sIdentifier
-                            .sVar
-                        | *:
-                            pIdentifier  .sIdentifier
-                    ]
-                    ':'
-                    % type identifier
-                    pIdentifier  .sIdentifier
-                    [
-                        | ';':
-                        | *:
-                            >
-                    ]
-                }
-                ')'
-            | *:
-        ]
-        ';'
+        '('
+        {   [
+                | 'mut' :
+                    .sVar
+                    pIdentifier
+                    .sIdentifier
+                | pIdentifier :
+                    .sIdentifier
+                | *:
+                >
+            ]
+        ':'
+            % type identifier
+            pIdentifier  .sIdentifier
+            [
+                | ',':
+                | *:
+                    >
+            ] 
+        }
+        ')'
         .sParmEnd;
 
 
@@ -265,6 +344,35 @@ BeginStmt :
                     >
             ]
         };
+
+CallStmt :
+        .sCallStmt
+        .sIdentifier    % procedure identifier accepted in the Statement rule
+        % accept zero or more actual parameters
+        [
+            | '(':
+                {
+                    @Expression
+                    .sExpnEnd
+                    % allow a field width specification to occur in calls
+                    % to the standard procedures write and writeln
+                    [
+                        | ':':
+                            .sFieldWidth
+                            @Expression
+                            .sExpnEnd
+                        | *:
+                    ]
+                    [
+                        | ',':
+                        | *:
+                            >
+                    ]
+                }
+                ')'
+            | *:        % no actual parameters
+        ]
+        .sParmEnd;
 
 ConstantDefinitions :
         % Accept one or more named constant definitions
@@ -400,6 +508,7 @@ Mutable:
 .sMutable
 ;
 
+% change TODO: add ==, and others??
 Expression :
         @SimpleExpression
         [
@@ -490,6 +599,7 @@ IdentifierExtension :
                 .sParmEnd
             | *:
         ];
+
 
 end
 
