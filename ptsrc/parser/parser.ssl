@@ -404,7 +404,9 @@ Expression :
         @SimpleExpression
         [
             | '=':
+                %change to '=='
                 @SimpleExpression  .sEq
+                %need to change to ! for not equals
             | '<>':
                 @SimpleExpression  .sNE
             | '<':
