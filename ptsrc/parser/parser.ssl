@@ -609,11 +609,16 @@ MatchStmt :
         '{'
         {[
             | '|':
+            [
+                | '_':
+                >
+                | *:
+
+            ]
                 @MatchAlternative
             | *:
                 >
         ]}
-        '_'
         '=>'
         .sCaseOtherwise
         @Block
