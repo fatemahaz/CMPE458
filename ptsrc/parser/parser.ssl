@@ -614,7 +614,6 @@ MatchStmt :
                 >
         ]}
         '|'
-        '_'
         .sCaseOtherwise
         @MatchAlternative
         .sCaseEnd;
@@ -623,15 +622,21 @@ MatchStmt :
 MatchAlternative :
         % A case alternative is a statement labelled by
         % one or more optionally signed integer constants
-
-        {
-            @OptionallySignedIntegerConstant
-            [
-                | '|':
-                | *:
-                    >
-            ]
+        [
+            | '_':
+            
+            | *:
+                 {
+                @OptionallySignedIntegerConstant
+                [
+                    | '|':
+                    | *:
+                        >
+                ]
         }
+        ]
+
+   
         .sLabelEnd
         '=>'  @Block;
 
