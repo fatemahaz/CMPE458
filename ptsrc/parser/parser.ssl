@@ -252,6 +252,7 @@ Block :
                 @WhileStmt
             | 'loop':
             | 'match':
+                @MatchStmt
             | *:
                 >
 
@@ -599,6 +600,41 @@ IdentifierExtension :
                 .sParmEnd
             | *:
         ];
+
+MatchStmt :
+        .sCaseStmt
+        %do we have to look for one?
+        @Expression
+        .sExpnEnd
+        '{'
+        {[
+            | '|':
+                @MatchAlternative
+                [
+                    | '_' :
+                    >
+                ]
+            | *:
+                >
+        ]}
+
+        .sCaseEnd;
+
+%more than one label?
+MatchAlternative :
+        % A case alternative is a statement labelled by
+        % one or more optionally signed integer constants
+
+        {
+            @OptionallySignedIntegerConstant
+            [
+                | ',':
+                | *:
+                    >
+            ]
+        }
+        .sLabelEnd
+        '=>'  @Block;
 
 
 end
