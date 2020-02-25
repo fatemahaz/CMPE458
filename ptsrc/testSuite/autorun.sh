@@ -1,7 +1,5 @@
 #!/bin/bash
 echo "Automatically running test suite for Phase 2..."
-echo "****************** PLEASE NOTE ******************"
-echo "The irrelevant parts of the output for each test case, such as parser output tokens '.sProgram', '.sIdentifier', '.sParmEnd' etc have been STRIPPED from the output to avoid unnecessary clutter"
 echo ""
 
 echo "Test file: mod_main.pt"
