@@ -126,7 +126,7 @@ Output :
         pPercent
         pAmpersand
         pOrBar
-        pExclamation
+        pNot
         pUnderscore
         pDoubleAmpersand
         pDoubleOrBar
@@ -214,7 +214,7 @@ Scan :
                     | '=':  % change added to support notEquals
                         .pNotEqual
                     | *:
-                        .pExclamation
+                        .pNot
                 ]
             | '_':
                 .pUnderscore

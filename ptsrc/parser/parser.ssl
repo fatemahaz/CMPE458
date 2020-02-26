@@ -83,7 +83,7 @@ Input :
         pPercent                '%'                    
         pAmpersand              '&'   
         pOrBar                  '|'
-        pExclamation            '!'       
+        pNotEqual               '!'       
         pUnderscore             '_'
         pDoubleAmpersand        '&&'           
         pDoubleOrBar            '||'           
