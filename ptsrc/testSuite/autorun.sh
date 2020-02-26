@@ -346,13 +346,13 @@ ssltrace "ptc -o2 -t2 -L ./../lib/pt div.pt" ./../lib/pt/parser.def -e
 echo "================================"
 echo ""
 
-echo "Test file: mod.pt"
+echo "Test file: modulus.pt"
 echo "we do not need to test for the previous PT Pascal keyword 'mod' since it will never get screened to a keyword in Qust, as proved by out tests in phase 1 Instead, we will test the replacement in Qust '%' and make sure it is mapped to the parser output token sMod"
 echo "Contents of test file:"
-cat mod.pt
+cat modulus.pt
 echo "
 Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt mod.pt" ./../lib/pt/parser.def -e 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt modulus.pt" ./../lib/pt/parser.def -e 
 echo "================================"
 echo ""
 
@@ -387,7 +387,7 @@ echo "================================"
 echo ""
 
 echo "Test file: not_equal.pt"
-echo "this test maps the new Qust operator '!=' by emitting a sNotEqual parser output token"
+echo "this test maps the new Qust operator '!=' by emitting a sNE parser output token"
 echo "Contents of test file:"
 cat not_equal.pt
 echo "
@@ -397,7 +397,7 @@ echo "================================"
 echo ""
 
 echo "Test file: pt_not_equal_fail.pt"
-echo "this test fails for the old PT Pascal operator '<>' by NOT emitting a sNotEqual parser output token"
+echo "this test fails for the old PT Pascal operator '<>' by NOT emitting a sNE parser output token"
 echo "Contents of test file:"
 cat pt_not_equal_fail.pt
 echo "
@@ -483,16 +483,6 @@ cat double_quote_stringlit.pt
 echo "
 Output of test case:"
 ssltrace "ptc -o2 -t2 -L ./../lib/pt double_quote_stringlit.pt" ./../lib/pt/parser.def -e 
-echo "================================"
-echo ""
-
-echo "Test file: old_equal_fail.pt"
-echo "this test fails for the old assignment syntax ':=' by not emitting a sAssignmentStmt token"
-echo "Contents of test file:"
-cat old_equal_fail.pt
-echo "
-Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt old_equal_fail.pt" ./../lib/pt/parser.def -e 
 echo "================================"
 echo ""
 
