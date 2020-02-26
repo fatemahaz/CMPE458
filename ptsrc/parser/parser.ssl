@@ -197,7 +197,8 @@ Program :
         .sParmEnd
         '{'
             @BeginStmt
-        '}' 
+        '}'
+        .sEnd 
         ; 
         % remove ; and . from end of program
 
@@ -232,6 +233,7 @@ Block :
                 '{'
                 @BeginStmt
                 '}'
+                .sEnd
 
             | 'fn' :
                 .sProcedure
@@ -241,6 +243,7 @@ Block :
                  '{'
                 @BeginStmt
                 '}'
+                .sEnd
 
             % change: added mod to emit mod and then go into Block
             % does anything else need to be done???     
@@ -250,6 +253,7 @@ Block :
                  '{'
                 @BeginStmt
                 '}'
+                .sEnd
 
             % change : alternatives from the statement rule
             | pIdentifier:
@@ -294,8 +298,9 @@ IfStmt :
         .sExpnEnd
         .sThen
          '{'
-                @BeginStmt
-                '}'
+         @BeginStmt
+         '}'
+                .sEnd
         {[
             | 'else':
                 [
@@ -307,11 +312,13 @@ IfStmt :
                          '{'
                             @BeginStmt
                         '}'
+                        .sEnd
                     | *:
                         .sElse
                          '{'
                             @BeginStmt
                         '}'
+                        .sEnd
                 ]
             | *:
             >
@@ -323,7 +330,9 @@ WhileStmt :
         .sExpnEnd
          '{'
             @BeginStmt
-        '}';
+        '}'
+        .sEnd
+        ;
 
 FnHeading :
         % Accept zero or more procedure formal parameter declarations.
@@ -641,6 +650,7 @@ MatchStmt :
          '{'
             @BeginStmt
         '}'
+        .sEnd
         .sCaseEnd
         '}';
 
@@ -659,16 +669,20 @@ MatchAlternative :
         .sLabelEnd
         '=>'   '{'
                 @BeginStmt
-                '}';
+                '}'
+                .sEnd
+                ;
 
 Loop:
     .sLoopStmt
     '{'
     @BeginStmt
+    .sEnd
     'break'
     'if'
     @Expression
     @BeginStmt
+    .sEnd
     '}'
     ;
 
