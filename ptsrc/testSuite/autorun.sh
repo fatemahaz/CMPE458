@@ -416,46 +416,6 @@ ssltrace "ptc -o2 -t2 -L ./../lib/pt minus_equals.pt" ./../lib/pt/parser.def -e
 echo "================================"
 echo ""
 
-echo "Test file: new_comment_style.pt"
-echo "the new line commenting style using syntax '//' will be tested. We expect it to be ignored by the parser and no specific parser output tokens to be emitted for it"
-echo "Contents of test file:"
-cat new_comment_style.pt
-echo "
-Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt new_comment_style.pt" ./../lib/pt/parser.def -e 
-echo "================================"
-echo ""
-
-echo "Test file: new_comment_style_block.pt"
-echo "the new line commenting style using syntax '/**/' will be tested. We expect it to be ignored by the parser and no specific parser output tokens to be emitted for it"
-echo "Contents of test file:"
-cat new_comment_style_block.pt
-echo "
-Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt new_comment_style_block.pt" ./../lib/pt/parser.def -e 
-echo "================================"
-echo ""
-
-echo "Test file: old_new_comment_style_fail.pt"
-echo "the new line commenting style using syntax '{}' will be tested. It will fail by **"
-echo "Contents of test file:"
-cat old_new_comment_style_fail.pt
-echo "
-Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt old_new_comment_style_fail.pt" ./../lib/pt/parser.def -e 
-echo "================================"
-echo ""
-
-echo "Test file: old_comment_style_block_fail.pt"
-echo "the new line commenting style using syntax '(**)' will be tested. It will fail by **"
-echo "Contents of test file:"
-cat old_comment_style_block_fail.pt
-echo "
-Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt old_comment_style_block_fail.pt" ./../lib/pt/parser.def -e 
-echo "================================"
-echo ""
-
 echo "Test file: single_quote_fail.pt"
 echo "this test will fail for the single quote by emitting a sIdentifier token instead of a sStringLiteral token"
 echo "Contents of test file:"
