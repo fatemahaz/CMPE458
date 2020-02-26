@@ -1,6 +1,5 @@
 mod main(output) {
-	if  x > y {
-	} else if y > x {
-	} else {
+	if (x < 5) && (x > 3) {
+		print(x);
 	}
 }
