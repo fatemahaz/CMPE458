@@ -1,4 +1,7 @@
 #!/bin/bash
+cd ../parser
+make
+cd ../testSuite
 echo "Automatically running test suite for Phase 2..."
 echo "****************** PLEASE NOTE ******************"
 echo "The irrelevant parts of the output for each test case, such as parser output tokens '.sProgram', '.sIdentifier', '.sParmEnd' etc have been STRIPPED from the output to avoid unnecessary clutter"
@@ -401,7 +404,7 @@ echo "Contents of test file:"
 cat pt_not_equal_fail.pt
 echo "
 Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt pt_not_equals_fail.pt" ./../lib/pt/parser.def -e 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt pt_not_equal_fail.pt" ./../lib/pt/parser.def -e 
 echo "================================"
 echo ""
 
@@ -465,6 +468,26 @@ ssltrace "ptc -o2 -t2 -L ./../lib/pt new_comment_style_block.pt" ./../lib/pt/par
 echo "================================"
 echo ""
 
+echo "Test file: old_new_comment_style_fail.pt"
+echo "the new line commenting style using syntax '{}' will be tested. It will fail by **"
+echo "Contents of test file:"
+cat old_new_comment_style_fail.pt
+echo "
+Output of test case:"
+ssltrace "ptc -o2 -t2 -L ./../lib/pt old_new_comment_style_fail.pt" ./../lib/pt/parser.def -e 
+echo "================================"
+echo ""
+
+echo "Test file: old_comment_style_block_fail.pt"
+echo "the new line commenting style using syntax '(**)' will be tested. It will fail by **"
+echo "Contents of test file:"
+cat old_comment_style_block_fail.pt
+echo "
+Output of test case:"
+ssltrace "ptc -o2 -t2 -L ./../lib/pt old_comment_style_block_fail.pt" ./../lib/pt/parser.def -e 
+echo "================================"
+echo ""
+
 echo "Test file: single_quote_fail.pt"
 echo "this test will fail for the single quote by emitting a sIdentifier token instead of a sStringLiteral token"
 echo "Contents of test file:"
@@ -486,7 +509,17 @@ echo "================================"
 echo ""
 
 echo "Test file: old_equal_fail.pt"
-echo "this test fails for the old assignment syntax ':=' by emitting a **"
+echo "this test fails for the old assignment syntax ':=' by not emitting a sAssignmentStmt token"
+echo "Contents of test file:"
+cat old_equal_fail.pt
+echo "
+Output of test case:"
+ssltrace "ptc -o2 -t2 -L ./../lib/pt old_equal_fail.pt" ./../lib/pt/parser.def -e 
+echo "================================"
+echo ""
+
+echo "Test file: old_equal_fail.pt"
+echo "this test fails for the old assignment syntax ':=' by not emitting a sAssignmentStmt token"
 echo "Contents of test file:"
 cat old_equal_fail.pt
 echo "
