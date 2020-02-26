@@ -210,7 +210,12 @@ Scan :
                         .pOrBar
                 ]
             | '!':
-                .pExclamation
+                [
+                    | '=':  % change added to support notEquals
+                        .pNotEqual
+                    | *:
+                        .pExclamation
+                ]
             | '_':
                 .pUnderscore
             | '/':
@@ -269,8 +274,6 @@ Scan :
             % change: remove rule for pDot and pDotDot
             | '<':
                 [
-                    | '>':
-                        .pNotEqual
                     | '=':
                         .pLessEqual
                     | *:
