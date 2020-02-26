@@ -305,6 +305,10 @@ AssignmentOrCallStmt :
                 .sExpnEnd
             | *:
                 @CallStmt
+        ]
+        [
+            | ';':
+            | * :
         ];
 
 % change: call block rule, and add support for sElseIf token
