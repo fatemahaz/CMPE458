@@ -564,9 +564,13 @@ Expression :
             | '==':
                 %change to '=='
                 @SimpleExpression  .sEq
-                %need to change to ! for not equals
+                %change <> for != for not equals
             | '!=':
                 @SimpleExpression  .sNE
+            %change added '?' for string length
+            | '?':
+                .sStringLiteral
+                .sLength
             | '<':
                 @SimpleExpression  .sLT
             | '<=':
@@ -628,11 +632,23 @@ Factor :
                 .sNot
             | pStringLiteral:
                 .sStringLiteral
+                [
+                    | '/':
+                    @Substring
+                    | *:
+                ]
             | 'file':
                 .sFile '(' @Expression ')'
                 .sExpnEnd
             | * :
         ];
+
+Substring:
+        @Expression
+        ':'
+        @Expression
+        .sSubstring
+    ;
 
 IdentifierExtension :
         % Handle subscripts and function actual parameter lists
