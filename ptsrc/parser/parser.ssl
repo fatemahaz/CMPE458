@@ -266,6 +266,8 @@ Block :
                 @Loop
             | 'match':
                 @MatchStmt
+            | ';' :
+                .sNullStmt
             | *:
                 >
 
