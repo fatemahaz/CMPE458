@@ -296,6 +296,13 @@ AssignmentOrCallStmt :
                 @Expression
                 .sAdd
                 .sExpnEnd
+            | '-=':
+                .sAssignmentStmt
+                .sIdentifier
+                .sIdentifier
+                @Expression
+                .sSubtract
+                .sExpnEnd
             | *:
                 @CallStmt
         ];
