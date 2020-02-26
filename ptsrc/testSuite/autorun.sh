@@ -426,26 +426,6 @@ ssltrace "ptc -o2 -t2 -L ./../lib/pt minus_equals.pt" ./../lib/pt/parser.def -e
 echo "================================"
 echo ""
 
-echo "Test file: bitand_vs_and.pt"
-echo "the parser output tokens for & and && will be compared"
-echo "Contents of test file:"
-cat bitand_vs_and.pt
-echo "
-Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt bitand_vs_and.pt" ./../lib/pt/parser.def -e 
-echo "================================"
-echo ""
-
-echo "Test file: bitor_vs_or.pt"
-echo "the parser output tokens for | and || will be compared"
-echo "Contents of test file:"
-cat bitor_vs_or.pt
-echo "
-Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt bitor_vs_or.pt" ./../lib/pt/parser.def -e 
-echo "================================"
-echo ""
-
 echo "Test file: new_comment_style.pt"
 echo "the new line commenting style using syntax '//' will be tested. We expect it to be ignored by the parser and no specific parser output tokens to be emitted for it"
 echo "Contents of test file:"
