@@ -66,7 +66,7 @@ echo ""
 
 
 echo "Test file: var_fail.pt"
-echo "this test fails for previous way of declaring variables by not emitting sVar token"
+echo "this test fails for previous way of declaring variables by not emitting sVar token and instead emitting sCallStmt"
 echo "Contents of test file:"
 cat var_fail.pt
 echo "
@@ -86,7 +86,7 @@ echo "================================"
 echo ""
 
 echo "Test file: array_fail.pt"
-echo "this program will faild for declaring an array the PT Pascal way with a lower bound by emitting a sNullStmt token"
+echo "this program will fail for declaring an array the PT Pascal way with a lower bound by emitting a sNullStmt token"
 echo "Contents of test file:"
 cat array_fail.pt
 echo "
@@ -106,7 +106,7 @@ echo "================================"
 echo ""
 
 echo "Test file: const_multiple_semicolon_fail.pt"
-echo "this test fails for multiple declarations of const when separate by semi colons by emitting sNullStmt tokens"
+echo "this test fails for multiple declarations of const when separate by semi colons by emitting sCallStmt token"
 echo "Contents of test file:"
 cat const_multiple_semicolon_fail.pt
 echo "
@@ -116,7 +116,7 @@ echo "================================"
 echo ""
 
 echo "Test file: const_multiple_comma.pt"
-echo "this program will pass for multiple declarations const when separate by commas by NOT emitting sNullStmt tokens"
+echo "this program will pass for multiple declarations const when separate by commas by emitting 2 sInteger tokens and NOT emitting a sCallStmt token"
 echo "Contents of test file:"
 cat const_multiple_comma.pt
 echo "
@@ -126,7 +126,7 @@ echo "================================"
 echo ""
 
 echo "Test file: let_multiple_semicolon_fail.pt"
-echo "this test fails for multiple declarations of a mutable integer variable when separate by semi colons by emitting sNullStmt tokens"
+echo "this test fails for multiple declarations of a mutable integer variable when separate by semi colons by emitting sCallStmt token"
 echo "Contents of test file:"
 cat let_multiple_semicolon_fail.pt
 echo "
@@ -136,7 +136,7 @@ echo "================================"
 echo ""
 
 echo "Test file: let_multiple_comma.pt"
-echo "this program will pass for multiple declarations of a mutable integer variable when separate by commas by NOT emitting sNullStmt tokens"
+echo "this program will pass for multiple declarations of a mutable integer variable when separate by commas by emitting 2 sInteger tokens and NOT emitting a sCallStmt token"
 echo "Contents of test file:"
 cat let_multiple_comma.pt
 echo "
@@ -156,7 +156,7 @@ echo "================================"
 echo ""
 
 echo "Test file: type_multiple_fail.pt"
-echo "this test fails for multiple declarations in each type by emitting sNullStmt tokens separated by semi colons"
+echo "this test fails for multiple declarations in each type by emitting a sCallStmt token when separated by semi colons"
 echo "Contents of test file:"
 cat type_multiple_fail.pt
 echo "
@@ -166,7 +166,7 @@ echo "================================"
 echo ""
 
 echo "Test file: type_multiple_comma_fail.pt"
-echo "this test fails for multiple declarations in each type by emitting sNullStmt tokens separated by commas"
+echo "this test fails for multiple declarations in each type by emitting sCallStmt when tokens separated by commas"
 echo "Contents of test file:"
 cat type_multiple_comma_fail.pt
 echo "
@@ -246,7 +246,7 @@ echo "================================"
 echo ""
 
 echo "Test file: match.pt"
-echo "this test will map 'match' to sCase token and will also emit sCaseOtherwise token the cases will be surrounded by sBegin and sEnd tokens for statement sequencing. This will be demonstrated by including 2 statements in one of that case and observing that no sNullStmt token is emitted. Finally, a sCaseEnd token will be emitted after the final sEnd token for the default statement"
+echo "this test will map 'match' to sCaseStmt token and will also emit sCaseOtherwise token the cases will be surrounded by sBegin and sEnd tokens for statement sequencing. This will be demonstrated by including 2 statements in one of that case and observing that no sNullStmt token is emitted. Finally, a sCaseEnd token will be emitted after the final sEnd token for the default statement"
 echo "Contents of test file:"
 cat match.pt
 echo "
@@ -266,7 +266,7 @@ echo "================================"
 echo ""
 
 echo "Test file: if_elseif_else.pt"
-echo "this program will output sIf, sElseIf, and sElse tokens for Qust style if statements"
+echo "this program will output sIf, sElseIf, and sElse tokens for Qust style if statements. After each condition is complete, sExpnEnd will be emitted followed by sThen"
 echo "Contents of test file:"
 cat if_elseif_else.pt
 echo "
@@ -276,7 +276,7 @@ echo "================================"
 echo ""
 
 echo "Test file: declaration_stmt.pt"
-echo "this test will show that declarations and and statements go in any order by incluing 2 declarations first and then 2 statementa by not emitting any sNullStmt tokens and emitting all appropriate parser output tokens"
+echo "this test will show that declarations and statements go in any order by incluing 2 declarations first and then 2 statementa by not emitting any sNullStmt tokens and emitting all appropriate parser output tokens"
 echo "Contents of test file:"
 cat declaration_stmt.pt
 echo "
@@ -286,7 +286,7 @@ echo "================================"
 echo ""
 
 echo "Test file: stmt_declaration.pt"
-echo "this program will show that declarations and and statements go in any order by incluing 2 statements first and then 2 declarations by emitting all appropriate parser output tokens"
+echo "this program will show that declarations and statements go in any order by incluing 2 statements first and then 2 declarations by emitting all appropriate parser output tokens"
 echo "Contents of test file:"
 cat stmt_declaration.pt
 echo "
@@ -296,7 +296,7 @@ echo "================================"
 echo ""
 
 echo "Test file: mod_declaration_stmt.pt"
-echo "this test will show that declarations and and statements go in any order by incluing 2 declarations first and then 2 statementa by not emitting any sNullStmt tokens and emitting all appropriate parser output tokens"
+echo "this test will show that declarations and statements go in any order by incluing 2 declarations first and then 2 statementa by not emitting any sNullStmt tokens and emitting all appropriate parser output tokens"
 echo "Contents of test file:"
 cat mod_declaration_stmt.pt
 echo "
@@ -306,7 +306,7 @@ echo "================================"
 echo ""
 
 echo "Test file: mod_stmt_declaration.pt"
-echo "this program will show that declarations and and statements go in any order by incluing 2 statements first and then 2 declarations by emitting all appropriate parser output tokens"
+echo "this program will show that declarations and statements go in any order by incluing 2 statements first and then 2 declarations by emitting all appropriate parser output tokens"
 echo "Contents of test file:"
 cat mod_stmt_declaration.pt
 echo "
@@ -366,7 +366,7 @@ echo "================================"
 echo ""
 
 echo "Test file: double_equals.pt"
-echo "this test maps the new Qust operator '==' by emitting a sDoubleEquals token"
+echo "this test maps the new Qust operator '==' by emitting a sEq token"
 echo "Contents of test file:"
 cat double_equals.pt
 echo "
@@ -376,7 +376,7 @@ echo "================================"
 echo ""
 
 echo "Test file: pt_double_equals_fail.pt"
-echo "this test fails for previous PT Pascal operator '=' by not emitting a sDoubleEquals token and instead emitting a sNullStmt token"
+echo "this test fails for previous PT Pascal operator '=' by not emitting a sEq token and instead emitting a sCallStmt token"
 echo "Contents of test file:"
 cat pt_double_equals_fail.pt
 echo "
@@ -385,20 +385,20 @@ ssltrace "ptc -o2 -t2 -L ./../lib/pt pt_double_equals_fail.pt" ./../lib/pt/parse
 echo "================================"
 echo ""
 
-echo "Test file: not_equals.pt"
+echo "Test file: not_equal.pt"
 echo "this test maps the new Qust operator '!=' by emitting a sNotEqual parser output token"
 echo "Contents of test file:"
-cat not_equals.pt
+cat not_equal.pt
 echo "
 Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt not_equals.pt" ./../lib/pt/parser.def -e 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt not_equal.pt" ./../lib/pt/parser.def -e 
 echo "================================"
 echo ""
 
-echo "Test file: pt_not_equals_fail.pt"
+echo "Test file: pt_not_equal_fail.pt"
 echo "this test fails for the old PT Pascal operator '<>' by NOT emitting a sNotEqual parser output token"
 echo "Contents of test file:"
-cat pt_not_equals_fail.pt
+cat pt_not_equal_fail.pt
 echo "
 Output of test case:"
 ssltrace "ptc -o2 -t2 -L ./../lib/pt pt_not_equals_fail.pt" ./../lib/pt/parser.def -e 
@@ -466,7 +466,7 @@ echo "================================"
 echo ""
 
 echo "Test file: single_quote_fail.pt"
-echo "this test will fail for the single quote by emitting a sNullStmt token instead of a sStringLiteral token"
+echo "this test will fail for the single quote by emitting a sIdentifier token instead of a sStringLiteral token"
 echo "Contents of test file:"
 cat single_quote_fail.pt
 echo "
@@ -482,5 +482,15 @@ cat double_quote_stringlit.pt
 echo "
 Output of test case:"
 ssltrace "ptc -o2 -t2 -L ./../lib/pt double_quote_stringlit.pt" ./../lib/pt/parser.def -e 
+echo "================================"
+echo ""
+
+echo "Test file: old_equal_fail.pt"
+echo "this test fails for the old assignment syntax ':=' by emitting a **"
+echo "Contents of test file:"
+cat old_equal_fail.pt
+echo "
+Output of test case:"
+ssltrace "ptc -o2 -t2 -L ./../lib/pt old_equal_fail.pt" ./../lib/pt/parser.def -e 
 echo "================================"
 echo ""
