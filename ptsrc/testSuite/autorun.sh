@@ -3,8 +3,6 @@ cd ../parser
 make
 cd ../testSuite
 echo "Automatically running test suite for Phase 2..."
-echo "****************** PLEASE NOTE ******************"
-echo "The irrelevant parts of the output for each test case, such as parser output tokens '.sProgram', '.sIdentifier', '.sParmEnd' etc have been STRIPPED from the output to avoid unnecessary clutter"
 echo ""
 
 echo "Test file: mod_main.pt"
@@ -38,7 +36,7 @@ echo "================================"
 echo ""
 
 echo "Test file: pub.pt"
-echo "this program will output sPublic after sProcedure and sIdentifier"
+echo "this program will output sPublic after sProcedure and sPublic"
 echo "Contents of test file:"
 cat pub.pt
 echo "
@@ -425,26 +423,6 @@ cat minus_equals.pt
 echo "
 Output of test case:"
 ssltrace "ptc -o2 -t2 -L ./../lib/pt minus_equals.pt" ./../lib/pt/parser.def -e 
-echo "================================"
-echo ""
-
-echo "Test file: bitand_vs_and.pt"
-echo "the parser output tokens for & and && will be compared"
-echo "Contents of test file:"
-cat bitand_vs_and.pt
-echo "
-Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt bitand_vs_and.pt" ./../lib/pt/parser.def -e 
-echo "================================"
-echo ""
-
-echo "Test file: bitor_vs_or.pt"
-echo "the parser output tokens for | and || will be compared"
-echo "Contents of test file:"
-cat bitor_vs_or.pt
-echo "
-Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt bitor_vs_or.pt" ./../lib/pt/parser.def -e 
 echo "================================"
 echo ""
 
