@@ -67,7 +67,7 @@ echo ""
 
 
 echo "Test file: var_fail.pt"
-echo "this test fails for previous way of declaring variables by not emitting sVar token and instead emitting sCallStmt"
+echo "this test fails for previous way of declaring variables by not emitting sVar token"
 echo "Contents of test file:"
 cat var_fail.pt
 echo "
@@ -107,7 +107,7 @@ echo "================================"
 echo ""
 
 echo "Test file: const_multiple_semicolon_fail.pt"
-echo "this test fails for multiple declarations of const when separate by semi colons by emitting sCallStmt token"
+echo "this test fails for multiple declarations of const when separate by semi colons by emitting an AssignmentStmt token"
 echo "Contents of test file:"
 cat const_multiple_semicolon_fail.pt
 echo "
@@ -117,7 +117,7 @@ echo "================================"
 echo ""
 
 echo "Test file: const_multiple_comma.pt"
-echo "this program will pass for multiple declarations const when separate by commas by emitting 2 sInteger tokens and NOT emitting a sCallStmt token"
+echo "this program will pass for multiple declarations const when separate by commas by emitting 2 sInteger tokens"
 echo "Contents of test file:"
 cat const_multiple_comma.pt
 echo "
@@ -127,7 +127,7 @@ echo "================================"
 echo ""
 
 echo "Test file: let_multiple_semicolon_fail.pt"
-echo "this test fails for multiple declarations of a mutable integer variable when separate by semi colons by emitting sCallStmt token"
+echo "this test fails for multiple declarations of a mutable integer variable when separate by semi colons by emitting a single sMutable token"
 echo "Contents of test file:"
 cat let_multiple_semicolon_fail.pt
 echo "
@@ -137,7 +137,7 @@ echo "================================"
 echo ""
 
 echo "Test file: let_multiple_comma.pt"
-echo "this program will pass for multiple declarations of a mutable integer variable when separate by commas by emitting 2 sInteger tokens and NOT emitting a sCallStmt token"
+echo "this program will pass for multiple declarations of a mutable integer variable when separate by commas by emitting 2 sInteger tokens"
 echo "Contents of test file:"
 cat let_multiple_comma.pt
 echo "
@@ -157,7 +157,7 @@ echo "================================"
 echo ""
 
 echo "Test file: type_multiple_fail.pt"
-echo "this test fails for multiple declarations in each type by emitting a sCallStmt token when separated by semi colons"
+echo "this test fails for multiple declarations in each type by emitting only one sType token when separated by semi colons"
 echo "Contents of test file:"
 cat type_multiple_fail.pt
 echo "
@@ -167,7 +167,7 @@ echo "================================"
 echo ""
 
 echo "Test file: type_multiple_comma_fail.pt"
-echo "this test fails for multiple declarations in each type by emitting sCallStmt when tokens separated by commas"
+echo "this test fails for multiple declarations in each type by emitting only one sType when tokens separated by commas"
 echo "Contents of test file:"
 cat type_multiple_comma_fail.pt
 echo "
@@ -187,7 +187,7 @@ echo "================================"
 echo ""
 
 echo "Test file: println.pt"
-echo "this test maps the predefined identifier 'println' with the previous parser output token .sCallStmt"
+echo "this test maps the predefined identifier 'println' with the previous parser output token sCallStmt"
 echo "Contents of test file:"
 cat print.pt
 echo "
@@ -197,7 +197,7 @@ echo "================================"
 echo ""
 
 echo "Test file: print.pt"
-echo "this test maps the predefined identifier 'print' with the previous parser output token .sCallStmt"
+echo "this test maps the predefined identifier 'print' with the previous parser output token sCallStmt"
 echo "Contents of test file:"
 cat print.pt
 echo "
@@ -332,7 +332,7 @@ echo "Contents of test file:"
 cat or.pt
 echo "
 Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt and.pt" ./../lib/pt/parser.def -e 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt or.pt" ./../lib/pt/parser.def -e 
 echo "================================"
 echo ""
 
@@ -346,13 +346,13 @@ ssltrace "ptc -o2 -t2 -L ./../lib/pt div.pt" ./../lib/pt/parser.def -e
 echo "================================"
 echo ""
 
-echo "Test file: mod.pt"
+echo "Test file: modulus.pt"
 echo "we do not need to test for the previous PT Pascal keyword 'mod' since it will never get screened to a keyword in Qust, as proved by out tests in phase 1 Instead, we will test the replacement in Qust '%' and make sure it is mapped to the parser output token sMod"
 echo "Contents of test file:"
-cat mod.pt
+cat modulus.pt
 echo "
 Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt mod.pt" ./../lib/pt/parser.def -e 
+ssltrace "ptc -o2 -t2 -L ./../lib/pt modulus.pt" ./../lib/pt/parser.def -e 
 echo "================================"
 echo ""
 
@@ -377,7 +377,7 @@ echo "================================"
 echo ""
 
 echo "Test file: pt_double_equals_fail.pt"
-echo "this test fails for previous PT Pascal operator '=' by not emitting a sEq token and instead emitting a sCallStmt token"
+echo "this test fails for previous PT Pascal operator '=' by not emitting a sEq token"
 echo "Contents of test file:"
 cat pt_double_equals_fail.pt
 echo "
@@ -387,7 +387,7 @@ echo "================================"
 echo ""
 
 echo "Test file: not_equal.pt"
-echo "this test maps the new Qust operator '!=' by emitting a sNotEqual parser output token"
+echo "this test maps the new Qust operator '!=' by emitting a sNE parser output token"
 echo "Contents of test file:"
 cat not_equal.pt
 echo "
@@ -397,7 +397,7 @@ echo "================================"
 echo ""
 
 echo "Test file: pt_not_equal_fail.pt"
-echo "this test fails for the old PT Pascal operator '<>' by NOT emitting a sNotEqual parser output token"
+echo "this test fails for the old PT Pascal operator '<>' by NOT emitting a sNE parser output token"
 echo "Contents of test file:"
 cat pt_not_equal_fail.pt
 echo "
@@ -483,16 +483,6 @@ cat double_quote_stringlit.pt
 echo "
 Output of test case:"
 ssltrace "ptc -o2 -t2 -L ./../lib/pt double_quote_stringlit.pt" ./../lib/pt/parser.def -e 
-echo "================================"
-echo ""
-
-echo "Test file: old_equal_fail.pt"
-echo "this test fails for the old assignment syntax ':=' by not emitting a sAssignmentStmt token"
-echo "Contents of test file:"
-cat old_equal_fail.pt
-echo "
-Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt old_equal_fail.pt" ./../lib/pt/parser.def -e 
 echo "================================"
 echo ""
 
