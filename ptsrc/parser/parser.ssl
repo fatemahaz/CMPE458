@@ -524,7 +524,7 @@ OptionallySignedIntegerConstant :
         ]
         ;
 
-change : changed for accomadation of new variables in qust which include:
+%change : changed for accomadation of new variables in qust which include:
 % mut. can also get type before the variable initialization
 VariableDeclarations :
         % Accept one or more variable declarations.
