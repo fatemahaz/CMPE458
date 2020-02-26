@@ -292,6 +292,7 @@ AssignmentOrCallStmt :
             | '+=':
                 .sAssignmentStmt
                 .sIdentifier
+                .sIdentifier
                 @Expression
                 .sAdd
                 .sExpnEnd
