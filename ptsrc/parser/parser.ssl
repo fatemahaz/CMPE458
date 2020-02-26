@@ -322,7 +322,12 @@ IfStmt :
                 ]
             | *:
             >
-        ]};
+        ]}
+        [
+            | ';' :
+            | * :
+        ]
+        ;
 
 WhileStmt :
         .sWhileStmt
@@ -332,6 +337,10 @@ WhileStmt :
             @BeginStmt
         '}'
         .sEnd
+        [
+            | ';' :
+            | * :
+        ]
         ;
 
 FnHeading :
