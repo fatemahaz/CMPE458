@@ -195,7 +195,10 @@ Program :
         }
         ')'
         .sParmEnd
-        @Block  
+        '{'
+         '{'
+            @BeginStmt
+        '}' 
         ; 
         % remove ; and . from end of program
 
@@ -205,10 +208,9 @@ Block :
         % appear only in the order consts, types, vars, procedures.
         % We allow arbitrary intermixing of these instead to preserve
         % programmer sanity.
+        
         {[
-            | '{' :
-                    @BeginStmt
-            
+                    
             | 'const':
                 .sConst
                 @ConstantDefinitions
@@ -228,21 +230,27 @@ Block :
                 pIdentifier .sIdentifier
                 .sPublic
                 @FnHeading
-                @Block
+                '{'
+                @BeginStmt
+                '}'
 
             | 'fn' :
                 .sProcedure
                 % procedure name
                 pIdentifier .sIdentifier
                 @FnHeading
-                @Block
+                 '{'
+                @BeginStmt
+                '}'
 
             % change: added mod to emit mod and then go into Block
             % does anything else need to be done???     
             | 'mod' :
                 .sModule
                 pIdentifier .sIdentifier
-                @Block
+                 '{'
+                @BeginStmt
+                '}'
 
             % change : alternatives from the statement rule
             | pIdentifier:
@@ -286,7 +294,9 @@ IfStmt :
         @Expression
         .sExpnEnd
         .sThen
-        @Block 
+         '{'
+                @BeginStmt
+                '}'
         {[
             | 'else':
                 [
@@ -295,10 +305,14 @@ IfStmt :
                         @Expression
                         .sExpnEnd
                         .sThen
-                        @Block
+                         '{'
+                            @BeginStmt
+                        '}'
                     | *:
                         .sElse
-                        @Block
+                         '{'
+                            @BeginStmt
+                        '}'
                 ]
             | *:
             >
@@ -308,7 +322,9 @@ WhileStmt :
         .sWhileStmt
         @Expression
         .sExpnEnd
-        @Block;
+         '{'
+            @BeginStmt
+        '}';
 
 FnHeading :
         % Accept zero or more procedure formal parameter declarations.
@@ -342,8 +358,7 @@ BeginStmt :
             @Block
             [
                 | ';':
-                | '}':
-                    .sEnd
+                | * :
                     >
             ]
         };
@@ -624,7 +639,9 @@ MatchStmt :
         ]}
         '=>'
         .sCaseOtherwise
-        @Block
+         '{'
+            @BeginStmt
+        '}'
         .sCaseEnd
         '}';
 
@@ -641,24 +658,19 @@ MatchAlternative :
             ]
         }
         .sLabelEnd
-        '=>'  @Block;
+        '=>'   '{'
+                @BeginStmt
+                '}';
 
 Loop:
     .sLoopStmt
-    [
-        | '{' :
-            @BeginStmt
-        | *:
-    ]
+    '{'
+    @BeginStmt
     'break'
     'if'
     @Expression
-    .sExpnEnd
-    [
-        | '{' :
-            @BeginStmt
-        | *:
-    ]
+    @BeginStmt
+    '}'
     ;
 
 end
