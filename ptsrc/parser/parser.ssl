@@ -297,10 +297,8 @@ IfStmt :
         @Expression
         .sExpnEnd
         .sThen
-         '{'
-         @BeginStmt
-         '}'
-                .sEnd
+        '{' @BeginStmt '}'
+        .sEnd
         {[
             | 'else':
                 [
@@ -309,39 +307,27 @@ IfStmt :
                         @Expression
                         .sExpnEnd
                         .sThen
-                         '{'
-                            @BeginStmt
+                        '{'
+                        @BeginStmt
                         '}'
                         .sEnd
                     | *:
                         .sElse
-                         '{'
-                            @BeginStmt
-                        '}'
+                        '{' @BeginStmt '}'
                         .sEnd
                 ]
             | *:
             >
-        ]}
-        [
-            | ';' :
-            | * :
-        ]
-        ;
+        ]};
 
 WhileStmt :
         .sWhileStmt
         @Expression
         .sExpnEnd
-         '{'
+        '{'
             @BeginStmt
         '}'
-        .sEnd
-        [
-            | ';' :
-            | * :
-        ]
-        ;
+        .sEnd;
 
 FnHeading :
         % Accept zero or more procedure formal parameter declarations.
