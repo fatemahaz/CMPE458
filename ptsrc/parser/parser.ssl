@@ -255,9 +255,6 @@ Block :
                 @Loop
             | 'match':
                 @MatchStmt
-            | 'break':
-                .sLoopBreakIf
-                @Expression
             | *:
                 >
 
@@ -648,11 +645,20 @@ MatchAlternative :
 
 Loop:
     .sLoopStmt
-    @BeginStmt
-    .sEnd
-
+    [
+        | '{' :
+            @BeginStmt
+        | *:
+    ]
+    'break'
+    'if'
     @Expression
     .sExpnEnd;
+    [
+        | '{' :
+            @BeginStmt
+        | *:
+    ]
 
 end
 
