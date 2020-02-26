@@ -680,6 +680,7 @@ Loop:
     .sEnd
     'break'
     'if'
+    .sLoopBreakIf
     @Expression
     @BeginStmt
     .sEnd
