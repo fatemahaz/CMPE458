@@ -256,7 +256,8 @@ Block :
             | 'match':
                 @MatchStmt
             | 'break':
-                @IfStmt
+                .sLoopBreakIf
+                @Expression
             | *:
                 >
 
@@ -264,7 +265,7 @@ Block :
 
 AssignmentOrCallStmt :
         [
-            | ':=':
+            | '=':
                 .sAssignmentStmt
                 .sIdentifier    % identifier accepted in the Statement rule
                 @Expression
@@ -357,23 +358,26 @@ CallStmt :
         '('
         {   [
                 | 'mut' :
+                    .sVar
                     @Expression
                     .sExpnEnd
+                | ')':
+                    .sParmEnd
+                    >
                 | * :
                     @Expression
-                    .sExpnEnd
-                    >
+                    .sExpnEnd 
             ]
 
             % check if more params
             [
                 | ',':
                 | *:
-                    >
+                .sParmEnd
+                ')'
+                >
             ] 
-        }
-        ')'
-        .sParmEnd;
+        };
 
 ConstantDefinitions :
         % Accept one or more named constant definitions
@@ -515,11 +519,11 @@ Mutable:
 Expression :
         @SimpleExpression
         [
-            | '=':
+            | '==':
                 %change to '=='
                 @SimpleExpression  .sEq
                 %need to change to ! for not equals
-            | '<>':
+            | '!=':
                 @SimpleExpression  .sNE
             | '<':
                 @SimpleExpression  .sLT
