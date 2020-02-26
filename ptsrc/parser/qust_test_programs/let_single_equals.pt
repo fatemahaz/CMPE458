@@ -1,3 +1,7 @@
 mod main(output) {
+<<<<<<< HEAD:ptsrc/parser/qust_test_programs/let_single_equals.pt
     let a = 5;
+=======
+	let mut s : str = "test";
+>>>>>>> changes:ptsrc/testSuite/str.pt
 }
