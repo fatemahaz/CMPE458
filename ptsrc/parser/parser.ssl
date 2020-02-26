@@ -653,7 +653,7 @@ Loop:
     'break'
     'if'
     @Expression
-    .sExpnEnd;
+    .sExpnEnd
     [
         | '{' :
             @BeginStmt
