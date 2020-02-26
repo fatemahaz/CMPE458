@@ -289,6 +289,12 @@ AssignmentOrCallStmt :
                 ']'  ':='
                 @Expression
                 .sExpnEnd
+            | '+=':
+                .sAssignmentStmt
+                .sIdentifier
+                @Expression
+                .sAdd
+                .sExpnEnd
             | *:
                 @CallStmt
         ];
