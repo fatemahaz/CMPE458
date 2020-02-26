@@ -199,6 +199,7 @@ Program :
         ; 
         % remove ; and . from end of program
 
+%move handling of braces to their respective functions
 Block :
         % Strictly speaking, standard Pascal requires that declarations
         % appear only in the order consts, types, vars, procedures.
@@ -251,8 +252,11 @@ Block :
             | 'while':
                 @WhileStmt
             | 'loop':
+                @Loop
             | 'match':
                 @MatchStmt
+            | 'break':
+                @IfStmt
             | *:
                 >
 
@@ -349,30 +353,26 @@ BeginStmt :
 CallStmt :
         .sCallStmt
         .sIdentifier    % procedure identifier accepted in the Statement rule
-        % accept zero or more actual parameters
-        [
-            | '(':
-                {
+        % Accept zero or more actual parameters
+        '('
+        {   [
+                | 'mut' :
                     @Expression
                     .sExpnEnd
-                    % allow a field width specification to occur in calls
-                    % to the standard procedures write and writeln
-                    [
-                        | ':':
-                            .sFieldWidth
-                            @Expression
-                            .sExpnEnd
-                        | *:
-                    ]
-                    [
-                        | ',':
-                        | *:
-                            >
-                    ]
-                }
-                ')'
-            | *:        % no actual parameters
-        ]
+                | * :
+                    @Expression
+                    .sExpnEnd
+                    >
+            ]
+
+            % check if more params
+            [
+                | ',':
+                | *:
+                    >
+            ] 
+        }
+        ')'
         .sParmEnd;
 
 ConstantDefinitions :
@@ -497,8 +497,10 @@ Mutable:
             | ':' :
                  @TypeBody
             | '=' :
-                pInteger
-                .sInteger
+                .sInitialValue
+                @Factor
+                @Expression
+                .sExpnEnd
             | ';' :
                 >
             | ',' :
@@ -639,6 +641,14 @@ MatchAlternative :
         }
         .sLabelEnd
         '=>'  @Block;
+
+Loop:
+    .sLoopStmt
+    @BeginStmt
+    .sEnd
+
+    @Expression
+    .sExpnEnd;
 
 end
 
