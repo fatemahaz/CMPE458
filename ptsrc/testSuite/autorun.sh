@@ -3,8 +3,6 @@ cd ../parser
 make
 cd ../testSuite
 echo "Automatically running test suite for Phase 2..."
-echo "****************** PLEASE NOTE ******************"
-echo "The irrelevant parts of the output for each test case, such as parser output tokens '.sProgram', '.sIdentifier', '.sParmEnd' etc have been STRIPPED from the output to avoid unnecessary clutter"
 echo ""
 
 echo "Test file: mod_main.pt"
@@ -38,7 +36,7 @@ echo "================================"
 echo ""
 
 echo "Test file: pub.pt"
-echo "this program will output sPublic after sProcedure and sIdentifier"
+echo "this program will output sPublic after sProcedure and sPublic"
 echo "Contents of test file:"
 cat pub.pt
 echo "
