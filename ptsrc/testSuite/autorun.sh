@@ -207,22 +207,12 @@ echo "================================"
 echo ""
 
 echo "Test file: bool.pt"
-echo "this test maps the predefined identifier bool with the previous parser output token sBoolean"
+echo "this test maps the predefined identifier bool with the previous parser output token sIdentifier"
 echo "Contents of test file:"
 cat bool.pt
 echo "
 Output of test case:"
 ssltrace "ptc -o2 -t2 -L ./../lib/pt bool.pt" ./../lib/pt/parser.def -e 
-echo "================================"
-echo ""
-
-echo "Test file: str.pt"
-echo "this test maps the predefined identifier str with the new Qust parser output token sString"
-echo "Contents of test file:"
-cat str.pt
-echo "
-Output of test case:"
-ssltrace "ptc -o2 -t2 -L ./../lib/pt str.pt" ./../lib/pt/parser.def -e 
 echo "================================"
 echo ""
 

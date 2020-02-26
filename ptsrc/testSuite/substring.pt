@@ -1,5 +1,3 @@
 mod main(output) {
-	let mut x: str;
-	x = "foo";
-	x = x / 1:2; 
+	"Hi there" / 4 : 6 
 }
