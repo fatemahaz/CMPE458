@@ -1,0 +1,7 @@
+mod main(output) {
+    loop {
+        a = 6
+        break if x == 10;
+        b = 9
+    }
+}
