@@ -581,7 +581,7 @@ SimpleExpression :
                 @Term  .sAdd
             | '-':
                 @Term  .sSubtract
-            | '|':
+            | '||':
                 .sInfixOr  @Term  .sOr
             | *:
                 >
@@ -596,7 +596,7 @@ Term :
                 @Factor  .sDivide
             | '%':
                 @Factor  .sModulus
-            | '&':
+            | '&&':
                 .sInfixAnd  @Factor  .sAnd
             | *:
                 >
