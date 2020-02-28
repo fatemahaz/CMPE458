@@ -1,3 +1,3 @@
 mod main(output) {
-	let mut s = str;
+    let mut b = 5;
 }

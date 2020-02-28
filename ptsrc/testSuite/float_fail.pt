@@ -1,2 +1,3 @@
 mod main(output) {
+	const c = 1.0;
 }

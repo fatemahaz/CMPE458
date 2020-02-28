@@ -1,0 +1,11 @@
+mod main(output) {
+    if x<42 { 
+
+    }
+    else if x>40 {
+        
+    }
+    else {
+
+    }
+}

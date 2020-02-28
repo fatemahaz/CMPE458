@@ -92,37 +92,38 @@
         sFieldWidth = 24;
         sIfStmt = 25;
         sThen = 26;
-        sElse = 27;
-        sWhileStmt = 28;
-        sLoopStmt = 29;
-        sLoopBreakIf = 30;
-        sLoopEnd = 31;
-        sModule = 32;
-        sPublic = 33;
-        sCaseOtherwise = 34;
-        sSubstring = 35;
-        sLength = 36;
-        sMutable = 37;
-        sInitialValue = 38;
-        sEq = 39;
-        sNE = 40;
-        sLT = 41;
-        sLE = 42;
-        sGT = 43;
-        sGE = 44;
-        sAdd = 45;
-        sSubtract = 46;
-        sMultiply = 47;
-        sDivide = 48;
-        sModulus = 49;
-        sInfixOr = 50;
-        sOr = 51;
-        sInfixAnd = 52;
-        sAnd = 53;
-        sNot = 54;
-        sNewLine = 55;
-        sEndOfFile = 56;
-        lastSemanticToken = 56;
+        sElseIf = 27;
+        sElse = 28;
+        sWhileStmt = 29;
+        sLoopStmt = 30;
+        sLoopBreakIf = 31;
+        sLoopEnd = 32;
+        sModule = 33;
+        sPublic = 34;
+        sCaseOtherwise = 35;
+        sSubstring = 36;
+        sLength = 37;
+        sMutable = 38;
+        sInitialValue = 39;
+        sEq = 40;
+        sNE = 41;
+        sLT = 42;
+        sLE = 43;
+        sGT = 44;
+        sGE = 45;
+        sAdd = 46;
+        sSubtract = 47;
+        sMultiply = 48;
+        sDivide = 49;
+        sModulus = 50;
+        sInfixOr = 51;
+        sOr = 52;
+        sInfixAnd = 53;
+        sAnd = 54;
+        sNot = 55;
+        sNewLine = 56;
+        sEndOfFile = 57;
+        lastSemanticToken = 57;
 
         { Input/Output Tokens }
 
@@ -131,11 +132,36 @@
         { Type Values }
 
         { S/SL Rule Table Addresses } {
-        Program = 0;
+        Mod = 0;
+        Program = 16;
+        BeginStmt = 331;
+        Block = 48;
+        ConstantDefinitions = 407;
+        TypeDefinitions = 495;
+        VariableDeclarations = 591;
+        FnHeading = 286;
+        AssignmentOrCallStmt = 170;
+        IfStmt = 210;
+        WhileStmt = 271;
+        Loop = 1015;
+        MatchStmt = 942;
+        Expression = 707;
+        CallStmt = 347;
+        ConstantValue = 435;
+        UnsignedIntegerConstant = 475;
+        TypeBody = 506;
+        SimpleType = 522;
+        OptionallySignedIntegerConstant = 571;
+        Mutable = 663;
+        Factor = 858;
+        SimpleExpression = 761;
+        Term = 814;
+        IdentifierExtension = 912;
+        MatchAlternative = 989;
         }
 
         { S/SL Table Parameters } {
-        sslTblSize = 28;
+        sslTblSize = 1038;
         minSslTableValue = -32767;
         maxSslTableValue = 32767;
 	}
