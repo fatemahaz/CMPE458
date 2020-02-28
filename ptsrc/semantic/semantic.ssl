@@ -1437,7 +1437,7 @@ Statement :
                 @WhileStmt
             | sCaseStmt:
                 @CaseStmt
-            | sRepeatStmt:
+            | sLoopStmt:
                 @RepeatStmt
             | sNullStmt:
         ];
@@ -1657,7 +1657,7 @@ RepeatStmt :
         .tRepeatBegin
         oFixPushTargetAddress           % top-of-loop branch target
         {[
-            | sRepeatEnd:
+            | sLoopEnd:
                 >
             | *:
                 @Statement
