@@ -17,6 +17,7 @@
 
 Input :
         % Semantic tokens - must match output tokens in parser.ssl exactly!
+        %change begin
         sIdentifier 
         firstSemanticToken = sIdentifier
         firstCompoundSemanticToken = sIdentifier
@@ -24,12 +25,15 @@ Input :
         sStringLiteral
         lastCompoundSemanticToken = sStringLiteral
 
+        % change: these should be copied from parser.def 
+
         sProgram
         sParmBegin
         sParmEnd
         sConst
         sType
         sVar
+
         sProcedure
         sBegin
         sEnd
@@ -48,10 +52,23 @@ Input :
         sFieldWidth
         sIfStmt
         sThen
+        sElseIf
         sElse
         sWhileStmt
-        sRepeatStmt
-        sRepeatEnd
+         
+        % change begin for new output tokens
+        sLoopStmt
+        sLoopBreakIf
+        sLoopEnd
+        sModule
+        sPublic
+        sCaseOtherwise
+        sSubstring
+        sLength
+        sMutable
+        sInitialValue
+        % change end
+
         sEq
         sNE
         sLT
@@ -71,6 +88,9 @@ Input :
         sNewLine
         sEndOfFile
         lastSemanticToken = sEndOfFile;
+
+
+        %change end
 
 Output :        
         % T-code tokens - must match input tokens in coder.ssl exactly!
@@ -133,6 +153,21 @@ Output :
         tTrapBegin
         tWriteEnd
         tReadEnd
+
+        %change new tokens
+        tFetchString
+        tAssignString
+        tStoreParmString
+        tSubscriptString
+        tConcatenate
+        tRepeatString
+        tSubstring 
+        tLength
+        tStringEqual
+        tWhilePreBreak
+        tWhileBreakIf
+        tCaseOtherwise
+        %change end
 
         % Compound T-codes - T-code operations that take an operand
         tLiteralAddress
@@ -1402,7 +1437,7 @@ Statement :
                 @WhileStmt
             | sCaseStmt:
                 @CaseStmt
-            | sRepeatStmt:
+            | sLoopStmt:
                 @RepeatStmt
             | sNullStmt:
         ];
@@ -1622,7 +1657,7 @@ RepeatStmt :
         .tRepeatBegin
         oFixPushTargetAddress           % top-of-loop branch target
         {[
-            | sRepeatEnd:
+            | sLoopEnd:
                 >
             | *:
                 @Statement
