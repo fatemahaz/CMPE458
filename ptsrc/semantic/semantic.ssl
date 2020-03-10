@@ -1974,7 +1974,7 @@ CompareAndSwapTypes :
                     | *:
                         #eTypeMismatch
                 ]
-        ];
+        ]; 
 
 CompareOperandAndResultTypes :
         % Compare the two operand types and the result type for assignment
