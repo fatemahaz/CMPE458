@@ -811,7 +811,7 @@ Block :
         % The parser has flagged phase errors, but has emitted out-of-phase
         % definitions with the intent of providing better error repair.
 
-sBegin
+		sBegin
 		@BeginStmt
         {[
             | sProcedure:
@@ -834,8 +834,8 @@ sBegin
                 @WhileStmt
             | sCaseStmt:
                 @CaseStmt
-            | sRepeatStmt:
-                @RepeatStmt
+            | sLoopStmt:
+                @LoopStmt
             | sNullStmt:
 			|*: >
         ]};
@@ -1437,7 +1437,6 @@ ProcedurePrologue :
         oTypeStkEnterParameterCount     % In procedure's type entry
         oCountPop;
 
-Statement :
 Statement :
 	oSymbolTblPushScope
 	@Block
