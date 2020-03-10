@@ -1653,7 +1653,7 @@ WhileStmt :
         oFixPopTargetAddress
         oFixPopForwardBranch;
 
-RepeatStmt :
+LoopStmt :
         .tRepeatBegin
         oFixPushTargetAddress           % top-of-loop branch target
         {[
