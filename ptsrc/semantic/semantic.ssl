@@ -811,6 +811,7 @@ Block :
         % The parser has flagged phase errors, but has emitted out-of-phase
         % definitions with the intent of providing better error repair.
 		sBegin
+		@BeginStmt
         {[
             | sProcedure:
                 @ProcedureDefinition
@@ -836,8 +837,8 @@ Block :
                 @RepeatStmt
             | sNullStmt:
 			|*: >
-        ]}
-		sEnd
+        ]};
+	
 
 ConstantDefinitions :           % Process named constant definitions
         {[
