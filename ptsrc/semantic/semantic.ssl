@@ -733,6 +733,18 @@ mechanism FixAddress :
 
 rules
 
+       
+% start change, not done yet      
+ModuleDefinition : 
+        {[
+                | 'main':
+                @Program
+        ]}
+        oSymbolTblStripScope
+        oSymbolTblMergeScope
+% end change
+
+
 Program :
         sProgram
         % Program scope, distinct from implicit scope surrounding
@@ -1172,6 +1184,12 @@ VariableDeclarations :
                     | syUndefined, syExternal:
                     | *:
                         #eMultiplyDefined
+                        
+                        % start change
+                        oSymbolStkPop
+                        @SymbolStkPushDefaultIntegerType
+                        % end change
+                        
                         % The new definition will obscure the old one
                 ]
 
@@ -1452,6 +1470,12 @@ Assignment :
         [ oSymbolStkChooseKind
             | syUndefined:
                 #eUndefinedIdentifier
+            
+            % start change
+            | syMutableVariable:
+                #eMutableIdentifier
+            % end change
+                
             | *:
         ]
         .tAssignBegin
@@ -1576,6 +1600,12 @@ ActualParameters :
                         @CompareAndSwapTypes
                     | syVarParameter:
                         @VarActual
+                        
+                    % start change 
+                    | syMutableVariable:
+                        #sMutable
+                    % end change
+                    
                 ]
                 oSymbolStkPop  oTypeStkPop      % actual
                 oSymbolStkPop  oTypeStkPop      % formal
