@@ -1490,11 +1490,13 @@ Assignment :
 
         @Variable	        % Pushes type of variable on type stack
 
-        [ oTypeStkChooseKind
-            | tpArray:
-                #eScalarReqd    % No error repair since error confined to this rule
-            | *:
-        ]
+        % start change - should I get rid of this?
+        % [ oTypeStkChooseKind
+            % | tpArray:
+               % #eScalarReqd    % No error repair since error confined to this rule
+            % | *:
+        % ]
+        % end change
 
         @Expression             % Pushes symbol and type stack entries for the expression
         @CompareAndSwapTypes
@@ -1609,7 +1611,7 @@ ActualParameters :
                     | syVarParameter:
                         @VarActual
                         
-                    % start change 
+                    % start change - Make sure syMutableVariable is accepted wherever syVariable is?
                     | syMutableVariable:
                         #sMutable
                     % end change
