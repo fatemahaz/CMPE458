@@ -734,7 +734,7 @@ mechanism FixAddress :
 rules
 
        
-% start change, not done yet      
+% start change, not done yet completely      
 ModuleDefinition : 
         {[
                 | 'main':
@@ -968,10 +968,14 @@ TypeBody :
         % Accept a type specification and push a Type Stack entry for it.
         % Enter it and any new index or component subtypes into the Type Table as necessary. 
         [
-            | sArray:
-                oTypeStkPush(tpArray)
-                @IndexType
-                @ComponentType
+        
+        % start change -Should we completely remove this?
+            % | sArray:
+                % oTypeStkPush(tpArray)
+                % @IndexType
+                % @ComponentType
+        % end change        
+        
             | sFile:
                 oTypeStkPush(tpFile)
                 @ComponentType
@@ -1182,14 +1186,15 @@ VariableDeclarations :
                 % Check not previously defined
                 [ oSymbolStkChooseKind
                     | syUndefined, syExternal:
+                    
+                    % start change - If the variable is mutable, set its kind to syMutableVariable using Assignment rule
+                    | syMutableVariable:
+                        @Assignment
+                        oSymbolStkPushDefaultIntegerType
+                    % end change
+                    
                     | *:
                         #eMultiplyDefined
-                        
-                        % start change
-                        oSymbolStkPop
-                        @SymbolStkPushDefaultIntegerType
-                        % end change
-                        
                         % The new definition will obscure the old one
                 ]
 
@@ -1200,6 +1205,7 @@ VariableDeclarations :
 
                 oTypeStkPop
         	oSymbolStkPop
+                @Assignment
             | *:
                 >
         ]};
@@ -1470,15 +1476,17 @@ Assignment :
         [ oSymbolStkChooseKind
             | syUndefined:
                 #eUndefinedIdentifier
-            
-            % start change
-            | syMutableVariable:
-                #eMutableIdentifier
-            % end change
-                
             | *:
         ]
         .tAssignBegin
+
+        % start change - syMutableVariable defined?
+        [ oSymbolStkPushDefaultIntegerType
+                | syMutableVariable:
+                        #eMutableVariableIdentifier
+                | *:
+        ]
+        % end change
 
         @Variable	        % Pushes type of variable on type stack
 
