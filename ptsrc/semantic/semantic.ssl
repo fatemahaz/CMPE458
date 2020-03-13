@@ -1175,6 +1175,7 @@ SubrangeUpperBound :
         ]
 		[ | sMutable:
 			%***** handle mutable type here
+			sMutable
 		]
         [
             | sNegate:
