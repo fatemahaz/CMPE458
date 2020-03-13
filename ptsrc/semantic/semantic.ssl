@@ -1071,13 +1071,15 @@ SimpleType :
                 [ 
                     | sRange:   % subrange specification
                         [ oSymbolStkChooseKind
+							% if array, exit
+							| syType:
+
                             | syConstant:       
                                 oTypeStkPushSymbol
                                 [ oTypeStkChooseKind
                                     | tpInteger:        
                                         oValuePushSymbol
                                     | *:
-                                        #eIntegerConstReqd
                                         oValuePush(one)
                                 ]
                                 [
