@@ -976,7 +976,26 @@ TypeBody :
             | sArray:
                 oTypeStkPush(tpArray)
 				[ | sIdentifier:
-                oSymbolStkPushIdentifier
+					oSymbolStkPushIdentifier
+					[ oSymbolStkChooseKind
+						| syConstant:
+							oTypeStkPushSymbol
+							[ oTypeStkChooseKind
+								| tpInteger:
+							%		oValuePushSymbol
+							%	| *:
+							%		#eIntegerConstReqd
+							%		@ValuePushValuePlusOne
+							]
+							oTypeStkPop
+						| syUndefined:
+							#eUndefinedIdentifier
+							@ValuePushValuePlusOne
+						| *:
+							#eIntegerConstReqd
+							@ValuePushValuePlusOne
+					]
+					oSymbolStkPop
 				  |*:
 				]
 				@ComponentType
@@ -1075,7 +1094,6 @@ SimpleType :
                 [
                     | sRange:   % subrange specification
                         [ oSymbolStkChooseKind
-							% if array, exit
                             | syConstant:       
                                 oTypeStkPushSymbol
                                 [ oTypeStkChooseKind
