@@ -2,6 +2,7 @@
 %
 % Date:  30 Jun 1980
 %       (Revised v4.2 - 18 Dec 2019)
+%       (Revised Qust - 27 Dec 2019)
 %
 % Author:  Alan Rosselet
 %
@@ -22,10 +23,10 @@ Input :
         lStar           '*'
         lColon          ':'
         lEquals         '='
-        % change : remove lDot
+        lDot            '.'
         lComma          ','
         lSemicolon      ';'
-        lQuote          '"'
+        lQuote
         lBackslash
         lLeftAngle      '<'
         lRightAngle     '>'
@@ -33,10 +34,9 @@ Input :
         lRightParen     ')'
         lLeftBracket    '['
         lRightBracket   ']'
-
-        % changes start 
         lLeftBrace      '{'
         lRightBrace     '}'
+%% ADDED
         lQuestionMark   '?'
         lSlash          '/'
         lPercent        '%'
@@ -44,8 +44,7 @@ Input :
         lOrBar          '|'
         lExclamation    '!'
         lUnderscore     '_'
-        % changes end
-
+%%
         lBlank
         lIllegal
         lNewLine
@@ -60,28 +59,51 @@ Output :
         %   Tokens pDiv through pRepeat are keywords which will be separated
         %   from user defined identifiers by the Screener.  This Scanner
         %   treats them all as identifiers.
-
-        % changes start
+%% CHANGED
+%%      pDiv 
+%%      firstKeywordToken = pDiv
+%%      pMod
+%%      pOr
+%%      pAnd
+%%      pNot
+%%      pThen
+%%      pElse
+%%      pOf
+%%      pEnd
+%%      pUntil
+%%      pDo
+%%      pArray
+%%      pFile
+%%      pProgram
+%%      pConst
+%%      pVar
+%%      pType
+%%      pProcedure
+%%      pBegin
+%%      pIf
+%%      pCase
+%%      pWhile
+%%      pRepeat
+%%      lastKeywordToken = pRepeat
+        pElse
+        firstKeywordToken = pElse
+        pOf
+        pFile
+        pType
         pPub
-        firstKeywordToken = pPub
+        pIf
+        pWhile
         pMod
         pMain
+        pConst
         pLet
         pMut
         pFn
         pLoop
         pBreak
         pMatch
-        % changes end
-
-        pElse
-        pOf
-        pFile
-        pConst
-        pType
-        pIf
-        pWhile
-        lastKeywordToken = pWhile
+        lastKeywordToken = pMatch
+%% 
 
         % Scanner tokens -
         %   These are the tokens actually recognized by the Scanner itself.
@@ -101,8 +123,10 @@ Output :
         pPlus
         pMinus
         pStar
-        pColonEquals
-        % change: remove pDot
+%% DELETED
+%%      pColonEquals
+%%
+        pDot
         pComma
         pSemicolon
         pColon
@@ -116,27 +140,25 @@ Output :
         pRightParen
         pLeftBracket
         pRightBracket
-        % change: remove pDotDot
-
-        % changes start
+        pDotDot
+%% CHANGED
+%%      lastSyntaxToken = pDotDot;
         pLeftBrace
         pRightBrace
-        pQuestionMark
+        pPlusEquals
+        pMinusEquals
         pSlash
         pPercent
-        pAmpersand
+        pDoubleEquals
+        pDoubleAmpersand
+        pDoubleOrBar
         pOrBar
         pNot
         pUnderscore
-        pDoubleAmpersand
-        pDoubleOrBar
-        pDoubleEquals
-        pEqualsGreater
-        pPlusEquals
-        pMinusEquals
-        lastSyntaxToken = pMinusEquals;
-
-        % changes end
+        pQuestionMark
+        pEqualGreater
+        lastSyntaxToken = pEqualGreater;
+%% 
 
 Error :
         eIllegalChar = 5
@@ -175,8 +197,17 @@ Scan :
             | lTab:
             | ';':
                 .pSemicolon
+%% CHANGED
+%%          | '(':
+%%              [
+%%                  | '*':
+%%                      @AlternateComment
+%%                  | *:
+%%                      .pLeftParen
+%%              ]
             | '(':
                 .pLeftParen
+%% 
             | ')':
                 .pRightParen
             | '[':
@@ -185,57 +216,17 @@ Scan :
                 .pRightBracket
             | ',':
                 .pComma
-
-            % changes start
-            | '{':
-                .pLeftBrace
-            | '}':
-                .pRightBrace
-            | '?':  
-                .pQuestionMark
-            | '%':
-                .pPercent
-            | '&':  
-                [
-                    | '&':  
-                        .pDoubleAmpersand
-                    | *:
-                        .pAmpersand
-                ]
-            | '|':
-                [
-                    | '|':  % change added to support ||
-                        .pDoubleOrBar
-                    | *:
-                        .pOrBar
-                ]
-            | '!':
-                [
-                    | '=':  % change added to support notEquals
-                        .pNotEqual
-                    | *:
-                        .pNot
-                ]
-            | '_':
-                .pUnderscore
-            | '/':
-                [
-                    | '/':
-                        @Comment
-                    | '*':
-                        @AlternateComment
-                    | *:
-                        .pSlash
-                ]
-            % changes end
-
+%% CHANGED
+%%          | ':':
+%%              [
+%%                  | '=':
+%%                      .pColonEquals
+%%                  | *:
+%%                      .pColon
+%%              ]
             | ':':
-                [
-                    | '=':
-                        .pColonEquals
-                    | *:
-                        .pColon
-                ]
+                .pColon
+%%
             | lDigit:
                 oBufferSave
                 @Integer
@@ -246,34 +237,54 @@ Scan :
                         @Identifier
                     | *:
                 ]
+%% CHANGED
+%%          | '=':
+%%              .pEquals
+%%          | '+':
+%%              .pPlus
             | '=':
                 [
-                    | '=':  % change added to support ==
+                    | '>':
+                        .pEqualGreater
+                    | '=':
                         .pDoubleEquals
-                    | '>':  %c change added to support =>
-                        .pEqualsGreater
                     | *:
                         .pEquals
                 ]
             | '+':
                 [
-                    | '=':  % change added to support +=
+                    | '=':
                         .pPlusEquals
                     | *:
                         .pPlus
                 ]
+%% 
             | lQuote:
                 @StringLiteral
+%% CHANGED
+%%          | '-':
+%%              .pMinus
             | '-':
                 [
-                    | '=':  % change added to support -=
+                    | '=':
                         .pMinusEquals
                     | *:
                         .pMinus
                 ]
-            % change: remove rule for pDot and pDotDot
+%% 
+            | '.':
+                [
+                    | '.':
+                        .pDotDot
+                    | *:
+                        .pDot
+                ]
             | '<':
                 [
+%% DELETED
+%%                  | '>':
+%%                      .pNotEqual
+%% 
                     | '=':
                         .pLessEqual
                     | *:
@@ -286,8 +297,54 @@ Scan :
                     | *:
                         .pGreater
                 ]
+%% CHANGED
+%%          | '{':
+%%              @Comment
+            | '{':
+                .pLeftBrace
+%%
             | '*':
                 .pStar
+%% ADDED
+            | '}':
+                .pRightBrace
+            | '/':
+                [
+                    | '/':
+                        @Comment
+                    | '*':
+                        @AlternateComment
+                    | *:
+                        .pSlash
+                ]
+            | '%':
+                .pPercent
+            | '!':
+                [
+                    | '=':
+                        .pNotEqual
+                    | *:
+                        .pNot
+                ]
+            | '&':
+                [
+                    | '&':
+                        .pDoubleAmpersand
+                    | *:
+                        #eIllegalChar
+                ]
+            | '|':
+                [
+                    | '|':
+                        .pDoubleOrBar
+                    | *:
+                        .pOrBar
+                ]
+            | '_':
+                .pUnderscore
+            | '?':
+                .pQuestionMark
+%% 
             | lNewPage:
             | lEndFile:
                 .pEndFile
@@ -353,9 +410,13 @@ Comment :
         % Discard the contents of a comment
 
         {[
-            | lNewLine:        % change: if newline comment has ended 
+%% CHANGED
+%%          | '}':
+%%              >
+            | lNewLine:
                 .pNewLine
                 >
+%% 
             | lEndFile:         % comment must be closed before EOF
                 #eCommentEOF
                 .pEndFile
@@ -368,8 +429,12 @@ AlternateComment :
         {[
             | '*':
                 [
+%% CHANGED
+%%                  | ')':
+%%                      >
                     | '/':
                         >
+%%
                     | *:
                 ]
             | lNewLine:

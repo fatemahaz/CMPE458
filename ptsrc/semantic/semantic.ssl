@@ -18,14 +18,12 @@
 Input :
         % Semantic tokens - must match output tokens in parser.ssl exactly!
         %change begin
-        sIdentifier 
+        sIdentifier
         firstSemanticToken = sIdentifier
         firstCompoundSemanticToken = sIdentifier
         sInteger
         sStringLiteral
         lastCompoundSemanticToken = sStringLiteral
-
-        % change: these should be copied from parser.def 
 
         sProgram
         sParmBegin
@@ -33,7 +31,12 @@ Input :
         sConst
         sType
         sVar
-
+%% ADDED
+        sMutable
+        sInitialValue
+        sPublic
+        sModule
+%%
         sProcedure
         sBegin
         sEnd
@@ -42,6 +45,9 @@ Input :
         sFile
         sRange
         sCaseStmt
+%% ADDED
+        sCaseOtherwise
+%%
         sCaseEnd
         sLabelEnd
         sExpnEnd
@@ -52,23 +58,15 @@ Input :
         sFieldWidth
         sIfStmt
         sThen
-        sElseIf
         sElse
         sWhileStmt
-         
-        % change begin for new output tokens
+%% CHANGED
+%%      sRepeatStmt
+%%      sRepeatEnd
         sLoopStmt
-        sLoopBreakIf
         sLoopEnd
-        sModule
-        sPublic
-        sCaseOtherwise
-        sSubstring
-        sLength
-        sMutable
-        sInitialValue
-        % change end
-
+        sLoopBreakIf
+%%
         sEq
         sNE
         sLT
@@ -85,10 +83,15 @@ Input :
         sInfixAnd
         sAnd
         sNot
+%% ADDED
+        sSubstring
+        sLength
+%%
         sNewLine
         sEndOfFile
-        lastSemanticToken = sEndOfFile;
-
+        lastSemanticToken = sEndOfFile; 
+         
+        % change begin for new output
 
         %change end
 

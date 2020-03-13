@@ -1,4 +1,0 @@
-mod main(output) {
-    let mut a : int;
-    a -= 5;
-}
