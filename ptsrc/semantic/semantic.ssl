@@ -1121,10 +1121,13 @@ SimpleType :
                 sRange
         	@SubrangeUpperBound     % pushes value on value stack
             | *:
-                #eSimpleTypeReqd
-                @SymbolStkPushDefaultIntegerType
-        	oValuePush(one)
-        	oValuePush(one)
+                % change: this was what here before@SymbolStkPushDefaultIntegerType
+                oTypeStkSetKind(tpInteger)
+                oSymbolStkLinkToStandardType(stdInteger)
+                oTypeTblUpdate          
+                % these oValuePushes were here before      
+                oValuePush(one)
+                oValuePush(one)
         ];
 
 ValuePushTypeBounds :
@@ -1199,8 +1202,15 @@ VariableDeclarations :
                         @Assignment
                     | * :
                 ]
+                    oTypeStkChooseKind
+                    [
+                        | tyInteger:
+                            .tRepeatBegin
+                        | *:
+                    ]
                     oTypeStkPop
                     oSymbolStkPop
+
             | *:
                 >
         ]};
