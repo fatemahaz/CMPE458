@@ -841,7 +841,7 @@ Block :
             | sNullStmt:
 			|*: >
         ]}
-        sEnd;
+        sEnd; 
 
 ConstantDefinitions :           % Process named constant definitions
         {[
