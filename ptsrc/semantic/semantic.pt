@@ -52,7 +52,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         defines Semantic Operations, Input/Output Tokens, Error Codes and Semantic Types }
 
         { Semantic Operations }
-        		oSymbolTblEnter = 14;
+        oSymbolTblEnter = 14;
         oSymbolTblUpdate = 15;
         oSymbolTblPushScope = 16;
         oSymbolTblPopScope = 17;
@@ -90,7 +90,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         oTypeStkChooseKind = 49; { >>20 }
         oTypeStkChooseTypeReference = 50; { >>14 }
         oTypeStkCompareNames = 51; { >>14 }
-		oTypeStkSwap = 52;
+        oTypeStkSwap = 52;
         oTypeStkPop = 53;
         oEmitNullAddress = 54;
         oEmitValue = 55;
@@ -128,7 +128,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         oFixPopTargetAddress = 87;
         oFixPopAndEnterValue = 88;
         oFixSwap = 89;
-		
+
         { Input Tokens }
         sIdentifier = 0;
         firstSemanticToken = 0;
@@ -166,7 +166,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         sIfStmt = 30;
         sThen = 31;
         sElse = 32;
-		sWhileStmt = 33;
+        sWhileStmt = 33;
         sLoopStmt = 34;
         sLoopEnd = 35;
         sLoopBreakIf = 36;
@@ -204,8 +204,8 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         tGT = 7;
         tGE = 8;
         tLT = 9;
-        tLE = 10
-		tAnd = 11;
+        tLE = 10;
+        tAnd = 11;
         tInfixAnd = 12;
         tOr = 13;
         tInfixOr = 14;
@@ -243,8 +243,8 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         tRepeatBegin = 46;
         tRepeatControl = 47;
         tCallBegin = 48;
-        tParmEnd = 49
-		tProcedureEnd = 50;
+        tParmEnd = 49;
+        tProcedureEnd = 50;
         tWriteBegin = 51;
         tReadBegin = 52;
         tTrapBegin = 53;
@@ -283,7 +283,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         tLineNumber = 85;
         tTrap = 86;
         lastCompoundTcode = 86;
-		tEndOfFile = 87;
+        tEndOfFile = 87;
         lastTcode = 87;
 
         { Input/Output Tokens }
@@ -321,7 +321,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         eExpnOperandReqd = 38;
         eTypeMismatch = 39;
         eInvalidExpn = 40;
-		eInputNotVisible = 41;
+        eInputNotVisible = 41;
         eOutputNotVisible = 42;
         eFieldWidth = 43;
         eTextFileVarReqd = 44;
@@ -360,7 +360,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         pidChr = 13;
         pidOrd = 14;
         pidEoln = 15;
-		pidEof = 16;
+        pidEof = 16;
         pidAssign = 17;
         lastPredeclaredId = 17;
         pidInput = 18;
@@ -398,8 +398,8 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         { Type 19 }
         stdInput = 0;
         stdOutput = 1;
-        stdNull = 2
-		{ Type 20 }
+        stdNull = 2;
+        { Type 20 }
         tpInteger = 0;
         tpChar = 1;
         tpBoolean = 2;
@@ -423,10 +423,86 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         trReadChar = 11;
         trAssign = 12;
 
+        { S/SL Rule Table Addresses } {
+        Program = 0;
+        ProgramParameter = 41;
+        Block = 101;
+        AllocateVar = 816;
+        BeginStmt = 1189;
+        ProcedureDefinition = 894;
+        ConstantDefinitions = 183;
+        TypeDefinitions = 351;
+        VariableDeclarations = 739;
+        AssignmentStmt = 1124;
+        CallStmt = 1203;
+        IfStmt = 1442;
+        WhileStmt = 1473;
+        CaseStmt = 1514;
+        LoopStmt = 1490;
+        ConstantValue = 197;
+        SymbolStkPushDefaultIntegerConstant = 3933;
+        SymbolStkPushDefaultCharConstant = 3945;
+        TypeBody = 389;
+        ComponentType = 474;
+        IndexType = 455;
+        SimpleType = 527;
+        ValuePushValuePlusOne = 3924;
+        TypeTblEnterIfNew = 445;
+        SymbolStkPushDefaultIntegerType = 3957;
+        SubrangeUpperBound = 677;
+        ValuePushTypeBounds = 659;
+        EnterVariableAttributes = 770;
+        ProcedureHeading = 947;
+        ProcedureParameterType = 993;
+        ProcedurePrologue = 1051;
+        CountPushCopy = 3929;
+        Statement = 1119;
+        Assignment = 1131;
+        Variable = 2232;
+        Expression = 1664;
+        CompareAndSwapTypes = 2006;
+        OpenProcedure = 2632;
+        AssignProcedure = 2663;
+        WriteProcedure = 2780;
+        WritelnProcedure = 3318;
+        ReadProcedure = 3376;
+        ReadlnProcedure = 3738;
+        ActualParameters = 1336;
+        FlushActuals = 3997;
+        VarActual = 1404;
+        BooleanControlExpression = 3909;
+        CaseSelectorExpression = 3892;
+        CaseAlternative = 1560;
+        Operand = 1692;
+        UnaryOperator = 1829;
+        BinaryOperator = 1861;
+        FlushExpn = 3976;
+        ConstantOperand = 2343;
+        VariableOperand = 2382;
+        FunctionOperand = 2409;
+        SymbolStkPushDefaultIntegerVariable = 3964;
+        FileOperand = 2607;
+        CompareOperandAndResultTypes = 2106;
+        CompareEqualityOperandTypes = 2167;
+        CompareRelationalOperandTypes = 2117;
+        VariableExtension = 2274;
+        StandardFunctionActual = 2512;
+        FileVariable = 3796;
+        WriteText = 3110;
+        WriteBinary = 3234;
+        WriteStandardExpnList = 3043;
+        TextFileVariable = 3837;
+        ReadTextParameterList = 3506;
+        ReadBinaryParameterList = 3572;
+        ReadText = 3638;
+        ReadBinary = 3667;
+        }
+
         { S/SL Table Parameters }
         sslTblSize = 4016;
         minSslTableValue = -32767;
-        maxSslTableValue = 32767
+        maxSslTableValue = 32767;
+
 { ===== End of contents of semantic.def }
 
         { firstFatalErrorCode MUST be bigger than lastSslErrorCode }
