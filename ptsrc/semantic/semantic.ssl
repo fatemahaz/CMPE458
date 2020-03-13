@@ -1073,7 +1073,7 @@ SimpleType :
                         [ oSymbolStkChooseKind
 							% if array, exit
 							| syType:
-								>>
+								@SimpleType
                             | syConstant:       
                                 oTypeStkPushSymbol
                                 [ oTypeStkChooseKind
