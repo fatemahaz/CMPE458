@@ -1,3 +1,0 @@
-mod main(output){
-    let square = length * length;
-}

@@ -1,15 +1,12 @@
-PT Pascal v4.2 (c) 2019 Queen's University, (c) 1980 University of Toronto
-December 2019
+Instructor's solution to Phase 2 of the 2020 course project,
+a Scanner/Screener/Parser for the Qust programming language.
 
-This directory contains the sources and build scripts for 
-PT Pascal version 4.2 as of December 2019.
+You can compare and update your own Phase 2 solution using this one as a reference 
+if you find that your own Phase 2 is not working well enough for you to work on Phase 3.
 
-To make PT Pascal, use the command "make".
+Of course, correct solutions need not be identical; they can be very different 
+and still meet the specifications. 
 
-To test the PT Pascal you have made, run the tests in the 
-"test" subdirectory using the ./ptc and ./pti command scripts 
-in that directory.
+If you cannot get your own Phase 2 solution working well enough to do Phase 3, 
+you can use this solution as the input to your Phase 3 if you ask for permission to do so.
 
-Editor plugins for the syntax colorization of PT and S/SL
-source files using Vim are in the editors subdirectory.
-See the README there for installation information.

@@ -6,24 +6,48 @@
 %   These must be in the exact same order as the keyword token definitions 
 %   in the Output section of scan.ssl and the Input section of parser.ssl
 
-% change start
+%% CHANGED
+%% div
+%% mod
+%% or
+%% and
+%% not
+%% then
+%% else
+%% of
+%% end
+%% until
+%% do
+%% array
+%% file
+%% program
+%% const
+%% var
+%% type
+%% procedure
+%% begin
+%% if
+%% case
+%% while
+%% repeat
+%%
+else
+of
+file
+type
 pub
+if
+while
 mod
 main
+const
 let
 mut
 fn
 loop
 break
 match
-% change end
-else
-of
-file
-const
-type
-if
-while
+%%
 
 % End of keywords
 
@@ -32,11 +56,14 @@ while
 %   in semantic.ssl.  
 
 % Predeclared type names
-% change start
+%% CHANGED
+%% integer
+%% char
+%% boolean
 int
 str
 bool
-% change end
+%%
 text
 
 % Predeclared constants
@@ -46,12 +73,12 @@ false
 % Predeclared procedures and functions
 reset
 rewrite
-
-% change start
+%% CHANGED
+%% write
+%% writeln
 print
 println
-% change end
-
+%%
 read
 readln
 chr

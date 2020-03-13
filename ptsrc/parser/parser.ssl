@@ -2,13 +2,14 @@
 %
 % Date:  30 Jun 1980
 %        (Revised v4.2 - 18 Dec 2019)
+%        (Revised Qust - 27 Dec 2019)
 %
 % Author:  Alan Rosselet
 %
 % Abstract
 %
 %     This module parses the syntax token stream emitted by the scanner
-%   and emits hello a postfix stream of tokens to the semantic analyzer
+%   and emits a postfix stream of tokens to the semantic analyzer
 %   module.  The parser detects and repairs syntax errors so that the
 %   token stream emitted to the semantic analyzer is syntactically
 %   legal (except for the special case of declaration phase errors - see
@@ -18,27 +19,51 @@ Input :
         % Keywords must be first both here and in stdIdentifiers,
         % and they must appear in the exact same order
 
-        % changes start for new qust tokens
+%% CHANGED
+%%      pDiv                    'div'
+%%      firstKeywordToken = pDiv
+%%      pMod                    'mod'
+%%      pOr                     'or'
+%%      pAnd                    'and'
+%%      pNot                    'not'
+%%      pThen                   'then'
+%%      pElse                   'else'
+%%      pOf                     'of'
+%%      pEnd                    'end'
+%%      pUntil                  'until'
+%%      pDo                     'do'
+%%      pArray                  'array'
+%%      pFile                   'file'
+%%      pProgram                'program'
+%%      pConst                  'const'
+%%      pVar                    'var'
+%%      pType                   'type'
+%%      pProcedure              'procedure'
+%%      pBegin                  'begin'
+%%      pIf                     'if'
+%%      pCase                   'case'
+%%      pWhile                  'while'
+%%      pRepeat                 'repeat'
+%%      lastKeywordToken = pRepeat 
+        pElse                   'else'
+        firstKeywordToken = pElse
+        pOf                     'of'
+        pFile                   'file'
+        pType                   'type'
         pPub                    'pub'
-        firstKeywordToken = pPub
+        pIf                     'if'
+        pWhile                  'while'
         pMod                    'mod'
         pMain                   'main'
+        pConst                  'const'
         pLet                    'let'
         pMut                    'mut'
         pFn                     'fn'
         pLoop                   'loop'
         pBreak                  'break'
         pMatch                  'match'
-        % changes end
-
-        pElse                   'else'
-        pOf                     'of'    
-        pFile                   'file'
-        pConst                  'const'
-        pType                   'type'
-        pIf                     'if'
-        pWhile                  'while'
-        lastKeywordToken = pWhile % changed from pRepeat 
+        lastKeywordToken = pMatch
+%%
 
         % Scanner tokens -
         %   These are the tokens actually recognized by the Scanner itself.
@@ -58,13 +83,18 @@ Input :
         pPlus                   '+'
         pMinus                  '-'
         pStar                   '*'
-        pColonEquals            ':='
-        % change: remove pDot 
+%% DELETED
+%%      pColonEquals            ':='
+%%
+        pDot                    '.'
         pComma                  ','
         pSemicolon              ';'
         pColon                  ':'
         pEquals                 '='
+%% CHANGED
+%%      pNotEqual               '<>'
         pNotEqual               '!='
+%%
         pLess                   '<'
         pLessEqual              '<='
         pGreaterEqual           '>='
@@ -73,27 +103,25 @@ Input :
         pRightParen             ')'
         pLeftBracket            '['
         pRightBracket           ']'
-        % change: removed pDotDot
-
-        % changes start
+        pDotDot                 '..'
+%% CHANGED
+%%      lastSyntaxToken = pDotDot;
         pLeftBrace              '{'
         pRightBrace             '}'
-        pQuestionMark           '?'
+        pPlusEquals             '+='
+        pMinusEquals            '-='
         pSlash                  '/'
-        pPercent                '%'                    
-        pAmpersand              '&'   
+        pPercent                '%'
+        pDoubleEquals           '=='
+        pDoubleAmpersand        '&&'
+        pDoubleOrBar            '||'
         pOrBar                  '|'
-        pNot                    '!'       
+        pNot                    '!'
         pUnderscore             '_'
-        pDoubleAmpersand        '&&'           
-        pDoubleOrBar            '||'           
-        pDoubleEquals           '=='        
-        pEqualsGreater          '=>'        
-        pPlusEquals             '+='   
-        pMinusEquals            '-='        
-        lastSyntaxToken = pMinusEquals;                 
-
-        % changes end
+        pQuestionMark           '?'
+        pEqualGreater           '=>'
+        lastSyntaxToken = pEqualGreater;
+%%
 
 Output :
         sIdentifier 
@@ -103,15 +131,18 @@ Output :
         sStringLiteral
         lastCompoundSemanticToken = sStringLiteral
 
-        % change: these should be copied from parser.def 
-
         sProgram
         sParmBegin
         sParmEnd
         sConst
         sType
         sVar
-
+%% ADDED
+        sMutable
+        sInitialValue
+        sPublic
+        sModule
+%%
         sProcedure
         sBegin
         sEnd
@@ -120,6 +151,9 @@ Output :
         sFile
         sRange
         sCaseStmt
+%% ADDED
+        sCaseOtherwise
+%%
         sCaseEnd
         sLabelEnd
         sExpnEnd
@@ -130,23 +164,15 @@ Output :
         sFieldWidth
         sIfStmt
         sThen
-        sElseIf
         sElse
         sWhileStmt
-         
-        % change begin for new output tokens
+%% CHANGED
+%%      sRepeatStmt
+%%      sRepeatEnd
         sLoopStmt
-        sLoopBreakIf
         sLoopEnd
-        sModule
-        sPublic
-        sCaseOtherwise
-        sSubstring
-        sLength
-        sMutable
-        sInitialValue
-        % change end
-
+        sLoopBreakIf
+%%
         sEq
         sNE
         sLT
@@ -163,6 +189,10 @@ Output :
         sInfixAnd
         sAnd
         sNot
+%% ADDED
+        sSubstring
+        sLength
+%%
         sNewLine
         sEndOfFile
         lastSemanticToken = sEndOfFile;
@@ -170,22 +200,14 @@ Output :
 
 rules
 
-% change: added mod rule for beginning of program
-Mod:
-        'mod' 
-        [
-                | 'main':
-                @Program
-        ]
-        ;
-
-% change: removed check for 'main', 
-% remove ; and . from end of program, and add support for
-% oppening and closing braces
 Program :
-        .sProgram
-        % program name
-        % pIdentifier
+%% CHANGED
+%%      'program'  .sProgram
+%%      % program name
+%%      pIdentifier
+        'mod' .sProgram
+        'main'
+%%
         % program parameters
         '('
         {
@@ -198,53 +220,66 @@ Program :
         }
         ')'
         .sParmEnd
-        '{'
-            @BeginStmt
-        '}'
-        .sEnd 
-        ; 
+%% CHANGED
+%%      ';'  @Block  '.';
+        '{' 
+            @Block 
+        '}';
+%%
 
-% change: move handling of braces to their respective functions
-% added choice for public function and function
-% added alternative from pt statement rule to block
-% added mod option to emit mod and then go into block
 Block :
         % Strictly speaking, standard Pascal requires that declarations
         % appear only in the order consts, types, vars, procedures.
         % We allow arbitrary intermixing of these instead to preserve
         % programmer sanity.
-        
+%% ADDED
+        .sBegin
+%%
         {[
-                    
             | 'const':
                 .sConst
                 @ConstantDefinitions
             | 'type':
                 .sType
-                @TypeDefinitions 
+                @TypeDefinitions
+%% CHANGED
+%%          | 'var':
             | 'let':
+%%
                 .sVar
                 @VariableDeclarations
-            | 'pub' :
+%% CHANGED
+%%          | 'procedure':
+%%              .sProcedure
+%%              % procedure name
+%%              pIdentifier  .sIdentifier
+%%              @ProcedureHeading
+%%              @Block  ';'
+            | 'fn':
                 .sProcedure
-                % procedure name
-                pIdentifier .sIdentifier
+                pIdentifier  .sIdentifier
+                @ProcedureHeading
+                '{'
+                    @Block  
+                '}'
+            | 'pub':
+                'fn'
+                .sProcedure
+                pIdentifier  .sIdentifier
                 .sPublic
-                @FnHeading
-                '{' @BeginStmt '}'
-                .sEnd
-            | 'fn' :
-                .sProcedure
-                % procedure name
-                pIdentifier .sIdentifier
-                @FnHeading
-                 '{' @BeginStmt '}'
-                .sEnd
-            | 'mod' :
+                @ProcedureHeading
+                '{'
+                    @Block  
+                '}'
+            | 'mod':
                 .sModule
-                pIdentifier .sIdentifier
-                 '{' @BeginStmt '}'
-                .sEnd
+                pIdentifier  .sIdentifier
+                '{'
+                    @Block  
+                '}'
+%%
+%% ADDED
+	    % From old PT Statement rule
             | pIdentifier:
                 @AssignmentOrCallStmt
             | 'if':
@@ -252,198 +287,44 @@ Block :
             | 'while':
                 @WhileStmt
             | 'loop':
-                @Loop
+                @LoopStmt
             | 'match':
-                @MatchStmt
-            | ';' :
-                .sNullStmt
-            | *:
-                >
-
-        ]}
-        ;
-
-% change: added support for += and -= 
-AssignmentOrCallStmt :
-        [
-            | '=':
-                .sAssignmentStmt
-                .sIdentifier    % identifier accepted in the Statement rule
-                @Expression
-                .sExpnEnd
-            | '[':
-                .sAssignmentStmt
-                .sIdentifier
-                .sSubscript
-                @Expression
-                .sExpnEnd
-                ']'  ':='
-                @Expression
-                .sExpnEnd
-            | '+=':
-                .sAssignmentStmt
-                .sIdentifier
-                .sIdentifier
-                @Expression
-                .sAdd
-                .sExpnEnd
-            | '-=':
-                .sAssignmentStmt
-                .sIdentifier
-                .sIdentifier
-                @Expression
-                .sSubtract
-                .sExpnEnd
-            | *:
-                @CallStmt
-        ]
-        [
+                @CaseStmt
             | ';':
-            | * :
-        ]
-        ;
-
-% change: handle opening and closing brances
-% and add support for sElseIf token
-IfStmt :
-        .sIfStmt
-        @Expression
-        .sExpnEnd
-        .sThen
-        '{' @BeginStmt '}'
-        .sEnd
-        {[
-            | 'else':
-                [
-                    | 'if':
-                        .sElseIf
-                        @Expression
-                        .sExpnEnd
-                        .sThen
-                        '{'
-                        @BeginStmt
-                        '}'
-                        .sEnd
-                    | *:
-                        .sElse
-                        '{' @BeginStmt '}'
-                        .sEnd
-                ]
+                .sNullStmt
+%%
             | *:
-            >
+                >
         ]}
-        ;
-
-% change : modified to handle openning and closes braces for 
-% statements and declarations
-WhileStmt :
-        .sWhileStmt
-        @Expression
-        .sExpnEnd
-        '{'
-            @BeginStmt
-        '}'
-        .sEnd
-        ;
-
-% change: modified from ProdureHeading. Change to allow for qust
-% procedures, which can have to have braces, and parameters are seperated 
-% by commas. Params can be mutable
-FnHeading :
-        % Accept zero or more procedure formal parameter declarations.
-        '('
-        {   [
-                | 'mut' :
-                    .sVar
-                    pIdentifier
-                    .sIdentifier
-                | pIdentifier :
-                    .sIdentifier
-                | *:
-                >
-            ]
-        ':'
-            % type identifier
-            pIdentifier  .sIdentifier
-            [
-                | ',':
-                | *:
-                    >
-            ] 
-        }
-        ')'
-        .sParmEnd
-        ;
-
-% change: beginstmt modified to not check for closing brace/end.
-% also removed emition of .sEnd
-BeginStmt :
-        .sBegin
-        {
-            @Block
-            [
-                | ';':
-                | * :
-                    >
-            ]
-        }
-        ;
-
-% changed to always include brackets even with no parameters
-% parameters can be optionally mutable, and are seperated by commas
-CallStmt :
-        .sCallStmt
-        .sIdentifier    % procedure identifier accepted in the Statement rule
-        % Accept zero or more actual parameters
-        '('
-        {   [
-                | 'mut' :
-                    .sVar
-                    @Expression
-                    .sExpnEnd
-                | ')':
-                    .sParmEnd
-                    >
-                | * :
-                    @Expression
-                    .sExpnEnd 
-            ]
-
-            % allow a field width specification to occur in calls
-            % to the standard procedures write and writeln
-            [
-                | ':':
-                    .sFieldWidth
-                    @Expression
-                    .sExpnEnd
-                | *:
-            ]
-
-            % check if more params
-            [
-                | ',':
-                | *:
-                .sParmEnd
-                ')'
-                >
-            ] 
-        }
-        ;
-
-% change: allows for multiple constant definitions seperated by a comma
+%% CHANGED
+%%      'begin'
+%%      @BeginStmt;
+        .sEnd;
+%%
+        
 ConstantDefinitions :
         % Accept one or more named constant definitions
-        pIdentifier  .sIdentifier
-        '=' @ConstantValue 
-        {[
-            | ';' :
-                >
-            | ',' :
-                @ConstantDefinitions 
-            | *:
-                >
-        ]}
-        ;
+%% CHANGED
+%%      pIdentifier  .sIdentifier
+%%      '=' @ConstantValue ';'
+%%      {[
+%%          | pIdentifier:
+%%              .sIdentifier
+%%              '=' @ConstantValue ';'
+%%          | *:
+%%              >
+%%      ]};
+        {
+            pIdentifier  .sIdentifier
+            '=' @ConstantValue 
+            [
+                | ',':
+                | *:
+                    >
+            ]
+        }
+        ';' ;
+%%
 
 ConstantValue :
         [
@@ -461,56 +342,73 @@ ConstantValue :
         ];
 
 UnsignedIntegerConstant :
-[
-        | pIdentifier:
-        .sIdentifier
-        | pInteger:
-        .sInteger
-]
-;
+        [
+            | pIdentifier:
+                .sIdentifier
+            | pInteger:
+                .sInteger
+        ];
 
-% change: qust doesn't have multiple type definitions, so removed loop
 TypeDefinitions :
-        % Accept one or more named type definitions.
+%% CHANGED
+%%      % Accept one or more named type definitions.
+%%      pIdentifier  .sIdentifier
+%%      '='  @TypeBody  ';'
+%%      {[
+%%          | pIdentifier:
+%%              .sIdentifier
+%%              '='  @TypeBody  ';'
+%%          | *:
+%%              >
+%%      ]};
+        % Accept one named type definition.
         pIdentifier  .sIdentifier
-        '='  @TypeBody  ';'
-;
+        '='  @TypeBody  ';' ;
+%%
 
-% change: modified have all other types than file go to SimpleType
 TypeBody :
         [
+%% CHANGED
+%%          | 'array':
+%%              .sArray
+%%              '['  @SimpleType  ']'
+%%              'of'  @SimpleType
+            | '[':
+                .sArray
+                @SimpleType  
+                ':'
+                .sRange
+                @UnsignedIntegerConstant
+                ']'
+%%
             | 'file':
                 .sFile
                 'of'  @SimpleType
             | *:
                 @SimpleType
-        ]
-        ;
+        ];
 
-% change: changed to account for new array in qust which is always starting at 1
-% array now has type
 SimpleType :
-        % A simple type is a named type (possibly predefined)
-        % or a subrange type specification
-        [
-            | '[':
-                .sArray
-                pIdentifier
-                .sIdentifier
-                ':'
-                .sRange         %% this may be unnecessary
-                [
-                    | pInteger :
-                        @OptionallySignedIntegerConstant
-                    | pIdentifier :
-                        .sIdentifier
-                ]
-                ']'
-            | pIdentifier :
-                .sIdentifier
-            | *:
-        ]
-        ;
+%% CHANGED
+%%      % A simple type is a named type (possibly predefined)
+%%      % or a subrange type specification
+%%      [
+%%          | pIdentifier:
+%%              .sIdentifier
+%%              [
+%%                  | '..':
+%%                      .sRange         %% this may be unnecessary
+%%                      @OptionallySignedIntegerConstant
+%%                  | *:
+%%              ]
+%%          | *:
+%%              @OptionallySignedIntegerConstant
+%%              '..'  .sRange
+%%              @OptionallySignedIntegerConstant
+%%      ];
+        % In Qust, a simple type is just a named type (possibly predefined)
+        pIdentifier .sIdentifier;
+%%
 
 OptionallySignedIntegerConstant :
         [
@@ -521,77 +419,385 @@ OptionallySignedIntegerConstant :
                 @UnsignedIntegerConstant
             | *:
                 @UnsignedIntegerConstant
-        ]
-        ;
+        ];
 
-%change : changed for accomadation of new variables in qust which include:
-% mut. can also get type before the variable initialization
 VariableDeclarations :
         % Accept one or more variable declarations.
+%% CHANGED
+%%      pIdentifier  .sIdentifier
+%%      ':'  @TypeBody  ';'
+%%      {[
+%%          | pIdentifier:
+%%              .sIdentifier
+%%              ':'  @TypeBody  ';'
+%%          | *:
+%%              >
+%%      ]};
+        {
+            [
+                | 'mut':
+                    pIdentifier  .sIdentifier
+                    @TypeOrValue
+                    .sMutable
+                | *:
+                    pIdentifier  .sIdentifier
+                    @TypeOrValue
+            ]
+            [
+                | ',':
+                | *:
+                    >
+            ]
+        }
+        ';' ;
+%%
+
+%% ADDED
+TypeOrValue:
         [
-            | 'mut' :
-                @Mutable
-            | pIdentifier :
-                .sIdentifier
-                {[
-                    | ':' : 
-                        @TypeBody
-                        [
-                            | '=' :
-                              .sInitialValue
-                              @Factor
-                              @Expression
-                             .sExpnEnd
-                             | * :
-                        ]
-                    | '=' :
+            | ':':
+                @TypeBody
+                [
+                    | '=':
                         .sInitialValue
-                        @Factor
                         @Expression
                         .sExpnEnd
-                    | ',' :
-                        @VariableDeclarations 
-                    | ';':
-                        >
-                    | * :
-                        >
-                ]}
-        ]
-        ;
-
-% change: New rule created for mutable variables
-Mutable:
-        pIdentifier
-        .sIdentifier
-        {[
-            | ':' :
-                 @TypeBody
-            | '=' :
+                    | *:
+                ]
+            | '=':
                 .sInitialValue
-                @Factor
                 @Expression
                 .sExpnEnd
-            | ';' :
-                >
-            | ',' :
-                @Mutable 
-            | *:
-                >
-        ]}
-        .sMutable
-        ;
+        ];
+%%
 
-% change: <> for != for not equals
-% '?' for string length, changed '=' to '=='
+ProcedureHeading :
+        % Accept zero or more procedure formal parameter declarations.
+%% CHANGED
+%%      [
+%%          | '(':
+%%              {
+%%                  % formal parameter identifier
+%%                  [
+%%                      | 'var':
+%%                          pIdentifier  .sIdentifier
+%%                          .sVar
+%%                      | *:
+%%                          pIdentifier  .sIdentifier
+%%                  ]
+%%                  ':'
+%%                  % type identifier
+%%                  pIdentifier  .sIdentifier
+%%                  [
+%%                      | ';':
+%%                      | *:
+%%                          >
+%%                  ]
+%%              }
+%%              ')'
+%%          | *:
+%%      ]
+%%      ';'
+%%      .sParmEnd;
+        '('
+        [
+            | ')':
+                % no parameters
+            | *:
+                {
+                    % formal parameter identifier
+                    [
+                        | 'mut':
+                            pIdentifier  .sIdentifier
+                            .sVar
+                        | *:
+                            pIdentifier  .sIdentifier
+                    ]
+                    ':'
+                    % type identifier
+                    pIdentifier  .sIdentifier
+                    [
+                        | ',':
+                        | *:
+                            >
+                    ]
+                }
+                ')'
+        ]
+        .sParmEnd;
+%%
+
+%% DELETED (merged into Block above) 
+%% Statement :
+%%       [
+%%           | pIdentifier:
+%%               @AssignmentOrCallStmt
+%%           | 'begin':
+%%               @BeginStmt
+%%           | 'if':
+%%               @IfStmt
+%%           | 'while':
+%%               @WhileStmt
+%%           | 'case':
+%%               @CaseStmt
+%%           | 'repeat':
+%%               @RepeatStmt
+%%           | *:
+%%               .sNullStmt
+%%       ];
+%%
+
+AssignmentOrCallStmt :
+        [
+%% CHANGED
+%%          | ':=':
+            | '=':
+%%
+                .sAssignmentStmt
+                .sIdentifier    % identifier accepted in the Statement rule
+                @Expression
+                .sExpnEnd
+            | '[':
+                .sAssignmentStmt
+                .sIdentifier
+                .sSubscript
+                @Expression
+                .sExpnEnd
+%% CHANGED
+%%              ']'  ':='
+                ']'  '='
+%%
+                @Expression
+                .sExpnEnd
+%% ADDED
+            | '+=':
+                .sAssignmentStmt
+                .sIdentifier    % identifier accepted in the Statement rule
+                .sIdentifier    
+                @Expression
+                .sAdd
+                .sExpnEnd
+            | '-=':
+                .sAssignmentStmt
+                .sIdentifier    % identifier accepted in the Statement rule
+                .sIdentifier
+                @Expression
+                .sSubtract
+                .sExpnEnd
+%%
+            | *:
+                @CallStmt
+        ] 
+	';' ;
+
+CallStmt :
+        .sCallStmt
+        .sIdentifier    % procedure identifier accepted in the Statement rule
+        % accept zero or more actual parameters
+%% ADDED
+        '('
+%%
+        [
+%% CHANGED
+%%          | '(':
+            | ')':
+                % empty argument list
+            | *:
+%%
+                {
+%% ADDED
+                    [
+                        | 'mut':
+                            .sMutable
+                        | *:
+                    ]
+%%
+                    @Expression
+                    .sExpnEnd
+                    % allow a field width specification to occur in calls
+                    % to the standard procedures write and writeln
+                    [
+                        | ':':
+                            .sFieldWidth
+                            @Expression
+                            .sExpnEnd
+                        | *:
+                    ]
+                    [
+                        | ',':
+                        | *:
+                            >
+                    ]
+                }
+                ')'
+%% DELETED
+%%          | *:        % no actual parameters
+%%
+        ]
+        .sParmEnd;
+
+%% DELETED
+%% BeginStmt :
+%%      .sBegin
+%%      {
+%%          @Statement
+%%          [
+%%              | ';':
+%%              | 'end':
+%%                  .sEnd
+%%                  >
+%%          ]
+%%      };
+%%
+
+IfStmt :
+        .sIfStmt
+        @Expression
+        .sExpnEnd
+%% CHANGED
+%%      'then'  .sThen
+%%      @Statement
+        .sThen
+        '{'
+            @Block
+        '}'
+%%
+        [
+            | 'else':
+                .sElse
+%% CHANGED
+%%              @Statement
+                [
+                    | 'if':
+                        .sBegin
+                        @IfStmt
+                        .sEnd
+                    | *:
+                        '{'
+                            @Block
+                        '}'
+                ]
+%%
+            | *:
+        ];
+
+CaseStmt :
+        .sCaseStmt
+        @Expression
+        .sExpnEnd
+%% CHANGED
+%%      'of'
+%%      @CaseAlternative
+%%      {[
+%%          | ';':
+%%              % since case alternatives cannot be null, allow
+%%              % for the common situation of an extra semicolon
+%%              % at the end of the list of case alternatives.
+%%              [
+%%                  | 'end':
+%%                      >
+%%                  | *:
+%%                      @CaseAlternative
+%%              ]
+%%          | 'end':
+%%              >
+%%      ]}
+        '{'
+            '|' @CaseAlternative
+            {[
+                | '|':
+                    [
+                        | '_':
+                            .sCaseOtherwise
+                            '=>'
+                            '{'
+                                @Block
+                            '}'
+                            >
+                        | *:
+                            @CaseAlternative
+                    ]
+                | *:
+                    >
+            ]}
+        '}'
+%%
+        .sCaseEnd;
+
+CaseAlternative :
+        % A case alternative is a statement labelled by
+        % one or more optionally signed integer constants
+
+        {
+            @OptionallySignedIntegerConstant
+            [
+%% CHANGED
+%%              | ',':
+                | '|':
+%%
+                | *:
+                    >
+            ]
+        }
+        .sLabelEnd
+%% CHANGED
+%%      ':'  @Statement;
+        '=>'
+        '{'
+            @Block
+        '}';
+%%
+
+WhileStmt :
+        .sWhileStmt
+        @Expression
+        .sExpnEnd
+%% CHANGED
+%%      'do'
+%%      @Statement;
+        '{'
+            @Block
+        '}';
+%%
+
+%% CHANGED
+%% RepeatStmt :
+%%      .sRepeatStmt
+%%      {
+%%          @Statement
+%%          [
+%%              | ';':
+%%              | 'until':
+%%                  .sRepeatEnd
+%%                  >
+%%          ]
+%%      }
+%%      @Expression
+%%      sExpnEnd;
+%%
+LoopStmt :
+        .sLoopStmt
+        '{'
+            @Block
+            'break' 'if' .sLoopBreakIf @Expression .sExpnEnd ';'
+            @Block
+        '}'
+	.sLoopEnd;
+%%
+
 Expression :
         @SimpleExpression
         [
+%% CHANGED
+%%          | '=':
             | '==':
+%%
                 @SimpleExpression  .sEq
+%% CHANGED
+%%          | '<>':
             | '!=':
+%%
                 @SimpleExpression  .sNE
-            | '?':
-                .sStringLiteral    .sLength
             | '<':
                 @SimpleExpression  .sLT
             | '<=':
@@ -601,16 +807,14 @@ Expression :
             | '>=':
                 @SimpleExpression  .sGE
             | *:
-        ]
-        ;
+        ];
 
-% change : removed comma option
 SimpleExpression :
         [
             | '+':
                 @Term
             | '-':
-                @Term  .sNegate 
+                @Term  .sNegate
             | *:
                 @Term
         ]
@@ -619,31 +823,46 @@ SimpleExpression :
                 @Term  .sAdd
             | '-':
                 @Term  .sSubtract
+%% CHANGED
+%%          | 'or':
             | '||':
+%%
                 .sInfixOr  @Term  .sOr
             | *:
                 >
-        ]}
-        ;
+        ]};
 
-% change: div, mod and and were changed to /, % and &&
 Term :
         @Factor
         {[
             | '*':
                 @Factor  .sMultiply
+%% CHANGED
+%%          | 'div':
+%%              @Factor  .sDivide
             | '/':
-                @Factor  .sDivide
+                @Factor  
+                [
+                    | ':':
+                        @Factor
+                        .sSubstring
+                    | *:
+                        .sDivide
+                ]
+%% CHANGED
+%%          | 'mod':
             | '%':
+%%
                 @Factor  .sModulus
+%% CHANGED
+%%          | 'and':
             | '&&':
+%%
                 .sInfixAnd  @Factor  .sAnd
             | *:
                 >
         ]};
 
-% change: added option for substring operator (/)
-% not was change to !, and a default case was added
 Factor :
         [
             | pIdentifier:
@@ -653,30 +872,23 @@ Factor :
                 .sInteger
             | '(':
                 @Expression  ')'
+%% CHANGED
+%%          | 'not':
             | '!':
+%%
                 @Factor
                 .sNot
+%% ADDED
+            | '?':
+                @Factor
+                .sLength
+%%
             | pStringLiteral:
                 .sStringLiteral
-                [
-                    | '/':
-                    @Substring
-                    | *:
-                ]
             | 'file':
                 .sFile '(' @Expression ')'
                 .sExpnEnd
-            | * :
-        ]
-        ;
-
-% change: substring rule was added to accomodate qust strings
-Substring:
-        @Expression
-        ':'
-        @Expression
-        .sSubstring
-    ;
+        ];
 
 IdentifierExtension :
         % Handle subscripts and function actual parameter lists
@@ -691,77 +903,6 @@ IdentifierExtension :
                 .sExpnEnd
                 .sParmEnd
             | *:
-        ]
-        ;
-
-% change: previously caseStmt. Changed for qust case statements
-% case statements include brackes and alternatives can be seperated by |
-MatchStmt :
-        .sCaseStmt
-        %do we have to look for one?
-        @Expression
-        .sExpnEnd
-        '{'
-        {[
-            | '|':
-            [
-                | '_':
-                >
-                | *:
-
-            ]
-                @MatchAlternative
-            | *:
-                >
-        ]}
-        '=>'
-        .sCaseOtherwise
-         '{'
-            @BeginStmt
-        '}'
-        .sEnd
-        .sCaseEnd
-        '}'
-        ;
-
-% change: changed to match new qust allowance for multiple statements. 
-% previously only one statement was allowed. Previously called case alternative
-MatchAlternative :
-    % A case alternative is a statement labelled by
-    % one or more optionally signed integer constants
-        {
-            @OptionallySignedIntegerConstant
-            [
-                | '|':
-                | *:
-                    >
-            ]
-        }
-        .sLabelEnd
-        '=>'   '{'
-                @BeginStmt
-                '}'
-                .sEnd
-;
-
-% change: added a loop rule to support new qust general loops
-Loop:
-    .sLoopStmt
-    '{'
-    @BeginStmt
-    .sEnd
-    'break'
-    'if'
-    .sLoopBreakIf
-    @Expression
-    [
-        | ';' :
-        | * :
-    ]
-    @BeginStmt
-    .sEnd
-    '}'
-    ;
+        ];
 
 end
-
