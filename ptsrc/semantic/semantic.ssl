@@ -978,22 +978,11 @@ TypeBody :
 				[ | sIdentifier:
 					oSymbolStkPushIdentifier
 					[ oSymbolStkChooseKind
-						| syConstant:
-							oTypeStkPushSymbol
-							[ oTypeStkChooseKind
-								| tpInteger:
-							%		oValuePushSymbol
-							%	| *:
-							%		#eIntegerConstReqd
-							%		@ValuePushValuePlusOne
-							]
-							oTypeStkPop
+						| syType:
 						| syUndefined:
 							#eUndefinedIdentifier
-							@ValuePushValuePlusOne
 						| *:
-							#eIntegerConstReqd
-							@ValuePushValuePlusOne
+							#eUndefinedIdentifier
 					]
 					oSymbolStkPop
 				  |*:
