@@ -1202,14 +1202,15 @@ VariableDeclarations :
                         @Assignment
                     | * :
                 ]
+
+                [
                     oTypeStkChooseKind
-                    [
-                        | tpInteger:
-                            .tRepeatBegin
-                        | *:
-                    ]
-                    oTypeStkPop
-                    oSymbolStkPop
+                    | tpInteger:
+                        .tRepeatBegin
+                    | *:
+                ]
+                oTypeStkPop
+                oSymbolStkPop
 
             | *:
                 >
