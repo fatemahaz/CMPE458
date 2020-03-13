@@ -1073,7 +1073,7 @@ SimpleType :
         [
             | sIdentifier:
                 oSymbolStkPushIdentifier
-                [ 
+                [
                     | sRange:   % subrange specification
                         [ oSymbolStkChooseKind
 							% if array, exit
