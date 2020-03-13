@@ -1198,9 +1198,9 @@ VariableDeclarations :
                     | sInitialValue:
                         @Assignment
                     | * :
-                        oTypeStkPop
-        	            oSymbolStkPop
                 ]
+                    oTypeStkPop
+                    oSymbolStkPop
             | *:
                 >
         ]};
