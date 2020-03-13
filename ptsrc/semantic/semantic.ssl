@@ -1173,6 +1173,9 @@ SubrangeUpperBound :
                 #eIntegerConstReqd
                 @ValuePushValuePlusOne
         ]
+		[ | sMutable:
+			%***** handle mutable type here
+		]
         [
             | sNegate:
                 oValueNegate
