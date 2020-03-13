@@ -1115,7 +1115,7 @@ SimpleType :
         			oValuePush(one)
                         ]
                 ]
-			| sRange:
+			| sInteger:
 				oValuePush(one)
                 oSymbolStkPush(syConstant)
                 [
@@ -1123,7 +1123,6 @@ SimpleType :
                         oValueNegate
                     | *:
                 ]
-				sRange
 				@SubrangeUpperBound 
             | *:
                 % change: this was what here before 
