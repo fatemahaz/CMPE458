@@ -1032,7 +1032,6 @@ IndexType :
 
 ComponentType :
         % Accept and fill in an  array or file component type
-        []
 		@SimpleType     % pushes symbol and two value bounds
         [ oSymbolStkChooseKind
             | syType:
