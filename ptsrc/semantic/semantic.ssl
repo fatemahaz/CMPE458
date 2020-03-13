@@ -1073,6 +1073,7 @@ SimpleType :
                         [ oSymbolStkChooseKind
 							% if array, exit
 							| syType:
+								.sRange
 								@SimpleType
                             | syConstant:       
                                 oTypeStkPushSymbol
@@ -1115,7 +1116,7 @@ SimpleType :
         			oValuePush(one)
                         ]
                 ]
-			| sInteger:
+			| sRange:
 				oValuePush(one)
                 oSymbolStkPush(syConstant)
                 [
