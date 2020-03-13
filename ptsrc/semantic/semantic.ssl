@@ -1204,7 +1204,7 @@ VariableDeclarations :
                 ]
                     oTypeStkChooseKind
                     [
-                        | tyInteger:
+                        | tpInteger:
                             .tRepeatBegin
                         | *:
                     ]
