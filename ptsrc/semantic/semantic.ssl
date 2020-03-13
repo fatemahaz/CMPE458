@@ -972,8 +972,8 @@ TypeBody :
         [
             | sArray:
                 oTypeStkPush(tpArray)
+				@ComponentType
                 @IndexType
-                @ComponentType
             | sFile:
                 oTypeStkPush(tpFile)
                 @ComponentType
@@ -1066,42 +1066,60 @@ SimpleType :
             | sIdentifier:
                 oSymbolStkPushIdentifier
                 [ 
-                    | sRange:   % removed the subrange allowance to be set to a constant 1
-                        oValuePush(one)
-  
+                    | sRange:   % subrange specification
+                        [ oSymbolStkChooseKind
+                            | syConstant:       
+                                oTypeStkPushSymbol
+                                [ oTypeStkChooseKind
+                                    | tpInteger:        
+                                        oValuePushSymbol
+                                    | *:
+                                        #eIntegerConstReqd
+                                        oValuePush(one)
+                                ]
+                                [
+                                    | sNegate:
+                                        oValueNegate
+                                    | *:
+                                ]
+                                oTypeStkPop
+                            | syUndefined:
+                                #eUndefinedIdentifier
+                                oValuePush(one)
+                            | *:
+                                #eIntegerConstReqd
+                                oValuePush(one)
                         ]
                         @SubrangeUpperBound        % pushes value on value stack
                     | *:        
                         % type identifier
                         [ oSymbolStkChooseKind
                             | syType:
-								@ValuePushTypeBounds
+        			@ValuePushTypeBounds
                             | syUndefined:
                                 #eUndefinedIdentifier
                                 oSymbolStkPop
                                 @SymbolStkPushDefaultIntegerType
-								oValuePush(one)
-								oValuePush(one)
+        			oValuePush(one)
+        			oValuePush(one)
                             | *:
                                 #eSimpleTypeReqd
                                 oSymbolStkPop
                                 @SymbolStkPushDefaultIntegerType
-								oValuePush(one)
-								oValuePush(one)
+        			oValuePush(one)
+        			oValuePush(one)
                         ]
                 ]
-            | sInteger:         % lower bound of subrange specification
-                oValuePushInteger
+			| sRange:
+				oValuePush(one)
                 oSymbolStkPush(syConstant)
                 [
                     | sNegate:
                         oValueNegate
                     | *:
                 ]
-                sRange
-        	@SubrangeUpperBound     % pushes value on value stack
-			| sMutable:
-			
+				sRange
+				@SubrangeUpperBound 
             | *:
                 #eSimpleTypeReqd
                 @SymbolStkPushDefaultIntegerType
