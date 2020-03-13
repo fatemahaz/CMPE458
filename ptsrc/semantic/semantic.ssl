@@ -1122,13 +1122,7 @@ SimpleType :
         	@SubrangeUpperBound     % pushes value on value stack
             | *:
                 % change: this was what here before 
-                @SymbolStkPushDefaultIntegerType
-                %oTypeStkPushSymbol
-                %oTypeStkSetKind(tpInteger)
-                %oSymbolStkLinkToStandardType(stdInteger)
-                %oTypeTblUpdate          
-                %oTypeStkPop
-                % these oValuePushes were here before      
+                @SymbolStkPushDefaultIntegerType 
                 oValuePush(one)
                 oValuePush(one)
         ];
