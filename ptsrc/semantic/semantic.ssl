@@ -975,6 +975,10 @@ TypeBody :
         [
             | sArray:
                 oTypeStkPush(tpArray)
+				[ | sIdentifier:
+                oSymbolStkPushIdentifier
+				  |*:
+				]
 				@ComponentType
                 @IndexType
             | sFile:
@@ -1028,7 +1032,8 @@ IndexType :
 
 ComponentType :
         % Accept and fill in an  array or file component type
-        @SimpleType     % pushes symbol and two value bounds
+        []
+		@SimpleType     % pushes symbol and two value bounds
         [ oSymbolStkChooseKind
             | syType:
                 oTypeStkPushSymbol
@@ -1072,9 +1077,6 @@ SimpleType :
                     | sRange:   % subrange specification
                         [ oSymbolStkChooseKind
 							% if array, exit
-							| syType:
-								.sRange
-								@SimpleType
                             | syConstant:       
                                 oTypeStkPushSymbol
                                 [ oTypeStkChooseKind
@@ -1116,15 +1118,12 @@ SimpleType :
         			oValuePush(one)
                         ]
                 ]
-			| sRange:
-				oValuePush(one)
+				
+            | sRange:
+				oValuePush(one) % lower bound of subrange specification
                 oSymbolStkPush(syConstant)
-                [
-                    | sNegate:
-                        oValueNegate
-                    | *:
-                ]
 				@SubrangeUpperBound 
+			
             | *:
                 % change: this was what here before 
                 @SymbolStkPushDefaultIntegerType 
