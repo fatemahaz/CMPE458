@@ -1,0 +1,15 @@
+mod main(output){
+    let x = 5;
+    if x == 72
+    {
+
+    }
+    elseif x == 99 
+    {
+
+    }
+    else 
+    {
+
+    }
+}
