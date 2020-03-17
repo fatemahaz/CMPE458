@@ -18,14 +18,12 @@
 Input :
         % Semantic tokens - must match output tokens in parser.ssl exactly!
         %change begin
-        sIdentifier 
+        sIdentifier
         firstSemanticToken = sIdentifier
         firstCompoundSemanticToken = sIdentifier
         sInteger
         sStringLiteral
         lastCompoundSemanticToken = sStringLiteral
-
-        % change: these should be copied from parser.def 
 
         sProgram
         sParmBegin
@@ -33,7 +31,12 @@ Input :
         sConst
         sType
         sVar
-
+%% ADDED
+        sMutable
+        sInitialValue
+        sPublic
+        sModule
+%%
         sProcedure
         sBegin
         sEnd
@@ -42,6 +45,9 @@ Input :
         sFile
         sRange
         sCaseStmt
+%% ADDED
+        sCaseOtherwise
+%%
         sCaseEnd
         sLabelEnd
         sExpnEnd
@@ -52,23 +58,15 @@ Input :
         sFieldWidth
         sIfStmt
         sThen
-        sElseIf
         sElse
         sWhileStmt
-         
-        % change begin for new output tokens
+%% CHANGED
+%%      sRepeatStmt
+%%      sRepeatEnd
         sLoopStmt
-        sLoopBreakIf
         sLoopEnd
-        sModule
-        sPublic
-        sCaseOtherwise
-        sSubstring
-        sLength
-        sMutable
-        sInitialValue
-        % change end
-
+        sLoopBreakIf
+%%
         sEq
         sNE
         sLT
@@ -85,10 +83,15 @@ Input :
         sInfixAnd
         sAnd
         sNot
+%% ADDED
+        sSubstring
+        sLength
+%%
         sNewLine
         sEndOfFile
-        lastSemanticToken = sEndOfFile;
-
+        lastSemanticToken = sEndOfFile; 
+         
+        % change begin for new output
 
         %change end
 
@@ -811,8 +814,7 @@ Block :
         % The parser has flagged phase errors, but has emitted out-of-phase
         % definitions with the intent of providing better error repair.
 
-sBegin
-		@BeginStmt
+		sBegin
         {[
             | sProcedure:
                 @ProcedureDefinition
@@ -834,12 +836,13 @@ sBegin
                 @WhileStmt
             | sCaseStmt:
                 @CaseStmt
-            | sRepeatStmt:
-                @RepeatStmt
+            | sLoopStmt:
+                @LoopStmt
             | sNullStmt:
 			|*: >
-        ]};
-
+        ]}
+	sEnd;
+		
 ConstantDefinitions :           % Process named constant definitions
         {[
             | sIdentifier:
@@ -972,27 +975,39 @@ TypeBody :
         [
             | sArray:
                 oTypeStkPush(tpArray)
+				[ | sIdentifier:
+					oSymbolStkPushIdentifier
+					[ oSymbolStkChooseKind
+						| syType:
+						| syUndefined:
+							#eUndefinedIdentifier
+						| *:
+							#eUndefinedIdentifier
+					]
+					oSymbolStkPop
+				  |*:
+				]
+				@ComponentType
                 @IndexType
-                @ComponentType
             | sFile:
                 oTypeStkPush(tpFile)
                 @ComponentType
             | *:                
                 @SimpleType     % pushes symbol and two value bounds
-        	[ oSymbolStkChooseKind
-        	    | syType:
-        		oTypeStkPushSymbol
-        	    | *:        
-        		oTypeStkPush(tpSubrange)
-        		oTypeStkEnterBounds
-        		[ oTypeStkVerifyBounds
-        		    | yes:
-        		    | *:
-        			oValuePop
-        			@ValuePushValuePlusOne
-        			oTypeStkEnterBounds
-        		]
-        	]
+        	    [ oSymbolStkChooseKind
+        	        | syType:
+        		        oTypeStkPushSymbol
+        	        | *:        
+        		        oTypeStkPush(tpSubrange)
+        		        oTypeStkEnterBounds
+        		        [ oTypeStkVerifyBounds
+        		            | yes:
+        		            | *:
+        			            oValuePop
+        			            @ValuePushValuePlusOne
+        			            oTypeStkEnterBounds
+        	            ]
+        	    ]
         	oValuePop       % subrange upper
         	oValuePop       %          lower bound-----
         	oSymbolStkPop
@@ -1025,7 +1040,7 @@ IndexType :
 
 ComponentType :
         % Accept and fill in an  array or file component type
-        @SimpleType     % pushes symbol and two value bounds
+		@SimpleType     % pushes symbol and two value bounds
         [ oSymbolStkChooseKind
             | syType:
                 oTypeStkPushSymbol
@@ -1065,7 +1080,7 @@ SimpleType :
         [
             | sIdentifier:
                 oSymbolStkPushIdentifier
-                [ 
+                [
                     | sRange:   % subrange specification
                         [ oSymbolStkChooseKind
                             | syConstant:       
@@ -1074,7 +1089,6 @@ SimpleType :
                                     | tpInteger:        
                                         oValuePushSymbol
                                     | *:
-                                        #eIntegerConstReqd
                                         oValuePush(one)
                                 ]
                                 [
@@ -1095,7 +1109,7 @@ SimpleType :
                         % type identifier
                         [ oSymbolStkChooseKind
                             | syType:
-        			@ValuePushTypeBounds
+        			            @ValuePushTypeBounds
                             | syUndefined:
                                 #eUndefinedIdentifier
                                 oSymbolStkPop
@@ -1110,21 +1124,17 @@ SimpleType :
         			oValuePush(one)
                         ]
                 ]
-            | sInteger:         % lower bound of subrange specification
-                oValuePushInteger
+				
+            | sRange:
+				oValuePush(one) % lower bound of subrange specification
                 oSymbolStkPush(syConstant)
-                [
-                    | sNegate:
-                        oValueNegate
-                    | *:
-                ]
-                sRange
-        	@SubrangeUpperBound     % pushes value on value stack
+				@SubrangeUpperBound 
+			
             | *:
-                #eSimpleTypeReqd
-                @SymbolStkPushDefaultIntegerType
-        	oValuePush(one)
-        	oValuePush(one)
+                % change: this was what here before 
+                @SymbolStkPushDefaultIntegerType 
+                oValuePush(one)
+                oValuePush(one)
         ];
 
 ValuePushTypeBounds :
@@ -1170,6 +1180,9 @@ SubrangeUpperBound :
                 #eIntegerConstReqd
                 @ValuePushValuePlusOne
         ]
+		[ | sMutable:
+			%***** handle mutable type here
+		]
         [
             | sNegate:
                 oValueNegate
@@ -1192,10 +1205,16 @@ VariableDeclarations :
                 % Accepts a type specification and pushes its type to the Type Stack.
                 % Creates type table entries for the type and any new subtypes as necessary.
                 @TypeBody
-        	@EnterVariableAttributes
+        	    @EnterVariableAttributes
 
+                [
+                    | sInitialValue:
+                        @Assignment
+                    | * :
+                ]
                 oTypeStkPop
-        	oSymbolStkPop
+                oSymbolStkPop
+
             | *:
                 >
         ]};
@@ -1438,7 +1457,6 @@ ProcedurePrologue :
         oCountPop;
 
 Statement :
-Statement :
 	oSymbolTblPushScope
 	@Block
 	oSymbolTblPopScope;
@@ -1654,7 +1672,7 @@ WhileStmt :
         oFixPopTargetAddress
         oFixPopForwardBranch;
 
-RepeatStmt :
+LoopStmt :
         .tRepeatBegin
         oFixPushTargetAddress           % top-of-loop branch target
         {[
@@ -2058,6 +2076,7 @@ CompareEqualityOperandTypes :
         oSymbolStkPop
         oSymbolStkSetKind(syExpression);
 
+%chicken
 Variable :
         % Emit code to place the address of a variable on the runtime
         % expression stack, and push the variable's type onto the type stack.
