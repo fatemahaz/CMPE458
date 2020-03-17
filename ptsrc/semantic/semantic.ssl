@@ -979,6 +979,14 @@ TypeBody :
 					oSymbolStkPushIdentifier
 					[ oSymbolStkChooseKind
 						| syType:
+							oTypeStkPushSymbol
+                                [ oTypeStkChooseKind
+                                    | tpInteger:        
+                                       
+                                    | *:
+                                        #eUndefinedIdentifier
+                                ]
+                                oTypeStkPop
 						| syUndefined:
 							#eUndefinedIdentifier
 						| *:
