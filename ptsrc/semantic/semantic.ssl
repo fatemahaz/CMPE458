@@ -975,6 +975,8 @@ TypeBody :
         [
             | sArray:
                 oTypeStkPush(tpArray)
+				% this choice block has been added to check that array is defined
+				% with a proper type
 				[ | sIdentifier:
 					oSymbolStkPushIdentifier
 					[ oSymbolStkChooseKind
@@ -987,6 +989,7 @@ TypeBody :
 					oSymbolStkPop
 				  |*:
 				]
+				% the order of calling the 2 rules below has been switched
 				@ComponentType
                 @IndexType
             | sFile:
@@ -1124,7 +1127,8 @@ SimpleType :
         			oValuePush(one)
                         ]
                 ]
-				
+			% the below option has been changed from sInteger to sRange
+			% a 1 is pushed as the default lower bound for a range
             | sRange:
 				oValuePush(one) % lower bound of subrange specification
                 oSymbolStkPush(syConstant)
