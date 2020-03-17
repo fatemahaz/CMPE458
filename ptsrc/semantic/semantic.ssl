@@ -238,6 +238,10 @@ Error :
         eTextFileVarReqd
         eWriteExpn
         eReadVar
+        % change added errors
+        eMutableTypeReqd
+        eMutableNotReqd
+        % change end
         lastSslErrorCode = eReadVar;
 
 type Integer :
@@ -335,12 +339,14 @@ type SymbolKind :
         syConstant
         syType
         syVariable
+        %change new symbol kind
         syVarParameter
         syProcedure
         syFunction
         syExternal
         syExpression
-        syUndefined;
+        syUndefined
+        syMutableVariable;
 
 type StdRoutine :
         rtReset = 1
@@ -1212,6 +1218,21 @@ VariableDeclarations :
                         @Assignment
                     | * :
                 ]
+                                
+                % change:  the symbol kind to mutable if we get that
+                [
+                    | sMutable:
+                        oSymbolStkSetKind(syMutableVariable)
+                        oSymbolTblUpdate
+                        % make sure that the top type is mutable
+                        [
+                            oSymbolStkChooseKind
+                            | syMutableVariable:
+                            | *:
+                                #eTypeMismatch
+                        ]
+                    | *:
+                ]
                 oTypeStkPop
                 oSymbolStkPop
 
@@ -1401,7 +1422,7 @@ ProcedureParameterType :
         oSymbolStkPop           	        % parameter type symbol
 
         [ oSymbolStkChooseKind
-            | syVariable:
+            | syVariable, syMutableVariable:
                 [ oTypeStkChooseKind
                     | tpArray, tpFile:
                         #eNonScalarValParm
@@ -1437,7 +1458,7 @@ ProcedurePrologue :
 
                 % Emit code to copy the actual to the formal parameter
                 [ oSymbolStkChooseKind
-                    | syVariable:               % value parameter
+                    | syVariable, syMutableVariable:               % value parameter
                         [ oTypeStkChooseKind
                             | tpInteger, tpSubrange:
                                 .tStoreParmInteger
@@ -1589,10 +1610,17 @@ ActualParameters :
                 % formal parameter must be a variable
                 % or a variable parameter
                 [ oSymbolStkChooseKind
-                    | syVariable:
+                    | syVariable, syMutableVariable:
                         % value parameter, actual should be an expression
-                        @Expression
-                        @CompareAndSwapTypes
+                        % change: added check for .sMutable and if so, there is an error
+                        [
+                            | sMutable:
+                                #eInvalidExpn
+                            | *:
+                                % value parameter, actual should be an expression
+                                @Expression
+                                @CompareAndSwapTypes
+                        ]
                     | syVarParameter:
                         @VarActual
                 ]
@@ -1614,9 +1642,18 @@ VarActual :
         % equal type names.  Check for the special case of a 
         % packed array component which is illegal.
 
+        % change: if we came here that means we have a variable callstmt:
+        % we now need to eat the .sMutable token
+        sMutable
         [
             | sIdentifier:
                 oSymbolStkPushIdentifier
+                [
+                    oSymbolStkChooseKind
+                    | syMutableVariable:
+                    | *:
+                        #eMutableTypeReqd
+                ]
                 @Variable
                 .tVarParm
                 [ oTypeStkCompareNames
@@ -1805,7 +1842,7 @@ Operand :
                 [ oSymbolStkChooseKind
                     | syConstant:
                         @ConstantOperand
-                    | syVariable, syVarParameter:
+                    | syVariable, syVarParameter, syMutableVariable:
                         @Variable
                         @VariableOperand
                     | syFunction:
@@ -2084,7 +2121,7 @@ Variable :
         % and a Symbol Stack entry has been pushed for it.
 
         [ oSymbolStkChooseKind
-            | syVariable:
+            | syVariable, syMutableVariable:
                 .tLiteralAddress
                 oValuePushSymbol
                 oEmitValue
@@ -2253,7 +2290,7 @@ StandardFunctionActual :
                         @FlushActuals
                 ]
                 [ oSymbolStkChooseKind
-                    | syVariable, syVarParameter:
+                    | syVariable, syVarParameter, syMutableVariable:
                         oTypeStkPushSymbol
                         [ oTypeStkChooseKind
                             | tpFile:
@@ -2420,7 +2457,7 @@ WriteProcedure :
                                 >>
                         ]
                         [ oSymbolStkChooseKind
-                            | syVariable, syVarParameter:
+                            | syVariable, syVarParameter, syMutableVariable:
                                 oTypeStkPushComponent
                                 oValuePushSymbol        % file descriptor
                                 [ oTypeStkChooseKind
@@ -2516,7 +2553,7 @@ WriteProcedure :
                         [ oSymbolStkChooseKind
                             | syConstant:
                                 @ConstantOperand
-                            | syVariable, syVarParameter:
+                            | syVariable, syVarParameter, syMutableVariable:
                                 @Variable
                                 @VariableOperand
                             | syFunction:
@@ -2767,7 +2804,7 @@ ReadProcedure :
                                 >>
                         ]
                         [ oSymbolStkChooseKind
-                            | syVariable, syVarParameter:
+                            | syVariable, syVarParameter, syMutableVariable:
                                 oValuePushSymbol        % file descriptor
                                 oTypeStkPushComponent
                                 [ oTypeStkChooseKind
@@ -2998,7 +3035,7 @@ FileVariable :
         [ oTypeStkChooseKind
             | tpFile:
         	[ oSymbolStkChooseKind
-        	    | syVariable, syVarParameter:
+        	    | syVariable, syVarParameter, syMutableVariable:
         		[
         		    | sExpnEnd:
         		    | *:
@@ -3020,7 +3057,7 @@ TextFileVariable :
         [ oTypeStkChooseKind
             | tpFile:
         	[ oSymbolStkChooseKind
-        	    | syVariable, syVarParameter:
+        	    | syVariable, syVarParameter, syMutableVariable:
         		oTypeStkPushComponent
         		[ oTypeStkChooseKind
         		    | tpChar:
