@@ -813,9 +813,13 @@ ProgramParameter :
 Block :
         % The parser has flagged phase errors, but has emitted out-of-phase
         % definitions with the intent of providing better error repair.
-
+		
+		% eat sBegin token at begining of block because of Qust style
+		% block declaration
 		sBegin
         {[
+			%the options in the choice have been expanded to include both
+			% declarations and statements
             | sProcedure:
                 @ProcedureDefinition
             | sConst:
@@ -841,6 +845,7 @@ Block :
             | sNullStmt:
 			|*: >
         ]}
+	% eat sEnd token at end of Qust block
 	sEnd;
 		
 ConstantDefinitions :           % Process named constant definitions
@@ -1460,6 +1465,8 @@ ProcedurePrologue :
         oTypeStkEnterParameterCount     % In procedure's type entry
         oCountPop;
 
+% statement rule has been changed to open a new scope, call the
+% block rule, then close the scope
 Statement :
 	oSymbolTblPushScope
 	@Block
