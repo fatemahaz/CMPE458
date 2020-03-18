@@ -1484,6 +1484,12 @@ Statement :
 
 AssignmentStmt :
         sIdentifier  oSymbolStkPushIdentifier
+        % change: check if variable is mutable
+        [ oSymbolStkChooseKind
+            | syMutableVariable:
+            | *:
+                #eMutableTypeReqd
+        ]
         @Assignment
         oSymbolStkPop;
 
@@ -1492,10 +1498,7 @@ Assignment :
         [ oSymbolStkChooseKind
             | syUndefined:
                 #eUndefinedIdentifier
-            %change: make sure assigned variable is mutable, otherwise throw error
-            | syMutableVariable:
             | *:
-                #eMutableTypeReqd
         ]
         .tAssignBegin
 
