@@ -321,6 +321,11 @@ mechanism SymbolTable :
         % the scope being exited, except for formal parameters
         % which must be retained for type checking.
 
+% start change
+    oSymbolTblStripScope
+    oSymbolTblMergeScope
+% end change
+
     oSymbolTblLookupExternal >> Boolean;
         % Return true if any external names (program parameters)
         % have not yet been declared.
@@ -1493,7 +1498,14 @@ ModuleDefinition :
         oTypeStkSetRecursionFlag(no)
         oTypeTblUpdate
         oTypeStkPop
-        oSymbolTblPopScope
+        % start change
+	oSymbolTblStripScope
+        oSymbolTblMergeScope
+	% Do I need to do anything for this? 
+	% public procedures to remain visible, so it should not make the change for any symbol that is
+	% marked as a public procedure (i.e., has symbol kind syPublicProcedure).
+	% end change
+	
         oFixPopForwardBranch;   % fix branch around module above
 % end change
 
