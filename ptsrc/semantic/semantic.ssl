@@ -1650,7 +1650,10 @@ VarActual :
 
         % change: if we came here that means we have a variable callstmt:
         % we now need to eat the .sMutable token
-        sMutable
+        [
+            | sMutable:
+            | *:
+                #eMutableTypeReqd
         [
             | sIdentifier:
                 oSymbolStkPushIdentifier
