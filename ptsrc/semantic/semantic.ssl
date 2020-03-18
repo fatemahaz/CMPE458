@@ -1710,19 +1710,26 @@ WhileStmt :
         oFixPopTargetAddress
         oFixPopForwardBranch;
 
+% TODO: copy part of while statment?
+%change RepeatStmt to LoopStmt, emit tWhileBegin instead of tRepeatBegin
 LoopStmt :
-        .tRepeatBegin
+       .tWhileBegin
         oFixPushTargetAddress           % top-of-loop branch target
-        {[
-            | sLoopEnd:
-                >
-            | *:
-                @Statement
-        ]}
-        .tRepeatControl
+        %change :added statement call here
+        .tWhilePreBreak
+        @Statement
+        sLoopBreakIf
         @BooleanControlExpression
-        .tRepeatTest
-        oFixPopTargetAddress;
+        .tWhileTest
+        oFixPushForwardBranch
+        oEmitNullAddress                % exit branch
+        oFixSwap                % top-of-loop target back on top
+        @Statement
+        .tWhileEnd
+        %check if not should be before or after
+        .tNot
+        oFixPopTargetAddress
+        oFixPopForwardBranch;
 
 CaseStmt :
         .tCaseBegin
