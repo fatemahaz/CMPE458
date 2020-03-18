@@ -1654,6 +1654,7 @@ VarActual :
             | sMutable:
             | *:
                 #eMutableTypeReqd
+        ]
         [
             | sIdentifier:
                 oSymbolStkPushIdentifier
