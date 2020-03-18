@@ -1492,7 +1492,10 @@ Assignment :
         [ oSymbolStkChooseKind
             | syUndefined:
                 #eUndefinedIdentifier
+            %change: make sure assigned variable is mutable, otherwise throw error
+            | syMutableVariable:
             | *:
+                #eMutableTypeReqd
         ]
         .tAssignBegin
 
