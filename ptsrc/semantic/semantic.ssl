@@ -1484,6 +1484,12 @@ Statement :
 
 AssignmentStmt :
         sIdentifier  oSymbolStkPushIdentifier
+        % change: check if variable is mutable
+        [ oSymbolStkChooseKind
+            | syMutableVariable:
+            | *:
+                #eMutableTypeReqd
+        ]
         @Assignment
         oSymbolStkPop;
 
@@ -1644,7 +1650,11 @@ VarActual :
 
         % change: if we came here that means we have a variable callstmt:
         % we now need to eat the .sMutable token
-        sMutable
+        [
+            | sMutable:
+            | *:
+                #eMutableTypeReqd
+        ]
         [
             | sIdentifier:
                 oSymbolStkPushIdentifier
