@@ -1446,6 +1446,42 @@ ProcedurePrologue :
         oTypeStkEnterParameterCount     % In procedure's type entry
         oCountPop;
 
+
+% start change
+ModuleDefinition :
+        sIdentifier  oSymbolStkPushLocalIdentifier      % module name
+        [ oSymbolStkChooseKind
+            | syUndefined:
+            | syExternal:
+                % Program parameters must be declared as file variables
+                #eExternalDeclare
+            | *:
+                #eMultiplyDefined
+                % New definition obscures old one.
+        ]
+        oFixPushForwardBranch
+        oEmitNullAddress
+	
+        oSymbolStkSetKind(syModule)
+        oSymbolStkEnterCodeAddress
+        oTypeStkPush(tpNull)
+        oTypeStkSetRecursionFlag(yes)
+        oTypeTblEnter
+        oSymbolStkEnterTypeReference
+        oSymbolTblEnter
+        oSymbolTblPushScope     % module scope
+
+        @Block
+
+        oSymbolTblUpdate
+        oSymbolStkPop
+        oTypeStkSetRecursionFlag(no)
+        oTypeTblUpdate
+        oTypeStkPop
+        oSymbolTblPopScope
+        oFixPopForwardBranch;   % fix branch around module above
+% end change
+
 Statement :
 	oSymbolTblPushScope
 	@Block
