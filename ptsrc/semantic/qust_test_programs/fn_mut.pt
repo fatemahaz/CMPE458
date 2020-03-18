@@ -3,5 +3,5 @@ mod main(output) {
 	fn proc (mut b:int) {
     }
 
-    proc(x);
+    proc(mut x);
 }
