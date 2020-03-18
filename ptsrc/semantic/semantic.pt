@@ -379,10 +379,13 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         syVariable = 2;
         syVarParameter = 3;
         syProcedure = 4;
-        syFunction = 5;
-        syExternal = 6;
-        syExpression = 7;
-        syUndefined = 8;
+        % start change
+        syPublicProcedure = 5;
+        syFunction = 6;
+        syExternal = 7;
+        syExpression = 8;
+        syUndefined = 9;
+        % end change
         { Type 18 }
         rtReset = 1;
         rtRewrite = 2;
@@ -1046,30 +1049,31 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
             { Standard routines are distinguished from user routines by negative value fields; 
               a user defined routine has its code address in this field. }
 
+% start change
             { reset }
-            symbolTblKind[pidReset] := syProcedure;
+            symbolTblKind[pidReset] := syProcedure, syPublicProcedure;
             symbolTblValue[pidReset] := -rtReset;
 
             { rewrite }
-            symbolTblKind[pidRewrite] := syProcedure;
+            symbolTblKind[pidRewrite] := syProcedure, syPublicProcedure;
             symbolTblValue[pidRewrite] := -rtRewrite;
 
             { write }
-            symbolTblKind[pidWrite] := syProcedure;
+            symbolTblKind[pidWrite] := syProcedure, syPublicProcedure;
             symbolTblValue[pidWrite] := -rtWrite;
 
             { writeln }
-            symbolTblKind[pidWriteln] := syProcedure;
+            symbolTblKind[pidWriteln] := syProcedure, syPublicProcedure;
             symbolTblValue[pidWriteln] := -rtWriteln;
 
             { read }
-            symbolTblKind[pidRead] := syProcedure;
+            symbolTblKind[pidRead] := syProcedure, syPublicProcedure;
             symbolTblValue[pidRead] := -rtRead;
 
             { readln }
-            symbolTblKind[pidReadln] := syProcedure;
+            symbolTblKind[pidReadln] := syProcedure, syPublicProcedure;
             symbolTblValue[pidReadln] := -rtReadln;
-
+% end change
             { chr }
             symbolTblKind[pidChr] := syFunction;
             symbolTblValue[pidChr] := -rtChr;
@@ -1085,11 +1089,11 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
             { eof }
             symbolTblKind[pidEof] := syFunction;
             symbolTblValue[pidEof] := -rtEof;
-
+% start change
             { assign }
-            symbolTblKind[pidAssign] := syProcedure;
+            symbolTblKind[pidAssign] := syProcedure, syPublicProcedure;
             symbolTblValue[pidAssign] := -rtAssign;
-
+% end change
             Assert(lastPredeclaredId = pidAssign, assert58);
 
             symbolTblTop := lastPredeclaredId;  { number of predefined symbols entered above }
@@ -1902,11 +1906,12 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                         { The top symbol is a procedure.  Push the procedure's i'th 
                           formal parameter, where i is the value of the top count stack entry. }
                         begin
-                            Assert((symbolStkKind[symbolStkTop] = syProcedure), assert24);
+                       % start change
+                            Assert((symbolStkKind[symbolStkTop] = syProcedure), syPublicProcedure), assert24);
                             SymbolStkPushIdentifier(symbolStkSymbolTblRef [symbolStkTop] + 
-                                countStack[countStackTop]);
+                                countStack[countStackTop]));
                         end;
-
+                       % end change
                     oSymbolStkSetKind:
                         symbolStkKind[symbolStkTop] := parameterValue;
 
@@ -1969,8 +1974,11 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                         { Standard routines are distinguished from user defined routines by their 
                           negative value fields. }
                         begin
+                       % start change
                             Assert((symbolStkKind[symbolStkTop] = syProcedure) or
-                                   (symbolStkKind[symbolStkTop] = syFunction), assert27);
+                                   (symbolStkKind[symbolStkTop] = syPublicProcedure);
+                                   (symbolStkKind[symbolStkTop] = syFunction), assert27) or
+                       % end change
                             if symbolStkValue[symbolStkTop] < 0 then
                                 resultValue := -symbolStkValue[symbolStkTop]
                             else
@@ -2084,11 +2092,12 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                             resultValue := yes
                         else
                             resultValue := no;
-
+                       
+                    % start change   
                     oTypeStkEnterParameterCount:
                         { Set the top entry's parameter count field from the top count. }
                         begin
-                            Assert((symbolStkKind[symbolStkTop] = syProcedure), assert28);
+                            Assert((symbolStkKind[symbolStkTop] = syProcedure), syPublicProcedure), assert28);
                             typeStkLowerBound[typeStkTop] := countStack[countStackTop];
                         end;
 
@@ -2096,13 +2105,14 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                         { Return yes if the parameter count field matches the top count, 
                           otherwise return no. }
                         begin
-                            Assert((symbolStkKind[symbolStkTop] = syProcedure), assert29);
+                            Assert((symbolStkKind[symbolStkTop] = syProcedure), syPublicProcedure), assert29);
                             if typeStkLowerBound[typeStkTop] = countStack[countStackTop] then
                                 resultValue := yes
                             else
                                 resultValue := no;
                         end;
-
+                    % end change
+                       
                     oTypeStkEnterComponentReference:
                         { Set the second entry's component link to point to the top entry's 
                           type table entry. }
