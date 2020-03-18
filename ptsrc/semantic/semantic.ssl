@@ -337,6 +337,9 @@ type SymbolKind :
         syFunction
         syExternal
         syExpression
+	% start change 
+	syModule
+	% end change
         syUndefined;
 
 type StdRoutine :
