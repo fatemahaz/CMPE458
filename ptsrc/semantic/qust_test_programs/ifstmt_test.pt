@@ -4,7 +4,7 @@ mod main(output){
     {
 
     }
-    elseif x == 99 
+    else if x == 99 
     {
 
     }
