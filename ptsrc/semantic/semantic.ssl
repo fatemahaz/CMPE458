@@ -1730,6 +1730,7 @@ LoopStmt :
         @Statement
         sLoopBreakIf
         @BooleanControlExpression
+        .tNot
         .tWhileTest
         oFixPushForwardBranch
         oEmitNullAddress                % exit branch
@@ -1737,7 +1738,6 @@ LoopStmt :
         @Statement
         .tWhileEnd
         %check if not should be before or after
-        .tNot
         oFixPopTargetAddress
         oFixPopForwardBranch;
 
