@@ -1,3 +1,4 @@
+%step 6 underscore
 %  PT Semantic Analysis Pass   Ver. 4.2
 %
 %  Date  30 Jun 1980
@@ -1719,19 +1720,26 @@ WhileStmt :
         oFixPopTargetAddress
         oFixPopForwardBranch;
 
+% TODO: copy part of while statment?
+%change RepeatStmt to LoopStmt, emit tWhileBegin instead of tRepeatBegin
 LoopStmt :
-        .tRepeatBegin
+       .tWhileBegin
+       .tWhilePreBreak
         oFixPushTargetAddress           % top-of-loop branch target
-        {[
-            | sLoopEnd:
-                >
-            | *:
-                @Statement
-        ]}
-        .tRepeatControl
+        %change :added statement call here
+        @Statement
+        sLoopBreakIf
         @BooleanControlExpression
-        .tRepeatTest
-        oFixPopTargetAddress;
+        .tNot
+        .tWhileTest
+        oFixPushForwardBranch
+        oEmitNullAddress                % exit branch
+        oFixSwap                % top-of-loop target back on top
+        @Statement
+        .tWhileEnd
+        sLoopEnd
+        oFixPopTargetAddress
+        oFixPopForwardBranch;
 
 CaseStmt :
         .tCaseBegin
@@ -1742,14 +1750,21 @@ CaseStmt :
         oFixPushForwardBranch
         oEmitNullAddress                % address of case branch table
         {[
-            | sCaseEnd:
+%Change     | sCaseEnd:
+%               >
+
+            |sCaseOtherwise:
                 >
             | *:
                 @CaseAlternative
         ]}
+%Change        
         .tCaseEnd
         oFixPopForwardBranch
         oEmitCaseBranchTable
+        .tCaseOtherwise
+        @CaseAlternative
+        sCaseEnd
         % emit merge branches for case alternatives
         {[ oCountChoose         % number of case alternatives
             | zero:
@@ -1813,6 +1828,9 @@ CaseAlternative :
                         oCasePushLabel
                 ]
                 oValuePop
+%Change
+            | *:
+                >
         ]}
         @Statement
         .tCaseMerge

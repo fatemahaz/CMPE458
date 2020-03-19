@@ -1,0 +1,7 @@
+#!/bin/bash
+
+ssltrace "ptc -o2 -t2 -L /cas/student/18cwc2/458repo/CMPE458/ptsrc/lib/pt \
+/cas/student/18cwc2/458repo/CMPE458/ptsrc/parser/qust_test_programs/qust_main_test.pt" \
+/cas/student/18cwc2/458repo/CMPE458/ptsrc/lib/pt/parser.def -ri
+
+
