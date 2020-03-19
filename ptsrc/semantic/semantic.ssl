@@ -1828,6 +1828,9 @@ CaseAlternative :
                         oCasePushLabel
                 ]
                 oValuePop
+%Change
+            | *:
+                >
         ]}
         @Statement
         .tCaseMerge
