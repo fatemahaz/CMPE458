@@ -1724,9 +1724,9 @@ WhileStmt :
 %change RepeatStmt to LoopStmt, emit tWhileBegin instead of tRepeatBegin
 LoopStmt :
        .tWhileBegin
+       .tWhilePreBreak
         oFixPushTargetAddress           % top-of-loop branch target
         %change :added statement call here
-        .tWhilePreBreak
         @Statement
         sLoopBreakIf
         @BooleanControlExpression
@@ -1737,7 +1737,7 @@ LoopStmt :
         oFixSwap                % top-of-loop target back on top
         @Statement
         .tWhileEnd
-        %check if not should be before or after
+        sLoopEnd
         oFixPopTargetAddress
         oFixPopForwardBranch;
 
