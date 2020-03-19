@@ -1,0 +1,6 @@
+mod main(output) {
+	let mut x = 0;
+	loop{
+		break if x > 3;
+	}	
+}
