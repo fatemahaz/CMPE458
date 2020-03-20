@@ -918,9 +918,9 @@ ConstantValue :         % An identifier token has just been accepted
                 oValuePush(one) % implicit lower bound of string index type
                 oValuePushStringLength
 				oSymbolStkSetKind(syVariable)
-                [ oValueChoose
+                
 					%changed: removed options for 0 and 1 length char
-                    | *:
+                    
                         % Emit a branch around the string since
                         % it is stored in the code area
                         .tAssignBegin
@@ -942,7 +942,7 @@ ConstantValue :         % An identifier token has just been accepted
                         oSymbolStkEnterTypeReference
                         oTypeStkPop
 						.tAssignString
-                ]
+                
 				oSymbolStkSetKind(syConstant)
                 oValuePop       % Upper bound
                 oValuePop       % Lower bound
@@ -1892,10 +1892,10 @@ Operand :
             | sStringLiteral:
                 oValuePush(one) % implicit lower bound of string index type
                 oValuePushStringLength
-                [ oValueChoose
+                
 					%changed: took out options for 0 and 1 length char
 					%everything will now be an array
-                    | *: 
+                    
                         oSymbolStkPush(syExpression)
                         % branch around string since
                         % it is stored in the code area
@@ -1915,7 +1915,7 @@ Operand :
                         oTypeStkPush(tpString)
                         oTypeStkEnterBounds
                         oTypeStkLinkToStandardComponentType(stdString)
-                ]
+                
                 oValuePop
                 oValuePop
             | sFile:
