@@ -125,21 +125,21 @@ Output :
         tVarParm
         tFetchAddress
         tFetchInteger
-        tFetchString
+        tFetchChar
         tFetchBoolean
         tAssignBegin
         tAssignAddress
         tAssignInteger
-        tAssignString
+        tAssignChar
         tAssignBoolean
         tStoreParmAddress
         tStoreParmInteger
-        tStoreParmString
+        tStoreParmChar
         tStoreParmBoolean
         tSubscriptBegin
         tSubscriptAddress
         tSubscriptInteger
-        tSubscriptString
+        tSubscriptChar
         tSubscriptBoolean
         tArrayDescriptor
         tFileDescriptor
@@ -254,7 +254,7 @@ type Integer :
 
         % These two sizes are machine dependent
         byteSize = 1
-        wordSize = 4;
+        wordSize = 4
 		stringSize = 1024;
 
 type Boolean :
