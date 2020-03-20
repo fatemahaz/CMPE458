@@ -1895,7 +1895,7 @@ Operand :
                 [ oValueChoose
 					%changed: took out options for 0 and 1 length char
 					%everything will now be an array
-                    | *:
+                    | *: 
                         oSymbolStkPush(syExpression)
                         % branch around string since
                         % it is stored in the code area

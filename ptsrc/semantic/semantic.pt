@@ -225,7 +225,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
         tAssignInteger = 28;
         tAssignChar = 29;
         tAssignBoolean = 30;
-        tStoreParmAddress = 31;
+        tStoreParmAddress = 31; 
         tStoreParmInteger = 32;
         tStoreParmChar = 33;
         tStoreParmBoolean = 34;
