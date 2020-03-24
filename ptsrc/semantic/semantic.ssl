@@ -1959,7 +1959,7 @@ BinaryOperator :
                     | tpInteger: 
                         .tAdd
                         oTypeStkPush(tpInteger) % result type
-                        @@
+                        @CompareOperandAndResultTypes
                     | tpString:
                         .tConcatenate
                         oTypeStkPush(tpString) % result type
