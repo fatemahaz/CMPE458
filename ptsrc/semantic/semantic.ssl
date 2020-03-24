@@ -2025,6 +2025,10 @@ BinaryOperator :
                 .tModulus
                 oTypeStkPush(tpInteger)
                 @CompareOperandAndResultTypes
+            | sSubstring:
+                .tSubstring 
+                oTypeStkPush(tpString)
+                @CompareOperandAndResultTypes
             | *:
         	>>
         ]
