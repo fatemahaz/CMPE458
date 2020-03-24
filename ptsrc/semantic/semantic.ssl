@@ -1963,8 +1963,14 @@ BinaryOperator :
         [
             | sAdd:
                 .tAdd
-                oTypeStkPush(tpInteger) % result type
-                @CompareOperandAndResultTypes
+                [ oTypeStkChooseKind
+                    | tpInteger: 
+                        oTypeStkPush(tpInteger) % result type
+                        @CompareOperandAndResultTypes
+                    | tpString:
+                        oTypeStkPush(tpString) % result type
+                        @CompareOperandAndResultTypes
+                ]
             | sSubtract:
                 .tSubtract
                 oTypeStkPush(tpInteger)
