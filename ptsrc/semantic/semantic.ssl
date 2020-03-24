@@ -2034,7 +2034,8 @@ BinaryOperator :
                         oTypeStkSwap
                         [ oTypeStkChooseKind
                             | tpString:
-                            | #eTypeMismatch
+                            | *:
+                            #eTypeMismatch
                         ]
                         oTypeStkSwap
                     | *:
