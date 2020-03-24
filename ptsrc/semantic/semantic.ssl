@@ -2112,14 +2112,6 @@ CompareOperandAndResultTypes :
         oSymbolStkPop
         oSymbolStkSetKind(syExpression);
 
-CompareOperandAndResultTypesSubstring :
-    @CompareAndSwapTypes
-    oTypeStkPop
-    @CompareAndSwapTypes
-    oTypeStkPop             % only result type remains
-    oSymbolStkPop
-    oSymbolStkSetKind(syExpression);
-
 CompareRelationalOperandTypes :
         % Verify that the types of the two operands are assignment
         % compatible and that they are valid ordered relational expression
