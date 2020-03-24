@@ -1942,7 +1942,7 @@ UnaryOperator :
                 [ oTypeStkChooseKind
                     | tpString:
                         oTypeStkSwap
-                        [ oTypeStkChooseKind
+                        [ oTypeStkChooseKind 
                             | tpInteger:
                             | *:
                                 #eTypeMismatch
