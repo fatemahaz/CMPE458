@@ -2254,7 +2254,7 @@ VariableOperand :
             | tpInteger, tpSubrange, tpFile:
                 .tFetchInteger          % replace address with value
             | tpString:
-                .tFetchString
+                .tLiteralString
             | tpBoolean:
                 .tFetchBoolean
             % The caller is responsible for detecting illegal situations
