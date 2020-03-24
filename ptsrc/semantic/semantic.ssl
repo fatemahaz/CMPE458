@@ -1959,7 +1959,7 @@ BinaryOperator :
                     | tpInteger: 
                         .tAdd
                         oTypeStkPush(tpInteger) % result type
-                        @CompareOperandAndResultTypes
+                        @@
                     | tpString:
                         .tConcatenate
                         oTypeStkPush(tpString) % result type
@@ -2001,8 +2001,21 @@ BinaryOperator :
                 @CompareRelationalOperandTypes
             | sMultiply:
                 .tMultiply
-                oTypeStkPush(tpInteger)
-                @CompareOperandAndResultTypes
+                oTypeStkSwap
+                [ oTypeStkChooseKind
+                    | tpInteger: 
+                        oTypeStkSwap
+                        oTypeStkPush(tpInteger) % result type
+                        @CompareOperandAndResultTypes
+                    | tpString:
+                        oTypeStkSwap
+                        [ oTypeStkChooseKind
+                            | tpInteger:
+                            | *:
+                                #eTypeMismatch
+                        ]
+                        oTypeStkPop
+                ]
             | sDivide:
                 .tDivide
                 oTypeStkPush(tpInteger)
