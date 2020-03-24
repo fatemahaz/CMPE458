@@ -1941,6 +1941,8 @@ UnaryOperator :
                 oTypeStkPush(tpString) % result type
                 @CompareAndSwapTypes
                 oTypeStkPop
+                oTypeStkPop
+                oTypeStkPush(tpInteger)
             | *:
                 >>
         ]
