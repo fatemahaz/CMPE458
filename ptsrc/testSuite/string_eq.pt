@@ -1,5 +1,6 @@
 mod main(output) {
 	let mut x : str = "foo";
     let mut y : str = "bar";
-	let mut k : bool = x == y;
+	let mut k : bool;
+    k = x == y;
 }
