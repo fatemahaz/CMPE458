@@ -2027,8 +2027,21 @@ BinaryOperator :
                 @CompareOperandAndResultTypes
             | sSubstring:
                 .tSubstring 
-                oTypeStkPush(tpString)
+                oTypeStkPush(tpInteger)
                 @CompareOperandAndResultTypes
+                [ oTypeStkChooseKind
+                    | tpInteger:
+                        oTypeStkSwap
+                        [ oTypeStkChooseKind
+                            | tpString:
+                            | #eTypeMismatch
+                        ]
+                        oTypeStkSwap
+                    | *:
+                        #eTypeMismatch
+                ]
+                oTypeStkPop
+                oSymbolStkPop
             | *:
         	>>
         ]
@@ -2097,6 +2110,14 @@ CompareOperandAndResultTypes :
         oTypeStkPop             % only result type remains
         oSymbolStkPop
         oSymbolStkSetKind(syExpression);
+
+CompareOperandAndResultTypesSubstring :
+    @CompareAndSwapTypes
+    oTypeStkPop
+    @CompareAndSwapTypes
+    oTypeStkPop             % only result type remains
+    oSymbolStkPop
+    oSymbolStkSetKind(syExpression);
 
 CompareRelationalOperandTypes :
         % Verify that the types of the two operands are assignment
