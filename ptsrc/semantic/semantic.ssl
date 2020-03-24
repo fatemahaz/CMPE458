@@ -1939,16 +1939,7 @@ UnaryOperator :
             | sLength:
                 .tLength
                 oTypeStkPush(tpString) % result type
-                [ oTypeStkChooseKind
-                    | tpString:
-                        oTypeStkSwap
-                        [ oTypeStkChooseKind 
-                            | tpInteger:
-                            | *:
-                                #eTypeMismatch
-                        ]
-                        oTypeStkSwap
-                ]
+                @CompareAndSwapTypes
                 oTypeStkPop
             | *:
                 >>
