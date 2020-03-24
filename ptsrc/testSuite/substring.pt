@@ -1,5 +1,5 @@
 mod main(output) {
 	let mut x : str = "Hi there";
 	let mut y : str;
-	y = x / 4 : 6 
+	y = x / 4 : 6;
 }
