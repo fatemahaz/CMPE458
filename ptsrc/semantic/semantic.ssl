@@ -1936,6 +1936,11 @@ UnaryOperator :
                 oTypeStkPush(tpBoolean) % result type
                 @CompareAndSwapTypes
                 oTypeStkPop
+            | sLength:
+                .tLength
+                oTypeStkPush(tpString) % result type
+                @CompareAndSwapTypes
+                oTypeStkPop
             | *:
                 >>
         ]
