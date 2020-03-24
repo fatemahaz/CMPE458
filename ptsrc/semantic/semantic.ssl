@@ -2015,6 +2015,7 @@ BinaryOperator :
                                 #eTypeMismatch
                         ]
                         oTypeStkPop
+                        oSymbolStkPop
                 ]
             | sDivide:
                 .tDivide
