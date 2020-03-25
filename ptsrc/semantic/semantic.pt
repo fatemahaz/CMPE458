@@ -1167,8 +1167,8 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                     write('integer type expression required');
                 eBooleanExpnReqd:
                     write('Boolean type expression required');
-                eCharExpnReqd:
-                    write('char type expression required');
+                eStringExpnReqd:
+                    write('String type expression required');
                 eArrayVarReqd:
                     write('array variable required');
                 eVariableReqd:
