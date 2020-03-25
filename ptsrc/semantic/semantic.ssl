@@ -2273,7 +2273,7 @@ ConstantOperand :
                 .tLiteralInteger
                 oEmitValue
             | tpString:
-                .tLiteralChar
+                .tLiteralString
                 oEmitValue
             | tpBoolean:
                 .tLiteralBoolean
@@ -2742,7 +2742,7 @@ WriteText :
         [ oTypeStkChooseKind
             | tpString:
                 .tTrap
-                oEmitTrapKind(trWriteChar)
+                oEmitTrapKind(trWriteString)
             | tpInteger, tpSubrange:
                 .tTrap
                 oEmitTrapKind(trWriteInteger)
