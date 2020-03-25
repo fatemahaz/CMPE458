@@ -1,4 +1,0 @@
-mod main(output) {
-	pub fn publicProc (mut b:int) {
-	}
-}

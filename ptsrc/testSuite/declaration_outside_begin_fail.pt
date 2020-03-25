@@ -1,0 +1,8 @@
+mod main(output) 
+let mut n : int;
+{
+	if 1 > 0{
+	}
+	if 0 < 1{
+	}
+}

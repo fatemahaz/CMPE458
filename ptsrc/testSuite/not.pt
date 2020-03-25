@@ -1,7 +1,0 @@
-mod main(output) {
-	let mut x : int;
-	x = 4;
-	if !x == 5 {
-		print(x);
-	}
-}

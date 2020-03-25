@@ -1,6 +1,0 @@
-mod main(output) {
-	let mut x : str = "foo";
-    let mut y : str = "bar";
-    let z = 5;
-	let mut k : str = z + y;
-}

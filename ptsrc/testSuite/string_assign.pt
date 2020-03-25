@@ -1,4 +1,0 @@
-mod main(output) {
-    let mut k : str;
-    k = "hello";
-}

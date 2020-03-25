@@ -1,4 +1,0 @@
-mod main(output) {
-	let mut x = "hello";
-	let y = ?x;
-}

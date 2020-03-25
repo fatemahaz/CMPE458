@@ -1,0 +1,3 @@
+mod main(output) {
+	let mut x : [int:1,10];
+}

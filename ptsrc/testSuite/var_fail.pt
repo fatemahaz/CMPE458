@@ -1,3 +1,0 @@
-mod main(output) {
-	var x : integer;
-}
