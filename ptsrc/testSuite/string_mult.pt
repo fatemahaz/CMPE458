@@ -1,4 +1,5 @@
 mod main(output) {
 	let mut x : str = "hello";
-	let y = ?x;
+	let mut k : str;
+    k = x * 4;
 }

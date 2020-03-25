@@ -1936,6 +1936,14 @@ UnaryOperator :
                 oTypeStkPush(tpBoolean) % result type
                 @CompareAndSwapTypes
                 oTypeStkPop
+            % change: added an option for sLength 
+            | sLength:
+                .tLength
+                oTypeStkPush(tpString) % result type
+                @CompareAndSwapTypes
+                oTypeStkPop
+                oTypeStkPop
+                oTypeStkPush(tpInteger)
             | *:
                 >>
         ]
@@ -1947,10 +1955,18 @@ BinaryOperator :
         % Could make this a cycle (comment applies to UnaryOperator as well)
         % but that would probably be less efficient on average.
         [
+            % change: the choice was changed to allow for string concantenation. 
             | sAdd:
-                .tAdd
-                oTypeStkPush(tpInteger) % result type
-                @CompareOperandAndResultTypes
+                [ oTypeStkChooseKind
+                    | tpInteger: 
+                        .tAdd
+                        oTypeStkPush(tpInteger) % result type
+                        @CompareOperandAndResultTypes
+                    | tpString:
+                        .tConcatenate
+                        oTypeStkPush(tpString) % result type
+                        @CompareOperandAndResultTypes
+                ]
             | sSubtract:
                 .tSubtract
                 oTypeStkPush(tpInteger)
@@ -1985,10 +2001,25 @@ BinaryOperator :
             | sLE:
                 .tLE
                 @CompareRelationalOperandTypes
+            % change: modified the sMultiply choice to allow for string repetition.
             | sMultiply:
                 .tMultiply
-                oTypeStkPush(tpInteger)
-                @CompareOperandAndResultTypes
+                oTypeStkSwap
+                [ oTypeStkChooseKind
+                    | tpInteger: 
+                        oTypeStkSwap
+                        oTypeStkPush(tpInteger) % result type
+                        @CompareOperandAndResultTypes
+                    | tpString:
+                        oTypeStkSwap
+                        [ oTypeStkChooseKind
+                            | tpInteger:
+                            | *:
+                                #eTypeMismatch
+                        ]
+                        oTypeStkPop
+                        oSymbolStkPop
+                ]
             | sDivide:
                 .tDivide
                 oTypeStkPush(tpInteger)
@@ -1997,6 +2028,25 @@ BinaryOperator :
                 .tModulus
                 oTypeStkPush(tpInteger)
                 @CompareOperandAndResultTypes
+            %change: a choice added here to support substring operation
+            | sSubstring:
+                .tSubstring 
+                oTypeStkPush(tpInteger)
+                @CompareOperandAndResultTypes
+                [ oTypeStkChooseKind
+                    | tpInteger:
+                        oTypeStkSwap
+                        [ oTypeStkChooseKind
+                            | tpString:
+                            | *:
+                            #eTypeMismatch
+                        ]
+                        oTypeStkSwap
+                    | *:
+                        #eTypeMismatch
+                ]
+                oTypeStkPop
+                oSymbolStkPop
             | *:
         	>>
         ]
@@ -2233,7 +2283,7 @@ VariableOperand :
             | tpInteger, tpSubrange, tpFile:
                 .tFetchInteger          % replace address with value
             | tpString:
-                .tFetchString
+                .tLiteralString
             | tpBoolean:
                 .tFetchBoolean
             % The caller is responsible for detecting illegal situations
