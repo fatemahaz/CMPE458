@@ -567,11 +567,10 @@ type TrapKind :
         trReadln = 4
         trWrite = 5
         trWriteln = 6
-        trWriteString = 7
         trWriteInteger = 8
-        trWriteChar = 9
+        trWriteString = 109
         trReadInteger = 10
-        trReadChar = 11
+        trReadString = 108
         trAssign = 12;
 
 mechanism Emit :
@@ -1983,12 +1982,30 @@ BinaryOperator :
                 .tOr
                 oTypeStkPush(tpBoolean)
                 @CompareOperandAndResultTypes
-            | sEq:
-                .tEQ
-                @CompareEqualityOperandTypes
+            
+            %Change add String 
+            | sEq: 
+               [ oTypeStkChooseKind
+                    | tpString:
+                        .tStringEqual
+                        @CompareEqualityOperandTypes
+                    | *: 
+                        .tEQ
+                        @CompareEqualityOperandTypes
+                ]
+ 
             | sNE:
-                .tNE
-                @CompareEqualityOperandTypes
+                  [ oTypeStkChooseKind
+                    | tpString:
+                        .tStringEqual
+                        .tNot
+                        @CompareEqualityOperandTypes
+                    | *: 
+                        .tNE
+                        @CompareEqualityOperandTypes
+                ]
+
+
             | sGT:
                 .tGT
                 @CompareRelationalOperandTypes
@@ -2131,13 +2148,6 @@ CompareRelationalOperandTypes :
                     | *:
                         #eOperandOperatorTypeMismatch
                 ]
-            | tpString:
-                oTypeStkPop
-                [ oTypeStkChooseKind
-                    | tpString:
-                    | *:
-                        #eOperandOperatorTypeMismatch
-                ]
             | *:
                 #eOperandOperatorTypeMismatch
                 oTypeStkPop
@@ -2263,7 +2273,7 @@ ConstantOperand :
                 .tLiteralInteger
                 oEmitValue
             | tpString:
-                .tLiteralChar
+                .tLiteralString
                 oEmitValue
             | tpBoolean:
                 .tLiteralBoolean
@@ -2467,7 +2477,7 @@ AssignProcedure :
                             | *:
                         ]
                         [ oTypeStkChooseKind
-                            | tpArray, tpPackedArray:   % must be a char array or literal string        
+                            | tpArray, tpString:   % must be a char array or literal string        
                                 oTypeStkPushComponent
                                 [ oTypeStkChooseKind
                                     | tpString:
@@ -2487,7 +2497,7 @@ AssignProcedure :
                                 .tLiteralInteger
                                 oValuePushTypeStkUpperBound
                                 [ oTypeStkChooseKind
-                                    | tpPackedArray:    % a literal string      
+                                    | tpString:    % a literal string      
                                         oValueNegate    % mark as code segment  
                                     | tpArray:
                                 ]
@@ -2722,9 +2732,6 @@ WriteText :
                         oValuePush(ten)
                     | tpString:
                         oValuePush(one)
-                    | tpPackedArray:    % a literal string
-                        oValuePushTypeStkUpperBound
-                        oValueNegate    % mark as code segment
                     | *:        % An error flagged below
                         oValuePush(zero)
                 ]
@@ -2735,27 +2742,10 @@ WriteText :
         [ oTypeStkChooseKind
             | tpString:
                 .tTrap
-                oEmitTrapKind(trWriteChar)
+                oEmitTrapKind(trWriteString)
             | tpInteger, tpSubrange:
                 .tTrap
                 oEmitTrapKind(trWriteInteger)
-            | tpArray, tpPackedArray:   % must be a char array or literal string
-                oTypeStkPushComponent
-                [ oTypeStkChooseKind
-                    | tpString:
-                    | *:
-                        #eWriteExpn
-                ]
-                oTypeStkPop     % component type
-                oValuePushTypeStkLowerBound
-                [ oValueChoose
-                    | one:
-                    | *:        % string has lower bound one
-                        #eWriteExpn
-                ]
-                oValuePop
-                .tTrap
-                oEmitTrapKind(trWriteString)
             | *:
                 #eWriteExpn
         ]
@@ -3017,7 +3007,7 @@ ReadText :
         [ oTypeStkChooseKind
             | tpString:
                 .tTrap
-                oEmitTrapKind(trReadChar)
+                oEmitTrapKind(trReadString)
             | tpInteger, tpSubrange:
                 .tTrap
                 oEmitTrapKind(trReadInteger)
@@ -3200,7 +3190,7 @@ SymbolStkPushDefaultIntegerConstant :
         oValuePop
         oSymbolStkLinkToStandardType(stdInteger);
 
-SymbolStkPushDefaultCharConstant :
+SymbolStkPushDefaultStringConstant :
         oSymbolStkPush(syConstant)
         oValuePush(zero)
         oSymbolStkEnterValue
