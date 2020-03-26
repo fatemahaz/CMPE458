@@ -1840,7 +1840,6 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                                           the parser's syntax error recovery procedure. }
                                         begin                                 
                                             while link > 0 do
-<<<<<<< HEAD
                                                 link := symbolTblIdentLink[link];
                                                         
                                             if symbolTblKind[i] <> syPublicProcedure then
@@ -1852,24 +1851,6 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                                                     symbolTblKind[i] := syProcedure;
                                                 end;
                                         end; 
-=======
-                                            begin
-                                                if symbolTblKind[i] <> syPublicProcedure then
-                                                    begin
-                                                        Assert(true, assert30);
-                                                        link := symbolTblIdentLink[link];
-                                                        identSymbolTblRef[-link] := symbolTblIdentLink[i];
-                                                    end
-                                                else
-                                                    begin
-                                                        {added assert}
-                                                        Assert(true, assert30);
-                                                        symbolTblKind[i] := syProcedure;
-                                                    end;
-                                            end;
-                                        end;
-
->>>>>>> pt pascal?
                                     i := i - 1;
                                 end;
                         end;
