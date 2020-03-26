@@ -3,6 +3,7 @@ mod main(output) {
 		let mut m: int = 5;
 		pub fn pubProc (mut b:int) {
 		}
+		m = 4;
 	}
 	let mut x: int = 1;
 	pubProc(mut x);
