@@ -1827,7 +1827,9 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                          { CHANGE Go through top scope in symbol table and for each symbol's identifier index
                          set reference to the symbol table to be the one occuring in the most
                          recent lexical level } 
+                        Assert(false, assert21);
                         begin
+                            Assert(false, assert21);
                             Assert((lexicLevelStackTop >= 1), assert31);
                             i := symbolTblTop;
                             { Set the identifier table pointer to the identifier entry in the 
