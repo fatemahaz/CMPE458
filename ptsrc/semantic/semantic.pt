@@ -1845,6 +1845,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                                             begin
                                                 if symbolTblKind[i] <> syPublicProcedure then
                                                     begin
+                                                        Assert(true, assert30);
                                                         link := symbolTblIdentLink[link];
                                                         identSymbolTblRef[-link] := symbolTblIdentLink[i];
                                                     end
