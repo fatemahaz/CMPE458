@@ -1842,15 +1842,17 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                                           the parser's syntax error recovery procedure. }
                                         begin
                                             while link > 0 do
-                                            if symbolTblKind[i] <> syPublicProcedure then
-                                                begin
-                                                    link := symbolTblIdentLink[link];
-                                                    identSymbolTblRef[-link] := symbolTblIdentLink[i];
-                                                end;
-                                            else
-                                                begin
-                                                    symbolTblKind[i] := syProcedure;
-                                                end;
+                                            begin
+                                                if symbolTblKind[i] <> syPublicProcedure then
+                                                    begin
+                                                        link := symbolTblIdentLink[link];
+                                                        identSymbolTblRef[-link] := symbolTblIdentLink[i];
+                                                    end;
+                                                else
+                                                    begin
+                                                        symbolTblKind[i] := syProcedure;
+                                                    end;
+                                            end;
                                         end;
 
                                     i := i - 1;
