@@ -1829,6 +1829,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                          recent lexical level }
 
                         begin
+                        Assert(true, assert30);
                             Assert((lexicLevelStackTop >= 1), assert31);
                             i := symbolTblTop;
                             { Set the identifier table pointer to the identifier entry in the 
