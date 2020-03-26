@@ -1592,7 +1592,7 @@ CallStmt :
             | *:
         ]
         [ oSymbolStkChooseKind
-            | syProcedure, syPublicProcedure:
+            | syProcedure, syPublicProcedure :
                 [ oSymbolStkChooseStandardRoutine
                     | rtReset:
                         .tTrapBegin
