@@ -1847,7 +1847,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                                                     begin
                                                         link := symbolTblIdentLink[link];
                                                         identSymbolTblRef[-link] := symbolTblIdentLink[i];
-                                                    end;
+                                                    end
                                                 else
                                                     begin
                                                         symbolTblKind[i] := syProcedure;
