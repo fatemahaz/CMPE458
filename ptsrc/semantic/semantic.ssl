@@ -1383,7 +1383,7 @@ ProcedureDefinition :
         oTypeStkSetRecursionFlag(no)
         oTypeTblUpdate
         oTypeStkPop
-        Scope
+        oSymbolTblPopScope
 
         .tProcedureEnd
         oFixPopForwardBranch;   % fix branch around procedure above
