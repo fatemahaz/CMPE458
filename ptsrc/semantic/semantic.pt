@@ -1844,11 +1844,13 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                                             identSymbolTblRef[-link] := symbolTblIdentLink[i];
                                                         
                                             if symbolTblKind[i] <> syPublicProcedure then
-                                                begin 
-                                                    identSymbolTblRef[-link] := symbolTblIdentLink[i];
-                                                end;
+                                                begin
+                                                    
+                                                    link := symbolTblIdentLink[link]; 
+                                                end
                                             else
-                                                begin  
+                                                begin
+                                                    
                                                     symbolTblKind[i] := syProcedure;
                                                 end;
                                         end; 
