@@ -337,7 +337,7 @@ mechanism SymbolTable :
     oSymbolTblStripScope
         %strip the scope
     
-    oSymbolTblMergeScope
+    oSymbolTblMergeScope;
         %merge the scope
 
 
@@ -1383,7 +1383,7 @@ ProcedureDefinition :
         oTypeStkSetRecursionFlag(no)
         oTypeTblUpdate
         oTypeStkPop
-        oSymbolTblPopScope
+        Scope
 
         .tProcedureEnd
         oFixPopForwardBranch;   % fix branch around procedure above
