@@ -1862,7 +1862,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
 
                                     i := i - 1;
                                 end;
-                        end};
+                        end;}
 
                     oSymbolTblMergeScope:
                         begin
