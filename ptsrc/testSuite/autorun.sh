@@ -16,10 +16,12 @@ echo "Contents of test file:"
 cat block_rule_general_test.pt
 echo "Full output of test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt block_rule_general_test.pt" ./../lib/pt/semantic.def
-echo "\n"
+echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt block_rule_general_test.pt" ./../lib/pt/semantic.def -e
-echo "\n*******************************\n"
+echo "
+*******************************
+"
 
 echo "Test file: empty_mod_main.pt"
 echo "this test will emit no errors for an empty mod main. It will call Block rule."
@@ -27,10 +29,12 @@ echo "Contents of test file:"
 cat empty_mod_main.pt
 echo "Full output of test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt empty_mod_main.pt" ./../lib/pt/semantic.def
-echo "\n"
+echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt empty_mod_main.pt" ./../lib/pt/semantic.def -e
-echo "\n*******************************\n"
+echo "
+*******************************
+"
 
 echo "Test file: new_scope_for_stmt.pt"
 echo "this test will declare a new scope for all statements by popping a new scope on the scope stack, calling the Block rule, then popping the scope from the scope stack"
@@ -38,10 +42,12 @@ echo "Contents of test file:"
 cat new_scope_for_stmt.pt
 echo "Full output of test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt new_scope_for_stmt.pt" ./../lib/pt/semantic.def
-echo "\n"
+echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt new_scope_for_stmt.pt" ./../lib/pt/semantic.def -e
-echo "\n*******************************\n"
+echo "
+*******************************
+"
 
 echo "Test file: declaration_stmt.pt"
 echo "this test will emit no errors for a program with declarations first then statements. It will call the Statement rule for all statements, which will open a new scope."
@@ -49,10 +55,12 @@ echo "Contents of test file:"
 cat declaration_stmt.pt
 echo "Full output of test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt declaration_stmt.pt" ./../lib/pt/semantic.def
-echo "\n"
+echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt declaration_stmt.pt" ./../lib/pt/semantic.def -e
-echo "\n*******************************\n"
+echo "
+*******************************
+"
 
 echo "Test file: stmt_declaration.pt"
 echo "this test will emit no errors for a program with statements first then declarations. It will call the Statement rule for all statements, which will open a new scope."
@@ -60,21 +68,25 @@ echo "Contents of test file:"
 cat stmt_declaration.pt
 echo "Full output of test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt stmt_declaration.pt" ./../lib/pt/semantic.def
-echo "\n"
+echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt stmt_declaration.pt" ./../lib/pt/semantic.def -e
-echo "\n*******************************\n"
+echo "
+*******************************
+"
 
-echo "Test file: decleration_outside_begin_fail.pt"
+echo "Test file: declaration_outside_begin_fail.pt"
 echo "this test will fail by emitting an error for declaration of a variable outside the begin and end brackets {}"
 echo "Contents of test file:"
 cat decleration_outside_begin_fail.pt
 echo "Full output of test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt decleration_outside_begin_fail.pt" ./../lib/pt/semantic.def
-echo "\n"
+echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt decleration_outside_begin_fail.pt" ./../lib/pt/semantic.def -e
-echo "\n*******************************\n"
+echo "
+*******************************
+"
 
 echo "======================================"
 echo "*** tests for Step 3: Types ***"
@@ -85,29 +97,9 @@ echo "Contents of test file:"
 cat array.pt
 echo "Full output of test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt array.pt" ./../lib/pt/semantic.def
-echo "\n"
+echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt array.pt" ./../lib/pt/semantic.def -e
-echo "\n*******************************\n"
-
-echo "Test file: array_neg_range_fail.pt"
-echo "this test will emit an error an arrage declaration with a negative upper bound"
-echo "Contents of test file:"
-cat array_neg_range_fail.pt
-echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt array_neg_range_fail.pt" ./../lib/pt/semantic.def
-echo "\n"
-echo "Output of emitted t-code tokens for test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt array_neg_range_fail.pt" ./../lib/pt/semantic.def -e
-echo "\n*******************************\n"
-
-echo "Test file: array_bottom_range_fail.pt"
-echo "this test will emit an error when there is an attemp"
-echo "Contents of test file:"
-cat array_bottom_range_fail.pt
-echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt array_bottom_range_fail.pt" ./../lib/pt/semantic.def
-echo "\n"
-echo "Output of emitted t-code tokens for test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt array_bottom_range_fail.pt" ./../lib/pt/semantic.def -e
-echo "\n*******************************\n"
+echo "
+*******************************
+"
