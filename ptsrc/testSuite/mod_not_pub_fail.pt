@@ -1,0 +1,10 @@
+mod main(output) {
+	
+
+	mod a {
+		fn pubProc (mut b:int) {
+		}
+	}
+	let mut x: int = 1;
+	pubProc(mut x);
+}
