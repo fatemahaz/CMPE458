@@ -1,4 +1,0 @@
-mod main(output) {
-	fn proc (mut b:int) {
-	}
-}

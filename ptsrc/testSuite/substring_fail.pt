@@ -1,6 +1,0 @@
-mod main(output) {
-	let mut x : str = "Hi there";
-    let mut j : bool;
-	let mut y : str;
-	y = x / j : 6;
-}

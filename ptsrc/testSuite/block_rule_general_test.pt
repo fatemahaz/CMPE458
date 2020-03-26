@@ -1,0 +1,10 @@
+mod main(output) {
+	const c = 27;
+	let mut n : int = 0;
+	let mut i : int, mut x : int;
+	while i <= c {
+		n += 1;
+		i += 1; 
+	}
+	x = n;
+}
