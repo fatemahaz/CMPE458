@@ -1861,6 +1861,8 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                                                     end
                                                 else
                                                     begin
+                                                        {added assert}
+                                                        Assert(assert30);
                                                         symbolTblKind[i] := syProcedure;
                                                     end;
                                             end;
