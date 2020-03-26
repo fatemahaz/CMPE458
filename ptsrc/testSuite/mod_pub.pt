@@ -2,6 +2,7 @@ mod main(output) {
 	
 
 	mod a {
+		let mut m: int = 5;
 		pub fn pubProc (mut b:int) {
 		}
 	}
