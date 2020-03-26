@@ -1826,10 +1826,9 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                     oSymbolTblStripScope:
                          { CHANGE Go through top scope in symbol table and for each symbol's identifier index
                          set reference to the symbol table to be the one occuring in the most
-                         recent lexical level } 
+                         recent lexical level }
+                        
                         begin
-                        Assert(true, assert30);
-                        {begin
                        
                             Assert((lexicLevelStackTop >= 1), assert31);
                             i := symbolTblTop;
@@ -1856,7 +1855,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                                         end; 
                                     i := i - 1;
                                 end;
-                        end;}
+                        end;
 
                     oSymbolTblMergeScope:
                         begin
