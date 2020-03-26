@@ -1829,6 +1829,8 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                          recent lexical level } 
                         begin
                         Assert(true, assert30);
+                        {begin
+                       
                             Assert((lexicLevelStackTop >= 1), assert31);
                             i := symbolTblTop;
                             { Set the identifier table pointer to the identifier entry in the 
@@ -1854,7 +1856,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                                         end; 
                                     i := i - 1;
                                 end;
-                        end;
+                        end};
 
                     oSymbolTblMergeScope:
                         begin
