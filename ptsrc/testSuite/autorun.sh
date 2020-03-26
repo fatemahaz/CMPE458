@@ -11,7 +11,7 @@ echo "======================================"
 echo "*** tests for Step 2: Blocks ***"
 echo "======================================"
 echo "Test file: block_rule_general_test.pt"
-echo "this test contains some general testing of the Block rule by testing a program with constant and variable declerations and a while loop. We expect no errors to be emitted."
+echo "this test contains some general testing of the Block rule by testing a program with constant and variable declarations and a while loop. We expect no errors to be emitted."
 echo "Contents of test file:"
 cat block_rule_general_test.pt
 echo "Full output of test case:"
@@ -78,12 +78,12 @@ echo "
 echo "Test file: declaration_outside_begin_fail.pt"
 echo "this test will fail by emitting an error for declaration of a variable outside the begin and end brackets {}"
 echo "Contents of test file:"
-cat decleration_outside_begin_fail.pt
+cat declaration_outside_begin_fail.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt decleration_outside_begin_fail.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt declaration_outside_begin_fail.pt" ./../lib/pt/semantic.def
 echo ""
 echo "Output of emitted t-code tokens for test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt decleration_outside_begin_fail.pt" ./../lib/pt/semantic.def -e
+ssltrace "ptc -o3 -t3 -L ./../lib/pt declaration_outside_begin_fail.pt" ./../lib/pt/semantic.def -e
 echo "
 *******************************
 "
