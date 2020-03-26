@@ -1853,7 +1853,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                                                         symbolTblKind[i] := syProcedure;
                                                     end;
                                             end;
-                                        end;
+                                        end; 
                                     i := i - 1;
                                 end;
                         end;
