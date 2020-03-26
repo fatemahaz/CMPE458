@@ -1840,20 +1840,20 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                                           the parser's syntax error recovery procedure. }
                                         begin                                 
                                             while link > 0 do
-                                            begin
-                                                Assert(false, assert21);
-                                                if symbolTblKind[i] <> syPublicProcedure then
-                                                    begin
-                                                        Assert(false, assert21);
-                                                        link := symbolTblIdentLink[link];
-                                                        identSymbolTblRef[-link] := symbolTblIdentLink[i];
-                                                    end
-                                                else
-                                                    begin
-                                                        Assert(false, assert22);
-                                                        symbolTblKind[i] := syProcedure;
-                                                    end;
-                                            end;
+                                                link := symbolTblIdentLink[link];
+                                            Assert(false, assert21);
+                                            identSymbolTblRef[-link] := symbolTblIdentLink[i];
+                                                        
+                                            if symbolTblKind[i] <> syPublicProcedure then
+                                                begin
+                                                    Assert(false, assert21);
+                                                    link := symbolTblIdentLink[link]; 
+                                                end
+                                            else
+                                                begin
+                                                    Assert(false, assert22);
+                                                    symbolTblKind[i] := syProcedure;
+                                                end;
                                         end; 
                                     i := i - 1;
                                 end;
