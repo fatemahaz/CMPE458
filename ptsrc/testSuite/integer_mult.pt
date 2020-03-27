@@ -1,0 +1,5 @@
+mod main(output) {
+	let mut x : int = 5;
+	let mut k : int;
+    k = x * 4;
+}
