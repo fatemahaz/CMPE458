@@ -1,0 +1,7 @@
+mod main(output) {
+    let mut x : int = 5;
+	fn proc (b:int) {
+    }
+
+    proc(x);
+}

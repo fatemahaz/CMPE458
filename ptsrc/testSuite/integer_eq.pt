@@ -1,0 +1,6 @@
+mod main(output) {
+	let mut x : int = 4;
+    let mut y : int = 6;
+	let mut k : bool;
+    k = x == y;
+}

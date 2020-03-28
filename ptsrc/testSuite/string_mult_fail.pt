@@ -1,0 +1,6 @@
+mod main(output) {
+	let mut x : str = "hello";
+	let mut k : str = "hi";
+	let mut l : str;
+    l = k * x;
+}
