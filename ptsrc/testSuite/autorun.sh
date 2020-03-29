@@ -299,7 +299,7 @@ echo "
 "
 
 echo "Test file: fn_value_mut.pt"
-echo "This test contains a declaration of a function with a value parameter. There is an attempt to call the function with a mutable variable which will fail with error #eInvalidExpn."
+echo "This test contains a declaration of a function with a value parameter. There is an attempt to call the function with a mutable variable which will fail with error #eMutableNotReqd."
 echo "Contents of test file:"
 cat fn_value_mut.pt
 echo "Full output of test case:"

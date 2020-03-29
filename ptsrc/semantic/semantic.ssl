@@ -1671,7 +1671,7 @@ ActualParameters :
                         % change: added check for .sMutable and if so, there is an error
                         [
                             | sMutable:
-                                #eInvalidExpn
+                                #eMutableNotReqd 
                             | *:
                                 % value parameter, actual should be an expression
                                 @Expression
