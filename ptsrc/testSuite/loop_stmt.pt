@@ -1,10 +1,6 @@
 mod main(output) {
     let mut x = 0;
     loop {
-<<<<<<< HEAD
-=======
-	read (x);
->>>>>>> added loop tests
 	if x != 0 {
 	    x = x+1;
 	}
