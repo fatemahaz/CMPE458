@@ -14,8 +14,8 @@ echo "Test file: block_rule_general_test.pt"
 echo "this test contains some general testing of the Block rule by testing a program with constant and variable declarations and a while loop. We expect no errors to be emitted."
 echo "Contents of test file:"
 cat block_rule_general_test.pt
-echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt block_rule_general_test.pt" ./../lib/pt/semantic.def
+echo "Full output of test case:" > block_rule_general_test_full_test.pt
+ssltrace "ptc -o3 -t3 -L ./../lib/pt block_rule_general_test.pt" ./../lib/pt/semantic.def > block_rule_general_test_full_test.pt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt block_rule_general_test.pt" ./../lib/pt/semantic.def -e
