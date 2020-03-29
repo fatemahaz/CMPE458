@@ -4,6 +4,7 @@ make
 cd ../semantic
 make
 cd ../testSuite
+mkdir fullTests
 echo "Automatically running test suite for Phase 3..."
 echo ""
 
@@ -14,8 +15,7 @@ echo "Test file: block_rule_general_test.pt"
 echo "this test contains some general testing of the Block rule by testing a program with constant and variable declarations and a while loop. We expect no errors to be emitted."
 echo "Contents of test file:"
 cat block_rule_general_test.pt
-echo "Full output of test case:" > block_rule_general_test_full_test.pt
-ssltrace "ptc -o3 -t3 -L ./../lib/pt block_rule_general_test.pt" ./../lib/pt/semantic.def > block_rule_general_test_full_test.pt
+ssltrace "ptc -o3 -t3 -L ./../lib/pt block_rule_general_test.pt" ./../lib/pt/semantic.def > ./fullTests/block_rule_general_test_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt block_rule_general_test.pt" ./../lib/pt/semantic.def -e
@@ -27,8 +27,7 @@ echo "Test file: empty_mod_main.pt"
 echo "this test will emit no errors for an empty mod main. It will call Block rule."
 echo "Contents of test file:"
 cat empty_mod_main.pt
-echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt empty_mod_main.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt empty_mod_main.pt" ./../lib/pt/semantic.def > ./fullTests/empty_mod_main_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt empty_mod_main.pt" ./../lib/pt/semantic.def -e
@@ -40,8 +39,7 @@ echo "Test file: new_scope_for_stmt.pt"
 echo "this test will declare a new scope for all statements by popping a new scope on the scope stack, calling the Block rule, then popping the scope from the scope stack"
 echo "Contents of test file:"
 cat new_scope_for_stmt.pt
-echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt new_scope_for_stmt.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt new_scope_for_stmt.pt" ./../lib/pt/semantic.def > ./fullTests/new_scope_for_stmt_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt new_scope_for_stmt.pt" ./../lib/pt/semantic.def -e
@@ -54,7 +52,7 @@ echo "this test will emit no errors for a program with declarations first then s
 echo "Contents of test file:"
 cat declaration_stmt.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt declaration_stmt.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt declaration_stmt.pt" ./../lib/pt/semantic.def > ./fullTests/declaration_stmt_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt declaration_stmt.pt" ./../lib/pt/semantic.def -e
@@ -67,7 +65,7 @@ echo "this test will emit no errors for a program with statements first then dec
 echo "Contents of test file:"
 cat stmt_declaration.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt stmt_declaration.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt stmt_declaration.pt" ./../lib/pt/semantic.def > ./fullTests/stmt_declaration_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt stmt_declaration.pt" ./../lib/pt/semantic.def -e
@@ -83,7 +81,7 @@ echo "this test will not emit an error for proper Qust array declaration. It wil
 echo "Contents of test file:"
 cat array.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt array.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt array.pt" ./../lib/pt/semantic.def > ./fullTests/array_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt array.pt" ./../lib/pt/semantic.def -e
@@ -99,7 +97,7 @@ echo "This test contain a variable declaration with type bool and no initial val
 echo "Contents of test file:"
 cat var_type_noinit.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt var_type_noinit.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt var_type_noinit.pt" ./../lib/pt/semantic.def > ./fullTests/var_type_noinit_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt var_type_noinit.pt" ./../lib/pt/semantic.def -e
@@ -112,7 +110,7 @@ echo "This test contain a variable declaration with type int and an initial valu
 echo "Contents of test file:"
 cat var_type_init.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt var_type_init.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt var_type_init.pt" ./../lib/pt/semantic.def > ./fullTests/var_type_init_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt var_type_init.pt" ./../lib/pt/semantic.def -e
@@ -125,7 +123,7 @@ echo "This test contains a declaration of a variable with an initial value. This
 echo "Contents of test file:"
 cat var_notype_init.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt var_notype_init.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt var_notype_init.pt" ./../lib/pt/semantic.def > ./fullTests/var_notype_init_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt var_notype_init.pt" ./../lib/pt/semantic.def -e
@@ -138,7 +136,7 @@ echo "This test contains a declaration of a variable without an initial value. T
 echo "Contents of test file:"
 cat var_notype_noinit_fail.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt var_notype_noinit_fail.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt var_notype_noinit_fail.pt" ./../lib/pt/semantic.def > ./fullTests/var_notype_noinit_fail_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt var_notype_noinit_fail.pt" ./../lib/pt/semantic.def -e
@@ -153,7 +151,7 @@ echo "This test tests the the fuctionality of Modules by accessing a public func
 echo "Contents of test file:"
 cat mod_pub.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt mod_pub.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt mod_pub.pt" ./../lib/pt/semantic.def > ./fullTests/mod_pub_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt mod_pub.pt" ./../lib/pt/semantic.def -e
@@ -166,7 +164,7 @@ echo "This test tests the the fuctionality of Modules by attempting accessing a 
 echo "Contents of test file:"
 cat mod_not_pub_fail.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt mod_not_pub_fail.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt mod_not_pub_fail.pt" ./../lib/pt/semantic.def > ./fullTests/mod_not_pub_fail_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt mod_not_pub_fail.pt" ./../lib/pt/semantic.def -e
@@ -183,7 +181,7 @@ echo "This test contains an if, else if, and else statement. This should be equi
 echo "Contents of test file:"
 cat ifstmt_test.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt ifstmt_test.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt ifstmt_test.pt" ./../lib/pt/semantic.def > ./fullTests/ifstmt_test_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt ifstmt_test.pt" ./../lib/pt/semantic.def -e
@@ -196,7 +194,7 @@ echo "This test contains only ifs and elses and is the equivelent to the previou
 echo "Contents of test file:"
 cat ifstmt_equiv.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt ifstmt_equiv.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt ifstmt_equiv.pt" ./../lib/pt/semantic.def > ./fullTests/ifstmt_equiv_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt ifstmt_equiv.pt" ./../lib/pt/semantic.def -e
@@ -212,7 +210,7 @@ echo "This test contains a declaration of a mutable integer variable with an ini
 echo "Contents of test file:"
 cat mut_integer_explicit.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt mut_integer_explicit.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt mut_integer_explicit.pt" ./../lib/pt/semantic.def > ./fullTests/mut_integer_explicit_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt mut_integer_explicit.pt" ./../lib/pt/semantic.def -e
@@ -225,7 +223,7 @@ echo "This test contains a declaration of a mutable variable with an initial val
 echo "Contents of test file:"
 cat mut_integer_implicit.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt mut_integer_implicit.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt mut_integer_implicit.pt" ./../lib/pt/semantic.def > ./fullTests/mut_integer_implicit_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt mut_integer_implicit.pt" ./../lib/pt/semantic.def -e
@@ -238,7 +236,7 @@ echo "This test contains a declaration of a non mutable variable with an initial
 echo "Contents of test file:"
 cat assign_notmut.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt assign_notmut.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt assign_notmut.pt" ./../lib/pt/semantic.def > ./fullTests/assign_notmut_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt assign_notmut.pt" ./../lib/pt/semantic.def -e
@@ -251,7 +249,7 @@ echo "This test contains a declaration of a mutable integer variable with an ini
 echo "Contents of test file:"
 cat assign_mut.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt assign_mut.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt assign_mut.pt" ./../lib/pt/semantic.def > ./fullTests/assign_mut_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt assign_mut.pt" ./../lib/pt/semantic.def -e
@@ -264,7 +262,7 @@ echo "This test contains a declaration of a function with a mutable parameter. T
 echo "Contents of test file:"
 cat fn_mut.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt fn_mut.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt fn_mut.pt" ./../lib/pt/semantic.def > ./fullTests/fn_mut_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt fn_mut.pt" ./../lib/pt/semantic.def -e
@@ -277,7 +275,7 @@ echo "This test contains a declaration of a function with a mutable parameter. T
 echo "Contents of test file:"
 cat fn_nomut.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt fn_nomut.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt fn_nomut.pt" ./../lib/pt/semantic.def > ./fullTests/fn_nomut_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt fn_nomut.pt" ./../lib/pt/semantic.def -e
@@ -290,7 +288,7 @@ echo "This test contains a declaration of a function with a value parameter. The
 echo "Contents of test file:"
 cat fn_value.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt fn_value.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt fn_value.pt" ./../lib/pt/semantic.def > ./fullTests/fn_value_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt fn_value.pt" ./../lib/pt/semantic.def -e
@@ -303,7 +301,7 @@ echo "This test contains a declaration of a function with a value parameter. The
 echo "Contents of test file:"
 cat fn_value_mut.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt fn_value_mut.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt fn_value_mut.pt" ./../lib/pt/semantic.def > ./fullTests/fn_value_mut_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt fn_value_mut.pt" ./../lib/pt/semantic.def -e
@@ -319,7 +317,7 @@ echo "This test contains a declaration of a string variable with an initial valu
 echo "Contents of test file:"
 cat string_assign.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt string_assign.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt string_assign.pt" ./../lib/pt/semantic.def > ./fullTests/string_assign_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt string_assign.pt" ./../lib/pt/semantic.def -e
@@ -335,7 +333,7 @@ echo "This test contains a declaration of a const which is a string. This should
 echo "Contents of test file:"
 cat string_assign_const.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt string_assign_const.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt string_assign_const.pt" ./../lib/pt/semantic.def > ./fullTests/string_assign_const_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt string_assign_const.pt" ./../lib/pt/semantic.def -e
@@ -348,7 +346,7 @@ echo "This test contains a declaration of string variable. Then an integer varia
 echo "Contents of test file:"
 cat string_length.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt string_length.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt string_length.pt" ./../lib/pt/semantic.def > ./fullTests/string_length_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt string_length.pt" ./../lib/pt/semantic.def -e
@@ -361,7 +359,7 @@ echo "This test contains a declaration of a string. Then a boolen variable is as
 echo "Contents of test file:"
 cat string_length_fail.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt string_length_fail.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt string_length_fail.pt" ./../lib/pt/semantic.def > ./fullTests/string_length_fail_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt string_length_fail.pt" ./../lib/pt/semantic.def -e
@@ -374,7 +372,7 @@ echo "This test contains a declaration of two string. Then a string variable is 
 echo "Contents of test file:"
 cat string_concat.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt string_concat.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt string_concat.pt" ./../lib/pt/semantic.def > ./fullTests/string_concat_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt string_concat.pt" ./../lib/pt/semantic.def -e
@@ -387,7 +385,7 @@ echo "This test contains a declaration of a string and integer. Then a string va
 echo "Contents of test file:"
 cat string_concat_fail.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt string_concat_fail.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt string_concat_fail.pt" ./../lib/pt/semantic.def > ./fullTests/string_concat_fail_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt string_concat_fail.pt" ./../lib/pt/semantic.def -e
@@ -400,7 +398,7 @@ echo "This test contains a declaration of an integer. Then a variable is assigne
 echo "Contents of test file:"
 cat integer_add.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt integer_add.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt integer_add.pt" ./../lib/pt/semantic.def > ./fullTests/integer_add_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt integer_add.pt" ./../lib/pt/semantic.def -e
@@ -413,7 +411,7 @@ echo "This test contains a declaration of two string. Then a boolen variable is 
 echo "Contents of test file:"
 cat string_eq.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt string_eq.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt string_eq.pt" ./../lib/pt/semantic.def > ./fullTests/string_eq_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt string_eq.pt" ./../lib/pt/semantic.def -e
@@ -426,7 +424,7 @@ echo "This test contains a declaration of a string and integer. Then a boolen va
 echo "Contents of test file:"
 cat string_eq_fail.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt string_eq_fail.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt string_eq_fail.pt" ./../lib/pt/semantic.def > ./fullTests/string_eq_fail_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt string_eq_fail.pt" ./../lib/pt/semantic.def -e
@@ -439,7 +437,7 @@ echo "This test contains a declaration of two integers. Then a boolean variable 
 echo "Contents of test file:"
 cat integer_eq.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt integer_eq.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt integer_eq.pt" ./../lib/pt/semantic.def > ./fullTests/integer_eq_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt integer_eq.pt" ./../lib/pt/semantic.def -e
@@ -452,7 +450,7 @@ echo "This test contains a declaration of two string. Then a boolen variable is 
 echo "Contents of test file:"
 cat string_neq.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt string_neq.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt string_neq.pt" ./../lib/pt/semantic.def > ./fullTests/string_neq_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt string_neq.pt" ./../lib/pt/semantic.def -e
@@ -465,7 +463,7 @@ echo "This test contains a declaration of a string and integer. Then a boolen va
 echo "Contents of test file:"
 cat string_neq_fail.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt string_neq_fail.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt string_neq_fail.pt" ./../lib/pt/semantic.def > ./fullTests/string_neq_fail_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt string_neq_fail.pt" ./../lib/pt/semantic.def -e
@@ -478,7 +476,7 @@ echo "This test contains a declaration of two integers. Then a boolean variable 
 echo "Contents of test file:"
 cat integer_neq.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt integer_neq.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt integer_neq.pt" ./../lib/pt/semantic.def > ./fullTests/integer_neq_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt integer_neq.pt" ./../lib/pt/semantic.def -e
@@ -491,7 +489,7 @@ echo "This test contains a declaration of a string. Then another string variable
 echo "Contents of test file:"
 cat string_mult.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt string_mult.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt string_mult.pt" ./../lib/pt/semantic.def > ./fullTests/string_mult_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt string_mult.pt" ./../lib/pt/semantic.def -e
@@ -504,7 +502,7 @@ echo "This test contains a declaration of two strings. Then another string varia
 echo "Contents of test file:"
 cat string_mult_fail.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt string_mult_fail.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt string_mult_fail.pt" ./../lib/pt/semantic.def > ./fullTests/string_mult_fail_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt string_mult_fail.pt" ./../lib/pt/semantic.def -e
@@ -517,7 +515,7 @@ echo "This test contains a declaration of an integer. Then an integer variable i
 echo "Contents of test file:"
 cat integer_mult.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt integer_mult.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt integer_mult.pt" ./../lib/pt/semantic.def > ./fullTests/integer_mult_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt integer_mult.pt" ./../lib/pt/semantic.def -e
@@ -530,7 +528,7 @@ echo "This test contains a declaration of a string. Then another string variable
 echo "Contents of test file:"
 cat string_substring.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt string_substring.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt string_substring.pt" ./../lib/pt/semantic.def > ./fullTests/string_substring_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt string_substring.pt" ./../lib/pt/semantic.def -e
@@ -543,7 +541,7 @@ echo "This test contains a declaration of a string and a boolen. Then another st
 echo "Contents of test file:"
 cat string_substring_fail.pt
 echo "Full output of test case:"
-ssltrace "ptc -o3 -t3 -L ./../lib/pt string_substring_fail.pt" ./../lib/pt/semantic.def
+ssltrace "ptc -o3 -t3 -L ./../lib/pt string_substring_fail.pt" ./../lib/pt/semantic.def > ./fullTests/string_substring_fail_full_test.txt
 echo ""
 echo "Output of emitted t-code tokens for test case:"
 ssltrace "ptc -o3 -t3 -L ./../lib/pt string_substring_fail.pt" ./../lib/pt/semantic.def -e
