@@ -1227,6 +1227,12 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
                     write('program too complicated (S patch table)');
                 eIdentTableOvfl:
                     write('too many identifiers (identifier table)');
+                { CHANGE : added error messages for new error codes }
+                eMutableTypeReqd:
+                    write('mutable type is required ');
+                eMutableNotReqd:
+                    write('parameter should not be mutable');
+                { CHANGE : end}
             end;
 
             writeln;
