@@ -145,6 +145,35 @@ ssltrace "ptc -o3 -t3 -L ./../lib/pt var_notype_noinit_fail.pt" ./../lib/pt/sema
 echo "
 *******************************
 "
+echo "======================================"
+echo "*** tests for Step 5: Modules ***"
+echo "======================================"
+echo "Test file: mod_pub.pt"
+echo "This test tests the the fuctionality of Modules by accessing a public function declared inside a module from outside the Module."
+echo "Contents of test file:"
+cat mod_pub.pt
+echo "Full output of test case:"
+ssltrace "ptc -o3 -t3 -L ./../lib/pt mod_pub.pt" ./../lib/pt/semantic.def
+echo ""
+echo "Output of emitted t-code tokens for test case:"
+ssltrace "ptc -o3 -t3 -L ./../lib/pt mod_pub.pt" ./../lib/pt/semantic.def -e
+echo "
+*******************************
+"
+
+echo "Test file: mod_not_pub_fail.pt"
+echo "This test tests the the fuctionality of Modules by attempting accessing a non-public function declared inside a module from outside the Module. The test should fail and emit an error token"
+echo "Contents of test file:"
+cat mod_not_pub_fail.pt
+echo "Full output of test case:"
+ssltrace "ptc -o3 -t3 -L ./../lib/pt mod_not_pub_fail.pt" ./../lib/pt/semantic.def
+echo ""
+echo "Output of emitted t-code tokens for test case:"
+ssltrace "ptc -o3 -t3 -L ./../lib/pt mod_not_pub_fail.pt" ./../lib/pt/semantic.def -e
+echo "
+*******************************
+"
+
 
 echo "======================================"
 echo "*** tests for Step 8: The Else If Clause ***"
