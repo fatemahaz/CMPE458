@@ -171,7 +171,37 @@ ssltrace "ptc -o3 -t3 -L ./../lib/pt mod_not_pub_fail.pt" ./../lib/pt/semantic.d
 echo "
 *******************************
 "
+echo "======================================"
+echo "*** tests for Step 6: Loop ***"
+echo "======================================"
+echo "Test file: loop_stmt.pt"
+echo "This test tests the the fuctionality of loops, no errors will be emitted."
+echo "Contents of test file:"
+cat loop_stmt.pt
+echo "Full output of test case:"
+ssltrace "ptc -o3 -t3 -L ./../lib/pt loop_stmt.pt" ./../lib/pt/semantic.def
+echo ""
+echo "Output of emitted t-code tokens for test case:"
+ssltrace "ptc -o3 -t3 -L ./../lib/pt loop_stmt.pt" ./../lib/pt/semantic.def -e
+echo "
+*******************************
+"
 
+echo "======================================"
+echo "*** tests for Step 7: Match ***"
+echo "======================================"
+echo "Test file: match_stmt.pt"
+echo "This test tests the the fuctionality of match, no errors will be emitted."
+echo "Contents of test file:"
+cat match_stmt.pt
+echo "Full output of test case:"
+ssltrace "ptc -o3 -t3 -L ./../lib/pt match_stmt.pt" ./../lib/pt/semantic.def
+echo ""
+echo "Output of emitted t-code tokens for test case:"
+ssltrace "ptc -o3 -t3 -L ./../lib/pt match_stmt.pt" ./../lib/pt/semantic.def -e
+echo "
+*******************************
+"
 
 echo "======================================"
 echo "*** tests for Step 8: The Else If Clause ***"
