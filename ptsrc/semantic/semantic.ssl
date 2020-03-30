@@ -1796,22 +1796,26 @@ CaseStmt :
         .tCaseSelect
         oFixPushForwardBranch
         oEmitNullAddress                % address of case branch table
+%Change
         {[
-%Change     | sCaseEnd:
-%               >
+            | sCaseEnd:
+                .tCaseEnd
+                oFixPopForwardBranch
+                oEmitCaseBranchTable
+                >
 
             |sCaseOtherwise:
+                .tCaseEnd
+                oFixPopForwardBranch
+                oEmitCaseBranchTable
+                .tCaseOtherwise
+                @CaseAlternative
+                sCaseEnd 
                 >
             | *:
                 @CaseAlternative
         ]}
 %Change        
-        .tCaseEnd
-        oFixPopForwardBranch
-        oEmitCaseBranchTable
-        .tCaseOtherwise
-        @CaseAlternative
-        sCaseEnd
         % emit merge branches for case alternatives
         {[ oCountChoose         % number of case alternatives
             | zero:
