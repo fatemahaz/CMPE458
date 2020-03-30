@@ -1796,8 +1796,9 @@ CaseStmt :
         .tCaseSelect
         oFixPushForwardBranch
         oEmitNullAddress                % address of case branch table
+%Change
         {[
-%Change     | sCaseEnd:
+            | sCaseEnd:
                 .tCaseEnd
                 oFixPopForwardBranch
                 oEmitCaseBranchTable
