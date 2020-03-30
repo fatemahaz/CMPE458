@@ -1,4 +1,6 @@
 mod main(output) {
+	let mut x: int;
+	let mut y: int;
 	if  x > y {
 	} else if y > x {
 	} else {
