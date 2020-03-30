@@ -1,0 +1,8 @@
+mod main(output) {
+    let mut i = 3;
+    match i { 
+        |   1 | 2 | 3 => {
+            i = i + 1;
+        }
+    }
+}
