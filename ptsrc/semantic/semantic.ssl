@@ -1802,6 +1802,11 @@ CaseStmt :
                 .tCaseEnd
                 oFixPopForwardBranch
                 oEmitCaseBranchTable
+                .tCaseMerge
+                oFixPushForwardBranch
+                oEmitNullAddress                % merge branch at end of statement
+                oFixSwap                        % keep case select branch on top
+                oCountIncrement;
 %               >
 
             |sCaseOtherwise:
