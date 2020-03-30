@@ -1145,7 +1145,8 @@ SimpleType :
             | sRange:
 				oValuePush(one) % lower bound of subrange specification
                 oSymbolStkPush(syConstant)
-				@SubrangeUpperBound 
+				@SubrangeUpperBound
+				
 			
             | *:
                 % change: this was what here before 
@@ -1197,9 +1198,6 @@ SubrangeUpperBound :
                 #eIntegerConstReqd
                 @ValuePushValuePlusOne
         ]
-		[ | sMutable:
-			%***** handle mutable type here
-		]
         [
             | sNegate:
                 oValueNegate
