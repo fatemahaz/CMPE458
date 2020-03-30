@@ -1810,7 +1810,7 @@ CaseStmt :
                 oEmitCaseBranchTable
                 .tCaseOtherwise
                 @CaseAlternative
-                sCaseEnd
+                sCaseEnd 
                 >
             | *:
                 @CaseAlternative
