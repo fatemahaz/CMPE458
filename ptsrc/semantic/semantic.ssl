@@ -481,7 +481,6 @@ type TypeKind :
         tpBoolean
         tpSubrange
         tpArray
-        tpPackedArray   % string literal
         tpFile
         tpNull;
 
@@ -2156,13 +2155,7 @@ CompareAndSwapTypes :
                     | *:
                         #eTypeMismatch
                 ]
-            | tpPackedArray: 
-                oTypeStkSwap
-                [ oTypeStkChooseKind
-                    | tpPackedArray:
-                    | *:
-                        #eTypeMismatch
-                ]
+
             | tpFile:
                 oTypeStkSwap
                 [ oTypeStkChooseKind
@@ -2328,9 +2321,6 @@ ConstantOperand :
                 oEmitValue
             | tpBoolean:
                 .tLiteralBoolean
-                oEmitValue
-            | tpPackedArray:    % always a named literal string
-                .tStringDescriptor
                 oEmitValue
         ]
         oValuePop;

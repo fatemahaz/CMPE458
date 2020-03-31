@@ -2418,7 +2418,7 @@ program SemanticAnalysis (output, semanticSsl, parseStream, temp, tCode, options
 								dataAreaEnd := dataAreaEnd + stringSize;
 							tpBoolean:
                                 dataAreaEnd := dataAreaEnd + byteSize;
-                            tpArray, tpPackedArray:
+                            tpArray:
                                 begin
                                     assert (typeStkComponentLink[typeStkTop] <> null, assert59);
                                     size := typeStkUpperBound[typeStkTop] - 
